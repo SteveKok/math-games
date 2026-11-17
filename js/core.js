@@ -153,6 +153,7 @@
     hand: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 12V5.5a1.5 1.5 0 0 1 3 0V11V3.8a1.5 1.5 0 0 1 3 0V11V5a1.5 1.5 0 0 1 3 0v7.5V8.5a1.5 1.5 0 0 1 3 0V15a7 7 0 0 1-7 7h-.5a7 7 0 0 1-5.6-2.8L3.6 14.6a1.6 1.6 0 0 1 2.5-2z" fill="currentColor"/></svg>',
     bulb: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5a6.5 6.5 0 0 0-3.8 11.8c.5.4.8 1 .8 1.7V17h6v-1c0-.7.3-1.3.8-1.7A6.5 6.5 0 0 0 12 2.5z" fill="currentColor"/><rect x="9" y="18.5" width="6" height="2" rx="1" fill="currentColor"/><rect x="10" y="21.2" width="4" height="1.6" rx=".8" fill="currentColor"/></svg>',
     glasses: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6.5" cy="14" r="4" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="17.5" cy="14" r="4" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M10.5 13.5c1-1 2-1 3 0M2.5 13 4 7.5M21.5 13 20 7.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+    help: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 9a3.5 3.5 0 1 1 5 3.2c-1 .5-1.5 1.2-1.5 2.3v.5" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/><circle cx="12" cy="19.5" r="1.8" fill="currentColor"/></svg>',
     book: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5C10 5 7 4.5 3 5v13c4-.5 7 0 9 1.5 2-1.5 5-2 9-1.5V5c-4-.5-7 0-9 1.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 6.5v13" stroke="currentColor" stroke-width="2"/></svg>'
   };
 

@@ -169,6 +169,16 @@ dialog.math p { margin: 6px 0; font-size: 1.05rem; }
 .demo .pile { width: 100%; }
 .demo .count { width: 36px; height: 36px; font-size: 1rem; }
 
+.cpu-row .icon-btn { align-self: center; }
+dialog.rules h3 { margin: 16px 0 4px; font-size: 1.25rem; }
+.rules-list { list-style: none; padding: 0; margin: 8px 0; display: flex; flex-direction: column; gap: 10px; counter-reset: r; }
+.rules-list li { display: flex; align-items: center; gap: 12px; font-size: 1.1rem; font-weight: 700; background: var(--bg); border-radius: 18px; padding: 10px 12px; }
+.rule-art { flex: none; width: 76px; height: 56px; display: flex; align-items: center; justify-content: center; gap: 2px; }
+.rule-art svg { width: 36px; height: 36px; }
+.rule-art .avatar { width: 36px; height: 36px; border-width: 2px; }
+.rule-art .arrow { font-weight: 800; font-size: 1.2rem; }
+.rules-demo { --item: 46px; align-items: stretch; }
+.rules-demo .item.selected { animation: bounce 1.2s infinite alternate; }
 .fx-canvas { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 1000; }
 .fly { pointer-events: none; }
 

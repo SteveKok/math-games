@@ -316,6 +316,30 @@
     openDialog('dlg-math');
   }
 
+  function openRules() {
+    var skin = MG.getSkin(state.skin);
+    // 1. 轮流：小孩 → 电脑
+    $('rule-art-turns').innerHTML = '<span class="avatar">' + KID + '</span><span class="arrow">⇄</span><span class="avatar">' + ROBOT + '</span>';
+    // 2. 只从一堆拿：一个物品 + 手
+    $('rule-art-pile').innerHTML = skin.draw(5, 'r2') + MG.ICONS.hand;
+    // 3. 拿到最后一个：最后一个物品 + 星星
+    $('rule-art-last').innerHTML = skin.draw(9, 'r3') + KID_STAR;
+    // 示意：一堆 5 个，点了第 3 个 → 选中最后 3 个
+    var demo = $('rules-demo');
+    demo.innerHTML = '';
+    var pile = [];
+    for (var k = 0; k < 5; k++) pile.push({ seed: 200 + k, uid: 'rule' + k });
+    var row = renderPile(pile, 0, skin, { static: true });
+    row.querySelectorAll('.item').forEach(function (el, k) { if (k >= 2) el.classList.add('selected'); });
+    demo.appendChild(row);
+    var btn = document.createElement('div');
+    btn.className = 'big-btn go';
+    btn.style.alignSelf = 'flex-end';
+    btn.innerHTML = MG.ICONS.hand + '<span>' + t('takeN', { n: 3 }) + '</span>';
+    demo.appendChild(btn);
+    openDialog('dlg-rules');
+  }
+
   function setSkin(id) {
     state.skin = id; MG.prefs.set('skin', id);
     render(); paintChrome();
@@ -341,6 +365,7 @@
 
   $('btn-take').addEventListener('click', kidTake);
   $('btn-levels').addEventListener('click', openLevels);
+  $('btn-rules').addEventListener('click', function () { MG.sound.play('tap'); openRules(); });
   $('levels-math').addEventListener('click', function () { closeDialog('dlg-levels'); openMath(); });
   $('btn-skin').addEventListener('click', function () {
     var i = MG.SKINS.findIndex(function (s) { return s.id === state.skin; });

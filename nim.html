@@ -20,6 +20,7 @@
     <div class="player cpu-row" id="cpu-row">
       <div class="avatar" id="cpu-avatar"></div>
       <div class="bubble" id="cpu-bubble" aria-live="polite"></div>
+      <button class="icon-btn" id="btn-rules" data-icon="help" data-i18n-aria="rules"></button>
     </div>
 
     <div class="legend" aria-hidden="true">
@@ -67,6 +68,19 @@
       <button class="big-btn secondary" id="levels-math" hidden><span data-icon="book"></span><span data-i18n="mathTitle"></span></button>
       <button class="big-btn secondary" data-close data-i18n="close"></button>
     </div>
+  </dialog>
+
+  <dialog id="dlg-rules" class="rules">
+    <h2 data-i18n="rulesTitle"></h2>
+    <ol class="rules-list">
+      <li><span class="rule-art" id="rule-art-turns"></span><span data-i18n="rule1"></span></li>
+      <li><span class="rule-art" id="rule-art-pile"></span><span data-i18n="rule2"></span></li>
+      <li><span class="rule-art" id="rule-art-last"></span><span data-i18n="rule3"></span></li>
+    </ol>
+    <h3 data-i18n="rulesHowTitle"></h3>
+    <div class="demo rules-demo" id="rules-demo" aria-hidden="true"></div>
+    <p data-i18n="rulesHow"></p>
+    <div class="actions"><button class="big-btn" data-close data-i18n="rulesOk"></button></div>
   </dialog>
 
   <dialog id="dlg-math" class="math">
