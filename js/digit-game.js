@@ -17,6 +17,10 @@
 
   function complete() {
     progress.cleared[state.idx] = true;
+    unlockNext();
+  }
+  /** 看了答案：下一关打开，但这一关不算通过（没有星星） */
+  function unlockNext() {
     if (state.idx < LAST) progress.unlocked = Math.max(progress.unlocked, state.idx + 1);
     save();
   }
@@ -69,6 +73,8 @@
     $('btn-impossible').hidden = !(playing && lv.impossible);
     $('btn-hint').hidden = lv.ch === 'think' || !playing || state.fails < 2;
     $('btn-hint').classList.toggle('hint', !state.hintOn);
+    // 看了提示还是做不出来：可以看答案，不会卡死
+    $('btn-solution').hidden = !(playing && lv.ch !== 'think' && state.hintOn && state.fails >= 3);
     $('btn-restart').hidden = !game || lv.ch === 'think' && state.revealed;
     $('card-ctrl').hidden = state.review || !(lv.ch === 'read' || lv.ch === 'think');
     $('btn-got').hidden = lv.ch !== 'read';
@@ -130,7 +136,7 @@
   }
   function paintStatus() {
     var el = $('status');
-    if (state.review || !state.status) { el.textContent = state.hintOn && state.lv.hint && !state.review ? t(state.lv.hint) : ''; el.className = 'status info'; return; }
+    if (state.review && !state.revealed || !state.status) { el.textContent = state.hintOn && state.lv.hint && !state.review ? t(state.lv.hint) : ''; el.className = 'status info'; return; }
     el.textContent = t(state.status.key, state.status.vars);
     el.className = 'status ' + state.status.kind;
   }
@@ -228,6 +234,17 @@
     render();
     if (state.idx === LAST) { MG.sound.play('win'); MG.confetti('star'); }
   }
+  /** 游戏关看答案：把一个答案摆上去，提示和解释都打开 */
+  function showSolution() {
+    var lv = state.lv;
+    if (state.done || state.revealed) return;
+    state.revealed = true; state.review = true; state.hintOn = true;
+    if (lv.example) state.digits = D.toDigits(lv.example);
+    state.status = { key: 'psolShown', kind: 'info' };
+    unlockNext();
+    MG.sound.play('hint');
+    render();
+  }
   function lookAgain() {
     $('dlg-win').close();
     state.review = true; state.hintOn = true; state.status = null;
@@ -271,6 +288,7 @@
     $('btn-check').addEventListener('click', check);
     $('btn-impossible').addEventListener('click', pressImpossible);
     $('btn-hint').addEventListener('click', useHint);
+    $('btn-solution').addEventListener('click', showSolution);
     $('btn-restart').addEventListener('click', function () { MG.sound.play('untap'); startLevel(state.idx); });
     $('btn-rules').addEventListener('click', openRules);
     $('btn-levels').addEventListener('click', openLevels);

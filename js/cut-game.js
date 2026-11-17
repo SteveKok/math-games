@@ -63,6 +63,8 @@
     $('btn-undo').disabled = !state.lines.length || state.done;
     $('btn-hint').hidden = lv.ch === 'think' || state.done || !showHintButton();
     $('btn-hint').classList.toggle('hint', !state.hintOn);
+    // 看了提示还是做不出来（提示之后又错了）：可以看答案，不会卡死
+    $('btn-solution').hidden = lv.ch === 'think' || state.done || state.review || !(state.hintOn && state.fails + state.misses > state.hintAt);
     $('card-ctrl').hidden = !(lv.ch === 'read' || lv.ch === 'think');
     $('btn-got').hidden = lv.ch !== 'read';
     $('btn-thint').hidden = $('btn-reveal').hidden = lv.ch !== 'think';
@@ -79,6 +81,21 @@
   }
 
   /* ---------- 回去看看：只看不答，所有提示和解释都摊开 ---------- */
+  /** 看了提示还是不会：把切法画出来，提示和解释都打开；下一关打开，但这一关不算通过（没有星星） */
+  function showSolution() {
+    var lv = state.lv;
+    if (state.done || state.review) return;
+    if (C.isEdge(lv)) state.lines = lv.solution.map(function (s) { return C.lineThrough(s[0], s[1]); });
+    else if (lv.ch === 'pin') state.line = C.lineThrough(lv.pins[0], lv.center);
+    else state.line = C.lineThrough([lv.center[0] - 10, lv.center[1] - 10], [lv.center[0] + 10, lv.center[1] + 10]);
+    state.done = true; state.revealed = true; state.review = true; state.hintOn = true; state.sel = -1; state.status = null;
+    state.solShown = 'psolShown';
+    if (state.idx < LAST) progress.unlocked = Math.max(progress.unlocked, state.idx + 1);
+    save();
+    MG.sound.play('hint');
+    render();
+    root.scrollTo(0, 0);
+  }
   function lookAgain() {
     $('dlg-win').close();
     state.review = true; state.hintOn = true; state.sel = -1; state.status = null;
@@ -170,7 +187,8 @@
   }
   function paintStatus() {
     var lv = state.lv, el = $('status'), line = activeLine(), kind = '', text;
-    if (state.review) { text = line ? splitText(line) : ''; }
+    if (state.review && state.solShown) { text = t(state.solShown); kind = 'info'; }
+    else if (state.review) { text = line ? splitText(line) : ''; }
     else if (state.status) { text = t(state.status.key); kind = state.status.kind; }
     else if (state.sel >= 0) text = t('cpicked');
     else if (line) text = splitText(line);
@@ -307,6 +325,7 @@
       '<path d="M50 6 V22" stroke="#e63946" stroke-width="4" stroke-linecap="round"/><circle cx="50" cy="6" r="3" fill="#ffb627"/></svg>';
   }
   function useHint() {
+    if (!state.hintOn) state.hintAt = state.fails + state.misses;
     state.hintOn = true;
     MG.sound.play('hint');
     state.status = { key: state.lv.hint, kind: 'info' };
@@ -371,6 +390,7 @@
     });
     $('btn-restart').addEventListener('click', function () { MG.sound.play('untap'); startLevel(state.idx); });
     $('btn-hint').addEventListener('click', useHint);
+    $('btn-solution').addEventListener('click', showSolution);
     $('btn-rules').addEventListener('click', openRules);
     $('btn-levels').addEventListener('click', openLevels);
     $('btn-got').addEventListener('click', function () { complete(); MG.sound.play('tap'); startLevel(state.idx + 1); });

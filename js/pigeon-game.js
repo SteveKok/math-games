@@ -80,6 +80,8 @@
     $('btn-hint').hidden = state.fails < 2 || state.done || !isGame(lv);
     $('btn-hint').classList.toggle('hint', state.fails >= 2 && !state.hintOn);
     $('btn-impossible').classList.toggle('hint', !!state.glowNope);
+    // 看了提示还是做不出来：可以看答案，不会卡死
+    $('btn-solution').hidden = !(isGame(lv) && !state.done && !state.review && state.hintOn && state.fails >= 3);
     if (lv.ch === 'nest') renderNest();
     else if (lv.ch === 'distinct') renderDistinct();
     else if (lv.ch === 'least') renderLeast();
@@ -113,13 +115,14 @@
     $('rv-next').hidden = state.idx === LAST;
     if (!on) { $('reveal').hidden = true; $('reveal').innerHTML = ''; return; }
     ['least-ctrl', 'card-ctrl'].forEach(function (id) { $(id).hidden = true; });
-    $('btn-hint').hidden = $('btn-restart').hidden = $('btn-impossible').hidden = true;
+    $('btn-hint').hidden = $('btn-restart').hidden = $('btn-impossible').hidden = $('btn-solution').hidden = true;
     var h = '', hint = reviewHint();
     if (hint) h += '<p class="reveal hint-box"><b>' + t('pshowHint') + '</b>' + hint + '</p>';
     if (lv.tip) h += '<p class="reveal answer-box"><b>' + t('pexplain') + '</b>' + t(lv.tip, nouns()) + '</p>';
     $('reveal').innerHTML = h;
     $('reveal').hidden = !h;
-    $('status').textContent = '';
+    $('status').textContent = state.solShown ? t(state.solShown) : '';
+    $('status').className = 'status info';
   }
 
   function setStatus(key, vars, kind) { state.status = { key: key, vars: vars, kind: kind || '' }; }
@@ -420,6 +423,25 @@
     render();
   }
 
+  /** 游戏关看答案：把一个答案摆上去（做不到的关就说做不到），提示和解释都打开；下一关打开，但不算通过 */
+  function showSolution() {
+    var lv = state.lv;
+    if (state.done || state.review) return;
+    var can = P.levelPossible(lv);
+    if (lv.ch === 'nest' && can) {
+      state.counts = new Array(lv.boxes).fill(0);
+      for (var i = 0; i < lv.items; i++) state.counts[i % lv.boxes]++;
+    }
+    if (lv.ch === 'distinct' && can) state.amounts = P.distinctExample(lv.kids, lv.sweets);
+    if (lv.ch === 'least') state.n = P.leastKids(lv.sweets);
+    state.done = true; state.review = true; state.glow = -1; state.glowNope = false;
+    state.solShown = can ? 'psolShown' : 'psolNope';
+    if (state.idx < LAST) progress.unlocked = Math.max(progress.unlocked, state.idx + 1);
+    save();
+    MG.sound.play('hint');
+    render();
+    root.scrollTo(0, 0);
+  }
   function complete() {
     progress.cleared[state.idx] = true;
     if (state.idx < LAST) progress.unlocked = Math.max(progress.unlocked, state.idx + 1);
@@ -485,6 +507,7 @@
     });
     $('btn-impossible').addEventListener('click', pressImpossible);
     $('btn-hint').addEventListener('click', useHint);
+    $('btn-solution').addEventListener('click', showSolution);
     $('btn-restart').addEventListener('click', function () { MG.sound.play('untap'); startLevel(state.idx); });
     $('btn-rules').addEventListener('click', openRules);
     $('btn-levels').addEventListener('click', openLevels);

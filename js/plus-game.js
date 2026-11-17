@@ -86,6 +86,8 @@
     $('btn-impossible').hidden = !(playing && (state.idx >= 2));
     $('btn-hint').hidden = think || !playing || state.fails < 2;
     $('btn-hint').classList.toggle('hint', !state.hintOn);
+    // 看了提示还是做不出来：可以看答案，不会卡死
+    $('btn-solution').hidden = !(playing && !think && state.hintOn && state.fails >= 3);
     $('btn-restart').hidden = !game || (think && state.revealed);
     $('card-ctrl').hidden = state.review || !(lv.ch === 'read' || think);
     $('btn-got').hidden = lv.ch !== 'read';
@@ -140,7 +142,7 @@
   }
   function paintStatus() {
     var el = $('status');
-    if (state.review) { el.textContent = ''; return; }
+    if (state.review) { el.textContent = state.solShown ? t(state.solShown) : ''; el.className = 'status info'; return; }
     if (state.status) { el.textContent = t(state.status.key, state.status.vars); el.className = 'status ' + state.status.kind; return; }
     if (state.hintOn && state.lv.hint) { el.textContent = t(state.lv.hint); el.className = 'status info'; return; }
     el.className = 'status soft';
@@ -241,6 +243,27 @@
     render();
     if (state.idx === LAST) { MG.sound.play('win'); MG.confetti('star'); }
   }
+  /** 游戏关看答案：把一个答案摆上去；返回 false 表示这一关做不到 */
+  function solve() {
+    var lv = state.lv, sol = Q.levelPossible(lv) ? Q.solution(lv.n, lv.s, lv.goal) : null;
+    if (sol) {
+      if (lv.mode === 'row') state.gaps = gapsFromCounts(lv.n, sol[0], sol[1], sol[2]);
+      else state.cnt = [0, 0, sol[0], sol[1], sol[2]];
+    }
+    return !!sol;
+  }
+  /** 看了提示还是不会：摆出答案，提示和解释都打开；下一关打开，但这一关不算通过（没有星星） */
+  function showSolution() {
+    if (state.done || state.revealed) return;
+    var can = solve();
+    state.revealed = true; state.review = true; state.hintOn = true; state.status = null;
+    state.solShown = can ? 'psolShown' : 'psolNope';
+    if (state.idx < LAST) progress.unlocked = Math.max(progress.unlocked, state.idx + 1);
+    save();
+    MG.sound.play('hint');
+    render();
+    root.scrollTo(0, 0);
+  }
   function lookAgain() {
     $('dlg-win').close();
     state.review = true; state.hintOn = true; state.status = null;
@@ -287,6 +310,7 @@
     $('btn-check').addEventListener('click', check);
     $('btn-impossible').addEventListener('click', pressImpossible);
     $('btn-hint').addEventListener('click', useHint);
+    $('btn-solution').addEventListener('click', showSolution);
     $('btn-restart').addEventListener('click', function () { MG.sound.play('untap'); startLevel(state.idx); });
     $('btn-rules').addEventListener('click', openRules);
     $('btn-levels').addEventListener('click', openLevels);
