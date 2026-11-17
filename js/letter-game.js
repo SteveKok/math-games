@@ -20,6 +20,9 @@
   }
 
   var state = {};
+  var CULTURE = L.LEVELS.findIndex(function (l) { return l.ch === 'culture'; });
+  /** 文化课是后来加的一关，一直开着；其他关按顺序解锁 */
+  function isOpen(i) { return i <= progress.unlocked || i === CULTURE; }
   function numInChapter(idx) {
     var ch = L.chapterOf(L.LEVELS[idx]), n = 0;
     for (var i = 0; i <= idx; i++) if (L.chapterOf(L.LEVELS[i]) === ch) n++;
@@ -40,7 +43,8 @@
 
   /* ---------- 开始一关 ---------- */
   function startLevel(idx) {
-    idx = Math.max(0, Math.min(idx, progress.unlocked, LAST));
+    idx = Math.max(0, Math.min(idx, LAST));
+    if (!isOpen(idx)) idx = Math.min(progress.unlocked, LAST);
     var lv = L.LEVELS[idx];
     state = { idx: idx, lv: lv, day: 0, glasses: false, val: 1,
       fails: 0, hintOn: false, done: false, revealed: false, review: false, status: null };
@@ -297,7 +301,7 @@
       L.LEVELS.forEach(function (lv, i) {
         if (L.chapterOf(lv) !== ch.id) return;
         var cls = 'lv-btn' + (progress.cleared[i] ? ' done' : '') + (i === state.idx ? ' current' : '');
-        h += '<button class="' + cls + '" data-lv="' + i + '"' + (i > progress.unlocked ? ' disabled' : '') + ' aria-label="' + t('level', { n: i + 1 }) + '">' +
+        h += '<button class="' + cls + '" data-lv="' + i + '"' + (isOpen(i) ? '' : ' disabled') + ' aria-label="' + t('level', { n: i + 1 }) + '">' +
           (lv.olympiad ? MG.ICONS.trophy : lv.ch === 'read' ? MG.ICONS.book : lv.ch === 'think' ? numInChapter(i) : (i + 1)) +
           (progress.cleared[i] ? '<small>★</small>' : '') + '</button>';
       });
@@ -344,7 +348,8 @@
       b.addEventListener('click', function () { b.closest('dialog').close(); });
     });
     root.addEventListener('mg:lang', function () { render(); });
-    startLevel(MG.prefs.get('letterLevel', 0));
+    // 首页「天干地支」的入口：letter.html#culture 直接进文化课
+    startLevel(root.location.hash === '#culture' ? CULTURE : MG.prefs.get('letterLevel', 0));
   }
 
   MG.letterDebug = { start: startLevel, state: function () { return state; }, progress: function () { return progress; } };
