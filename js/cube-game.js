@@ -8,7 +8,7 @@
   var $ = function (id) { return document.getElementById(id); };
   var LAST = C.LEVELS.length - 1;
   var FACE_CSS = ['rotateX(90deg)', 'rotateX(-90deg)', '', 'rotateY(180deg)', 'rotateY(-90deg)', 'rotateY(90deg)'];   // U D F B L R
-  var PAL2 = ['#ffffff', '#2fb67c'], PAL3 = ['#ff5d73', '#2fb67c', '#3a86ff'];
+  var PAL2 = ['#ffffff', '#2fb67c'];   // 没涂、绿色
 
   /* ---------- 进度 ---------- */
   var KEY = 'mg.cube.v1';
@@ -28,7 +28,7 @@
     return n;
   }
   function locked() { return state.done || state.revealed || state.review; }
-  function palette(lv) { return (lv.colors || 2) === 3 ? PAL3 : PAL2; }
+  function palette() { return PAL2; }
 
   /* ---------- 朝向（3×3 旋转矩阵） ---------- */
   function mul(a, b) {
@@ -63,7 +63,7 @@
   function startLevel(idx) {
     idx = Math.max(0, Math.min(idx, progress.unlocked, LAST));
     var lv = C.LEVELS[idx];
-    state = { idx: idx, lv: lv, colors: [0, 0, 0, 0, 0, 0], base: identity(), orient: VIEW, found: [], flash: -1, count: 1,
+    state = { idx: idx, lv: lv, colors: [0, 0, 0, 0, 0, 0], base: identity(), orient: VIEW, found: [], flash: -1,
       fails: 0, hintOn: false, done: false, revealed: false, review: false, status: null };
     MG.prefs.set('cubeLevel', idx);
     render();
@@ -94,9 +94,7 @@
     $('btn-rules').hidden = lv.ch !== 'paint';
     var playing = game && !locked();
     $('game-ctrl').hidden = !game || state.review;
-    $('btn-collect').hidden = !playing || lv.askCount;
-    $('btn-done').hidden = !playing || lv.askCount;
-    $('count-ctrl').hidden = !playing || !lv.askCount;
+    $('btn-collect').hidden = $('btn-done').hidden = !playing;
     $('btn-hint').hidden = think || !playing || state.fails < 2;
     $('btn-hint').classList.toggle('hint', !state.hintOn);
     $('btn-restart').hidden = !game || (think && state.revealed);
@@ -112,7 +110,6 @@
     if (!$('scene')) buildBoard();
     paintCube();
     paintCollection();
-    if (lv.askCount) { $('n-val').textContent = state.count; $('btn-answer').lastChild.textContent = t('cbcountAsk', { n: state.count }); }
     renderReveal();
     paintStatus();
   }
@@ -160,8 +157,6 @@
   }
   function paintCollection() {
     var lv = state.lv, pal = palette(lv);
-    $('collection').hidden = !!lv.askCount;
-    if (lv.askCount) return;
     $('collection').innerHTML = '<h3>' + t('cbcollection') + ' · ' + state.found.length + '</h3><div class="nets">' +
       state.found.map(function (c, i) { return '<div class="net-item' + (i === state.flash ? ' flash' : '') + '"><small>' + (i + 1) + '</small>' + netHtml(c, pal) + '</div>'; }).join('') + '</div>';
   }
@@ -171,7 +166,7 @@
     if (state.status) { el.textContent = t(state.status.key, state.status.vars); el.className = 'status ' + state.status.kind; return; }
     if (state.hintOn && state.lv.hint) { el.textContent = t(state.lv.hint); el.className = 'status info'; return; }
     el.className = 'status soft';
-    el.textContent = t((state.lv.colors || 2) === 3 ? 'cbtap3' : 'cbtap');
+    el.textContent = t('cbtap');
   }
   function renderReveal() {
     var lv = state.lv, h = '';
@@ -211,8 +206,7 @@
   }
   function tapFace(f) {
     if (locked()) return;
-    var n = (state.lv.colors || 2);
-    state.colors[f] = (state.colors[f] + 1) % n;
+    state.colors[f] = 1 - state.colors[f];
     state.status = null; state.flash = -1;
     MG.sound.play(state.colors[f] ? 'tap' : 'untap');
     render();
@@ -241,11 +235,6 @@
     if (state.found.length === C.classes(state.lv).length) return win();
     fail('cbmissing');
   }
-  function answerCount() {
-    if (locked()) return;
-    if (state.count === C.classes(state.lv).length) return win();
-    fail('cbnoCount', { n: state.count });
-  }
   function fail(key, vars) {
     state.fails++;
     state.status = { key: key, vars: vars, kind: 'warn' };
@@ -261,7 +250,7 @@
     render();
     var lv = state.lv, pal = palette(lv);
     $('win-face').innerHTML = state.found.length ? '<div class="nets win-nets">' + state.found.map(function (c) { return netHtml(c, pal, 'small'); }).join('') + '</div>'
-      : '<div class="win-plus"><b>' + state.count + '</b></div>';
+      : '';
     $('win-tip').textContent = (lv.tip ? t(lv.tip) : t(lv.key + 'A')) + (state.idx === LAST ? ' ' + t('cballClear') : '');
     $('win-next').hidden = state.idx === LAST;
     setTimeout(function () { $('dlg-win').showModal(); }, MG.reducedMotion() ? 0 : 450);
@@ -271,8 +260,7 @@
     var lv = state.lv;
     if (state.revealed) return;
     state.revealed = true; state.hintOn = true; state.status = null;
-    if (lv.askCount) state.count = C.classes(lv).length;
-    else state.found = C.classes(lv).map(function (c) { return c.slice(); });
+    state.found = C.classes(lv).map(function (c) { return c.slice(); });
     complete();
     MG.sound.play('hint');
     render();
@@ -358,11 +346,6 @@
     });
     $('btn-collect').addEventListener('click', collect);
     $('btn-done').addEventListener('click', claimDone);
-    $('btn-m1').addEventListener('click', function () { if (!locked()) { state.count = Math.max(1, state.count - 1); render(); } });
-    $('btn-p1').addEventListener('click', function () { if (!locked()) { state.count++; render(); } });
-    $('btn-m10').addEventListener('click', function () { if (!locked()) { state.count = Math.max(1, state.count - 10); render(); } });
-    $('btn-p10').addEventListener('click', function () { if (!locked()) { state.count += 10; render(); } });
-    $('btn-answer').addEventListener('click', answerCount);
     $('btn-hint').addEventListener('click', useHint);
     $('btn-restart').addEventListener('click', function () { MG.sound.play('untap'); startLevel(state.idx); });
     $('btn-rules').addEventListener('click', openRules);

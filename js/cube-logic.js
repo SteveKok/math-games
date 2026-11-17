@@ -63,7 +63,6 @@
   }
 
   /* ---------- 关卡 ---------- */
-  // collect：孩子一个个涂出来收集；answer：只问数目（太多了，不适合一个个收集）
   var LEVELS = [
     { ch: 'paint', k: 1, tip: 'cbtip1', hint: 'cbhint1' },
     { ch: 'paint', k: 2, tip: 'cbtip2', hint: 'cbhint2' },
@@ -71,8 +70,7 @@
     { ch: 'paint', k: 'any', olympiad: true, tip: 'cbtip4', hint: 'cbhint4' },
     { ch: 'read', key: 'cbread' },
     { ch: 'think', key: 'cbex1', k: 4 },
-    { ch: 'think', key: 'cbex2', k: 'all' },
-    { ch: 'think', key: 'cbex3', k: 'all', colors: 3, askCount: true }
+    { ch: 'think', key: 'cbex2', k: 'all' }
   ];
   var CHAPTERS = [
     { id: 'paint', nameKey: 'cbchPaint' },

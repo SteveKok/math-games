@@ -74,14 +74,14 @@ test('OMK 2018 Muda A5：至少涂一面，一共 9 种（两种做法一致）'
   assert.strictEqual(countOrbits(2, function (c) { return painted(c) >= 1; }), 9);
 });
 
-test('想一想：恰好 4 面 2 种；两色全涂 10 种；三色全涂 57 种', function () {
+test('想一想：恰好 4 面 2 种；绿白两色全涂 10 种', function () {
   var th = C.LEVELS.filter(function (l) { return l.ch === 'think'; });
-  assert.deepStrictEqual(th.map(function (l) { return C.classes(l).length; }), [2, 10, 57]);
-  assert.strictEqual(countOrbits(3, function () { return true; }), 57);
+  assert.deepStrictEqual(th.map(function (l) { return C.classes(l).length; }), [2, 10]);
+  assert.strictEqual(countOrbits(2, function () { return true; }), 10);
 });
 
-test('伯恩赛德引理：「每种转法下不变的涂法个数」的平均 = 种数（两色 10、三色 57）', function () {
-  [2, 3].forEach(function (nc) {
+test('伯恩赛德引理：「每种转法下不变的涂法个数」的平均 = 种数（两色：240 ÷ 24 = 10）', function () {
+  [2].forEach(function (nc) {
     var total = 0;
     C.ROTATIONS.forEach(function (r) {
       for (var code = 0; code < Math.pow(nc, 6); code++) {
@@ -90,7 +90,8 @@ test('伯恩赛德引理：「每种转法下不变的涂法个数」的平均 =
         if (C.apply(r, c).join() === c.join()) total++;
       }
     });
-    assert.strictEqual(total / 24, nc === 2 ? 10 : 57);
+    assert.strictEqual(total, 240);
+    assert.strictEqual(total / 24, 10);
   });
 });
 
