@@ -210,8 +210,12 @@
           '<circle cx="' + q[0] + '" cy="' + q[1] + '" r="1.8" fill="#8338ec"/><circle cx="' + o[0] + '" cy="' + o[1] + '" r="1.8" fill="#8338ec"/>';
       }).join('') +
       '<circle cx="50" cy="50" r="2.2" fill="#fff" stroke="#1d2433" stroke-width=".8"/></svg>';
-    var h = '<div class="lesson"><figure class="portrait">' + svg + '<figcaption>' + t('cpairs') + '</figcaption></figure>' +
-      paras.map(function (x) { return '<p class="lesson-text">' + x + '</p>'; }).join('') + '</div>';
+    var para = function (x) { return '<p class="lesson-text">' + x + '</p>'; };
+    // 先讲提出和证明定理的两位数学家（配画像），再讲 B1 怎样用中心对称把这条线画出来
+    var h = '<div class="lesson"><div class="portrait-row">' + MG.portrait('steinhaus') + MG.portrait('banach') + '</div>' +
+      paras.slice(0, 2).map(para).join('') +
+      '<figure class="portrait">' + svg + '<figcaption>' + t('cpairs') + '</figcaption></figure>' +
+      paras.slice(2).map(para).join('') + '</div>';
     $('board').className = 'pboard read-board';
     $('board').innerHTML = h;
     $('reveal').hidden = true;

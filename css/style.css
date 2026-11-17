@@ -289,3 +289,7 @@ dialog .face svg { width: 100%; height: 100%; }
 .reveal-wrap { display: flex; flex-direction: column; gap: 8px; }
 .read-art { width: 220px; max-width: 70vw; height: auto; }
 .card .art #cut-art svg, #cut-art svg { width: 120px; height: 100px; }
+.portrait-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.portrait-row .portrait svg { width: 100%; max-width: 160px; }
+.portrait figcaption b { display: block; color: var(--ink); }
+.portrait figcaption span { font-weight: 600; }
