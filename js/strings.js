@@ -370,7 +370,17 @@ window.MG.STRINGS = {
     ltex2Q: '有 10 个字母，替换规则由你自己设计。最多能让它们过几天才第一次回到原样？',
     ltex2H: '把 10 拆成几个圈的长度，比如 5 + 5、4 + 6、2 + 3 + 5……哪种拆法的最小公倍数最大？',
     ltex2A: '30 天：拆成 2 + 3 + 5，最小公倍数是 2 × 3 × 5 = 30。',
-    ltallClear: '全部完成！你学会了用最小公倍数算「一起回来」。'
+    ltallClear: '全部完成！你学会了用最小公倍数算「一起回来」。',
+    ltchCulture: '文化课：天干地支',
+    ltgzAsk: '华人传统用天干地支纪年：天干 10 个，地支 12 个，每过一年各往前走一格。从甲子年开始，要过几年才又是甲子年？按「下一年」试试！',
+    ltgzStems: '天干（10 个）', ltgzBranches: '地支（12 个）',
+    ltgzYearLabel: '{y} 年 · {gz}年 · {animal}年',
+    ltgzPassed: '过了 {n} 年',
+    ltgzNext: '下一年', ltgzJump: '跳 10 年', ltgzBack: '又是甲子年了！',
+    ltgzNotYet: '还不是甲子年哦',
+    ltgzAnimals: '鼠,牛,虎,兔,龙,蛇,马,羊,猴,鸡,狗,猪',
+    ltgzHint: '天干每 10 年回到「甲」，地支每 12 年回到「子」。要两个同时回来……',
+    ltgzTip: '10 和 12 的最小公倍数是 60，所以一个轮回（一甲子）是 60 年，不是 10 × 12 = 120 年！看看牌子上的号码：单数的天干只会碰到单数的地支，双数只会碰到双数，所以 120 种配法里只出现一半。2026 年是丙午马年。'
   },
 
   en: {
@@ -736,7 +746,17 @@ window.MG.STRINGS = {
     ltex2Q: 'You have 10 letters and design the rule yourself. What is the longest you can make them wait before they’re first back in order?',
     ltex2H: 'Split 10 into loop lengths, e.g. 5 + 5, 4 + 6, 2 + 3 + 5… Which split has the largest lowest common multiple?',
     ltex2A: '30 days: split it as 2 + 3 + 5, whose lowest common multiple is 2 × 3 × 5 = 30.',
-    ltallClear: 'All done! You’ve learned to use the lowest common multiple for things that come back together.'
+    ltallClear: 'All done! You’ve learned to use the lowest common multiple for things that come back together.',
+    ltchCulture: 'Culture corner: stems and branches',
+    ltgzAsk: 'The traditional Chinese calendar names years with 10 heavenly stems and 12 earthly branches; each year both move on one place. Starting from a Jiǎ-Zǐ (甲子) year, how many years until the next Jiǎ-Zǐ year? Press “Next year” to find out!',
+    ltgzStems: 'Heavenly stems (10)', ltgzBranches: 'Earthly branches (12)',
+    ltgzYearLabel: '{y} · {gz} ({py}) · Year of the {animal}',
+    ltgzPassed: '{n} years later',
+    ltgzNext: 'Next year', ltgzJump: 'Jump 10 years', ltgzBack: 'Jiǎ-Zǐ again!',
+    ltgzNotYet: 'It isn’t a Jiǎ-Zǐ year yet',
+    ltgzAnimals: 'Rat,Ox,Tiger,Rabbit,Dragon,Snake,Horse,Goat,Monkey,Rooster,Dog,Pig',
+    ltgzHint: 'The stems are back at 甲 every 10 years, the branches back at 子 every 12 years. Both at once…',
+    ltgzTip: 'The lowest common multiple of 10 and 12 is 60, so one full cycle is 60 years, not 10 × 12 = 120! Look at the card numbers: odd stems only ever meet odd branches and even meet even, so only half of the 120 pairings ever happen. 2026 is 丙午 (Bǐng-Wǔ), a Year of the Horse.'
   },
 
   ms: {
@@ -1102,6 +1122,16 @@ window.MG.STRINGS = {
     ltex2Q: 'Kamu ada 10 huruf dan mereka bentuk peraturan sendiri. Paling lama berapa hari kamu boleh membuat huruf menunggu sebelum pertama kali kembali?',
     ltex2H: 'Pecahkan 10 kepada panjang gelung, contohnya 5 + 5, 4 + 6, 2 + 3 + 5… Pecahan mana yang gandaan sepunya terkecilnya paling besar?',
     ltex2A: '30 hari: pecahkan kepada 2 + 3 + 5, gandaan sepunya terkecilnya 2 × 3 × 5 = 30.',
-    ltallClear: 'Semua selesai! Kamu sudah belajar menggunakan gandaan sepunya terkecil untuk benda yang kembali bersama.'
+    ltallClear: 'Semua selesai! Kamu sudah belajar menggunakan gandaan sepunya terkecil untuk benda yang kembali bersama.',
+    ltchCulture: 'Sudut budaya: batang dan cabang',
+    ltgzAsk: 'Kalendar tradisional Cina menamakan tahun dengan 10 batang langit dan 12 cabang bumi; setiap tahun kedua-duanya beralih satu tempat. Bermula dari tahun Jiǎ-Zǐ (甲子), berapa tahun lagi sehingga tahun Jiǎ-Zǐ seterusnya? Tekan “Tahun depan” untuk mengetahuinya!',
+    ltgzStems: 'Batang langit (10)', ltgzBranches: 'Cabang bumi (12)',
+    ltgzYearLabel: '{y} · {gz} ({py}) · Tahun {animal}',
+    ltgzPassed: '{n} tahun kemudian',
+    ltgzNext: 'Tahun depan', ltgzJump: 'Lompat 10 tahun', ltgzBack: 'Jiǎ-Zǐ lagi!',
+    ltgzNotYet: 'Belum tahun Jiǎ-Zǐ',
+    ltgzAnimals: 'Tikus,Lembu,Harimau,Arnab,Naga,Ular,Kuda,Kambing,Monyet,Ayam,Anjing,Babi',
+    ltgzHint: 'Batang kembali ke 甲 setiap 10 tahun, cabang kembali ke 子 setiap 12 tahun. Kedua-duanya serentak…',
+    ltgzTip: 'Gandaan sepunya terkecil bagi 10 dan 12 ialah 60, jadi satu kitaran penuh ialah 60 tahun, bukan 10 × 12 = 120! Lihat nombor pada kad: batang ganjil hanya bertemu cabang ganjil dan genap bertemu genap, jadi hanya separuh daripada 120 pasangan berlaku. Tahun 2026 ialah 丙午 (Bǐng-Wǔ), Tahun Kuda.'
   }
 };

@@ -69,21 +69,37 @@
     { ch: 'play', mode: 'predict', olympiad: true, letters: 'ABCDEFGHIJ', images: 'GIABJDCHFE', glasses: true, august: true, tip: 'lttip5', hint: 'lthint5' },
     { ch: 'read', key: 'ltread' },
     { ch: 'think', key: 'ltex1', mode: 'predict', letters: 'ABCDEFGHIJKL', images: 'BCAEFGDIJKLH', glasses: true },
-    { ch: 'think', key: 'ltex2', mode: 'number', answer: 30 }
+    { ch: 'think', key: 'ltex2', mode: 'number', answer: 30 },
+    // 文化课：天干地支，从 1984 甲子年开始，一年走一格
+    { ch: 'culture', mode: 'ganzhi', start: 1984, tip: 'ltgzTip', hint: 'ltgzHint' }
   ];
+
+  /* ---------- 天干地支 ---------- */
+  var STEMS = '甲乙丙丁戊己庚辛壬癸'.split('');
+  var BRANCHES = '子丑寅卯辰巳午未申酉戌亥'.split('');
+  var STEM_PY = ['jiǎ', 'yǐ', 'bǐng', 'dīng', 'wù', 'jǐ', 'gēng', 'xīn', 'rén', 'guǐ'];
+  var BRANCH_PY = ['zǐ', 'chǒu', 'yín', 'mǎo', 'chén', 'sì', 'wǔ', 'wèi', 'shēn', 'yǒu', 'xū', 'hài'];
+  /** 甲子年之后第 k 年：天干第几个、地支第几个（从 0 数起） */
+  function ganzhi(k) { return { stem: ((k % 10) + 10) % 10, branch: ((k % 12) + 12) % 12 }; }
+  /** 公历年份 → 天干地支（1984 是甲子年） */
+  function ganzhiOfYear(y) { var g = ganzhi(y - 1984); return STEMS[g.stem] + BRANCHES[g.branch]; }
+  /** 一轮（一甲子）有几年 */
+  function ganzhiCycle() { return lcm(STEMS.length, BRANCHES.length); }
   var CHAPTERS = [
     { id: 'play', nameKey: 'ltchPlay' },
     { id: 'oly', nameKey: 'pchOly' },
     { id: 'read', nameKey: 'ltchRead' },
-    { id: 'think', nameKey: 'pchThink' }
+    { id: 'think', nameKey: 'pchThink' },
+    { id: 'culture', nameKey: 'ltchCulture' }
   ];
   function chapterOf(lv) { return lv.olympiad ? 'oly' : lv.ch; }
   var OLYMPIAD = LEVELS.findIndex(function (l) { return l.olympiad; });
-  function answerOf(lv) { return lv.mode === 'number' ? lv.answer : order(lv); }
+  function answerOf(lv) { return lv.mode === 'number' ? lv.answer : lv.mode === 'ganzhi' ? ganzhiCycle() : order(lv); }
 
   return {
     ruleOf: ruleOf, step: step, boardOn: boardOn, cycles: cycles, gcd: gcd, lcm: lcm, order: order,
     simulate: simulate, longestWait: longestWait,
+    STEMS: STEMS, BRANCHES: BRANCHES, STEM_PY: STEM_PY, BRANCH_PY: BRANCH_PY, ganzhi: ganzhi, ganzhiOfYear: ganzhiOfYear, ganzhiCycle: ganzhiCycle,
     LEVELS: LEVELS, CHAPTERS: CHAPTERS, chapterOf: chapterOf, OLYMPIAD: OLYMPIAD, answerOf: answerOf
   };
 });

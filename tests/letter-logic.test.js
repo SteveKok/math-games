@@ -52,7 +52,35 @@ test('想一想 2：10 个字母最多要等 30 天（2 + 3 + 5 = 10，2 × 3 ×
     for (var p = Math.min(left, max); p >= 1; p--) go(left - p, p, L.lcm(m, p));
   })(10, 10, 1);
   assert.strictEqual(best, 30);
-  assert.strictEqual(L.answerOf(L.LEVELS[L.LEVELS.length - 1]), 30);
+  assert.strictEqual(L.answerOf(L.LEVELS.filter(function (l) { return l.key === 'ltex2'; })[0]), 30);
+});
+
+test('天干地支：一年走一格，第 60 年第一次回到甲子（不是 120 年）', function () {
+  assert.strictEqual(L.STEMS.length, 10);
+  assert.strictEqual(L.BRANCHES.length, 12);
+  assert.strictEqual(L.ganzhiCycle(), 60);
+  var first = null;
+  for (var k = 1; k <= 200; k++) { var g = L.ganzhi(k); if (g.stem === 0 && g.branch === 0) { first = k; break; } }
+  assert.strictEqual(first, 60);
+  var last = L.LEVELS[L.LEVELS.length - 1];
+  assert.ok(last.mode === 'ganzhi' && L.answerOf(last) === 60);
+});
+
+test('天干地支：120 种配法里只出现 60 种——单数只配单数、双数只配双数', function () {
+  var seen = {};
+  for (var k = 0; k < 600; k++) {
+    var g = L.ganzhi(k);
+    seen[g.stem + ',' + g.branch] = true;
+    assert.strictEqual(g.stem % 2, g.branch % 2);
+  }
+  assert.strictEqual(Object.keys(seen).length, 60);
+});
+
+test('天干地支：1984 甲子、2024 甲辰（龙）、2026 丙午（马）', function () {
+  assert.strictEqual(L.ganzhiOfYear(1984), '甲子');
+  assert.strictEqual(L.ganzhiOfYear(2024), '甲辰');
+  assert.strictEqual(L.ganzhiOfYear(2026), '丙午');
+  assert.strictEqual(L.ganzhiOfYear(2044), '甲子');
 });
 
 console.log('\n' + passed + ' tests passed');

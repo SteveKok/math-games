@@ -483,3 +483,18 @@ dialog .face .sq-svg { max-width: 110px; }
   .ltile { font-size: 1.15rem; border-width: 2px; }
   .hist-row small { min-width: 4em; font-size: .75rem; }
 }
+
+/* 文化课：天干地支 */
+.gz-year { display: flex; flex-direction: column; align-items: center; gap: 2px; background: #b3261e; color: #ffe9a8; border: 4px solid #8a6414; border-radius: 14px; padding: 10px; text-align: center; }
+.gz-year b { font-size: 1.35rem; }
+.gz-year small { font-weight: 800; color: #fff3c4; }
+.gz-title { margin: 4px 0 0; font-size: 1rem; text-align: center; }
+.gz-row { display: grid; gap: 4px; }
+.gz-row.stems { grid-template-columns: repeat(5, 1fr); }
+.gz-row.branches { grid-template-columns: repeat(6, 1fr); }
+.gz-card { position: relative; display: flex; flex-direction: column; align-items: center; border: 3px solid var(--line); border-radius: 10px; background: #fff; padding: 14px 2px 4px; }
+.gz-card small { position: absolute; top: 2px; left: 4px; font-weight: 900; font-size: .75rem; color: var(--ink-soft); }
+.gz-card b { font-size: 1.5rem; line-height: 1.1; }
+.gz-card i { font-style: normal; font-size: .7rem; font-weight: 700; color: var(--ink-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+.gz-card.cur { background: #ffd23f; box-shadow: 0 0 0 3px #b3261e; }
+.gz-card.cur small { color: #1d2433; }

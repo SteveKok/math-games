@@ -55,12 +55,14 @@
   function ask(lv) {
     if (lv.ch === 'read') return t('ltreadT');
     if (lv.key) return t(lv.key + 'Q');
+    if (lv.mode === 'ganzhi') return t('ltgzAsk');
     return lv.olympiad ? t('ltaskOly') : lv.mode === 'play' ? t('ltaskPlay') : t('ltaskPredict');
   }
   function render() {
     var lv = state.lv, game = lv.ch !== 'read', think = lv.ch === 'think', mode = lv.mode;
     $('level-title').textContent = lv.olympiad ? 'OMK 2017 · Muda A6'
       : lv.ch === 'read' ? t('ltchRead')
+      : lv.ch === 'culture' ? t('ltchCulture')
       : think ? t('pthinkN', { n: numInChapter(state.idx) })
       : t('level', { n: state.idx + 1 });
     $('ask').textContent = ask(lv);
@@ -74,10 +76,14 @@
     var playing = game && !locked();
     $('game-ctrl').hidden = !game || state.review;
     $('btn-next').hidden = !playing || mode === 'number';
-    $('btn-back').hidden = !playing || mode !== 'play';
+    var gz = mode === 'ganzhi';
+    $('btn-back').hidden = !playing || !(mode === 'play' || gz);
+    $('btn-jump').hidden = !playing || !gz;
+    $('btn-next').lastChild.textContent = t(gz ? 'ltgzNext' : 'ltnext');
+    $('btn-back').lastChild.textContent = t(gz ? 'ltgzBack' : 'ltback');
     $('btn-glasses').hidden = !game || !lv.glasses || mode === 'number';
     $('btn-glasses').setAttribute('aria-pressed', String(!!state.glasses));
-    $('count-ctrl').hidden = !playing || mode === 'play';
+    $('count-ctrl').hidden = !playing || mode === 'play' || gz;
     $('btn-hint').hidden = think || !playing || state.fails < 2;
     $('btn-hint').classList.toggle('hint', !state.hintOn);
     $('btn-restart').hidden = !game || (think && state.revealed);
@@ -91,8 +97,8 @@
     $('rv-next').hidden = state.idx === LAST;
     if (lv.ch === 'read') return renderRead();
     $('board').className = 'pboard letter-board';
-    $('board').innerHTML = mode === 'number' ? numberArt() : boardHtml();
-    if (mode !== 'play') {
+    $('board').innerHTML = mode === 'number' ? numberArt() : gz ? ganzhiHtml() : boardHtml();
+    if (mode !== 'play' && !gz) {
       $('n-val').textContent = state.val;
       $('btn-answer').lastChild.textContent = t(mode === 'number' ? 'ltanswerNum' : lv.august ? 'ltanswerAug' : 'ltanswer', { n: state.val });
     }
@@ -122,6 +128,21 @@
       '<div class="today" style="--n:' + letters.length + '">' + today.map(function (c) { return tile(c, loops); }).join('') + '</div></div>' +
       loopsLine + '<div class="history">' + hist + '</div>';   // 先留好位置，按钮不会跳来跳去
   }
+  /** 天干地支：当年是哪一干、哪一支，牌子上标着 1、2、3…… */
+  function ganzhiHtml() {
+    var lv = state.lv, k = state.day, g = L.ganzhi(k), animals = t('ltgzAnimals').split(',');
+    var cap = function (x) { return x.charAt(0).toUpperCase() + x.slice(1); };
+    var label = t('ltgzYearLabel', { y: lv.start + k, gz: L.STEMS[g.stem] + L.BRANCHES[g.branch],
+      py: cap(L.STEM_PY[g.stem]) + '-' + cap(L.BRANCH_PY[g.branch]), animal: animals[g.branch] });
+    function cards(list, cur, sub, cls) {
+      return '<div class="gz-row ' + cls + '">' + list.map(function (c, i) {
+        return '<div class="gz-card' + (i === cur ? ' cur' : '') + '"><small>' + (i + 1) + '</small><b>' + c + '</b><i>' + sub[i] + '</i></div>';
+      }).join('') + '</div>';
+    }
+    return '<div class="gz-year"><b>' + label + '</b><small>' + t('ltgzPassed', { n: k }) + '</small></div>' +
+      '<h3 class="gz-title">' + t('ltgzStems') + '</h3>' + cards(L.STEMS, g.stem, L.STEM_PY, 'stems') +
+      '<h3 class="gz-title">' + t('ltgzBranches') + '</h3>' + cards(L.BRANCHES, g.branch, animals, 'branches');
+  }
   function numberArt() {
     var shown = state.done || state.revealed || state.review;
     var parts = shown ? [2, 3, 5] : [10];
@@ -139,7 +160,7 @@
     if (state.status) { el.textContent = t(state.status.key, state.status.vars); el.className = 'status ' + state.status.kind; return; }
     if (state.hintOn && state.lv.hint) { el.textContent = t(state.lv.hint); el.className = 'status info'; return; }
     el.className = 'status soft';
-    el.textContent = state.lv.mode === 'number' ? '' : t('ltstep');
+    el.textContent = state.lv.mode === 'number' || state.lv.mode === 'ganzhi' ? '' : t('ltstep');
   }
   function renderReveal() {
     var lv = state.lv, h = '';
@@ -198,9 +219,23 @@
   }
   function claimBack() {
     if (locked()) return;
-    var lv = state.lv, home = state.day > 0 && L.boardOn(lv, state.day).join('') === lv.letters;
-    if (home && state.day === L.order(lv)) return win();
+    var lv = state.lv, cycle = L.answerOf(lv), home;
+    if (lv.mode === 'ganzhi') {
+      var g = L.ganzhi(state.day);
+      home = state.day > 0 && g.stem === 0 && g.branch === 0;
+      if (home && state.day === cycle) return win();
+      return fail(home ? 'ltearlier' : 'ltgzNotYet');
+    }
+    home = state.day > 0 && L.boardOn(lv, state.day).join('') === lv.letters;
+    if (home && state.day === cycle) return win();
     fail(home ? 'ltearlier' : 'ltnotYet');
+  }
+  function jumpTen() {
+    if (locked()) return;
+    state.day += 10;
+    state.status = null;
+    MG.sound.play('take');
+    render();
   }
   function answer() {
     if (locked()) return;
@@ -223,7 +258,8 @@
     state.status = null;
     render();
     var lv = state.lv, ans = L.answerOf(lv);
-    $('win-face').innerHTML = '<div class="win-plus"><b>' + (lv.august ? t('ltaug', { d: ans }) : ans) + '</b></div>';
+    $('win-face').innerHTML = '<div class="win-plus"><b>' + (lv.mode === 'ganzhi' ? '甲子' : lv.august ? t('ltaug', { d: ans }) : ans) + '</b>' +
+      (lv.mode === 'ganzhi' ? '<span>' + (lv.start + ans) + '</span>' : '') + '</div>';
     $('win-tip').textContent = (lv.tip ? t(lv.tip) : t(lv.key + 'A')) + (state.idx === LAST ? ' ' + t('ltallClear') : '');
     $('win-next').hidden = state.idx === LAST;
     setTimeout(function () { $('dlg-win').showModal(); }, MG.reducedMotion() ? 0 : 450);
@@ -276,6 +312,7 @@
     MG.setupTopbar();
     $('btn-next').addEventListener('click', nextDay);
     $('btn-back').addEventListener('click', claimBack);
+    $('btn-jump').addEventListener('click', jumpTen);
     $('btn-glasses').addEventListener('click', function () { state.glasses = !state.glasses; MG.sound.play('tap'); render(); });
     [['btn-m10', -10], ['btn-m1', -1], ['btn-p1', 1], ['btn-p10', 10]].forEach(function (p) {
       $(p[0]).addEventListener('click', function () {
