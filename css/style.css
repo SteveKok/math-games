@@ -338,3 +338,38 @@ dialog .face svg { width: 100%; height: 100%; }
   .slabel { min-width: 0; }
 }
 
+
+/* ---------- 自我介绍的数 ---------- */
+.sslots { display: grid; grid-template-columns: repeat(var(--n), minmax(0, 1fr)); gap: 4px; max-width: 520px; margin: 0 auto; width: 100%; }
+.sslot { display: flex; flex-direction: column; align-items: center; gap: 3px; border: 3px solid var(--line); border-radius: 12px; padding: 4px 1px; background: #ffe0e5; transition: background .2s; }
+.sslot.ok { background: #c9f2dc; }
+.sslot.fixed { box-shadow: inset 0 0 0 3px #8a6414; }
+.sidx { font-size: .8rem; font-weight: 900; color: #fff; background: #1d2433; border-radius: 999px; min-width: 1.6em; text-align: center; }
+.sdig { font-size: 2rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.scount { font-size: .95rem; font-weight: 800; color: var(--ink-soft); border-top: 2px dashed #9aa3b5; width: 80%; text-align: center; }
+.sslot.ok .scount { color: #0d6b45; }
+.sslot.bad .scount { color: #a01a33; }
+.sbtn { width: 100%; max-width: 40px; height: 32px; border-radius: 9px; box-shadow: 0 3px 0 var(--line); }
+.sbtn svg { width: 20px; height: 20px; }
+.sbtn-gap { height: 0; }
+.slegend { margin: 0; text-align: center; font-size: .85rem; color: var(--ink-soft); font-weight: 700; }
+.ssum { margin: 0; text-align: center; font-weight: 800; color: #1d5fc9; }
+.part-tabs { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; }
+.self-list { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.self-list .odo { font-size: 1.1rem; }
+.win-nums { display: flex; flex-direction: column; gap: 4px; align-items: center; justify-content: center; height: 100%; }
+.win-nums .odo { font-size: 1.3rem; }
+.rule-art.wide { width: 120px; }
+.rule-art.wide .sslots { gap: 2px; }
+.rule-art.wide .sslot { padding: 1px; border-width: 2px; border-radius: 6px; }
+.rule-art.wide .sdig { font-size: 1rem; }
+.rule-art.wide .sidx, .rule-art.wide .scount { font-size: .6rem; }
+#self-art .sslots.mini { width: 160px; }
+#self-art .sdig { font-size: 1.6rem; }
+@media (max-width: 520px) {
+  .sslots { gap: 2px; }
+  .sslot { border-width: 2px; border-radius: 9px; }
+  .sdig { font-size: 1.6rem; }
+  .sbtn { height: 30px; }
+  .sbtn svg { width: 16px; height: 16px; }
+}
