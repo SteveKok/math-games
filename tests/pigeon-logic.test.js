@@ -86,9 +86,13 @@ test('关卡：每章都有做得到和做不到的关，第三章答案合理',
   ['nest', 'distinct'].forEach(function (ch) {
     var ls = P.LEVELS.filter(function (l) { return l.ch === ch; });
     assert.ok(ls.some(P.levelPossible) && ls.some(function (l) { return !P.levelPossible(l); }), ch);
-    assert.ok(P.levelPossible(ls[0]), ch + ' 第一关要做得到');
   });
-  assert.deepStrictEqual(P.LEVELS.filter(function (l) { return l.ch === 'least'; }).map(function (l) { return P.leastKids(l.sweets); }), [6, 7, 11, 46]);
+  // 「都不一样多」第一关：不用 0 就做不到（1+2+3+4 = 10 > 9），逼孩子发现 0 也算
+  var d1 = P.LEVELS.filter(function (l) { return l.ch === 'distinct'; })[0];
+  var withoutZero = false;
+  compositions(d1.sweets, d1.kids, function (a) { if (allDifferent(a) && a.indexOf(0) < 0) withoutZero = true; });
+  assert.ok(P.levelPossible(d1) && !withoutZero);
+  assert.deepStrictEqual(P.LEVELS.filter(function (l) { return l.ch === 'least'; }).map(function (l) { return P.leastKids(l.sweets); }), [7, 12, 46]);
 });
 
 test('额外题 1：三色袜子，拿 4 只一定成双，3 只不一定', function () {

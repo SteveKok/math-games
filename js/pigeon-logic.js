@@ -68,31 +68,20 @@
 
   /* ---------- 关卡 ---------- */
   var LEVELS = [
-    // 第一章：每个窝最多 1 只，再到最多 2、3 只
-    { ch: 'nest', items: 3, boxes: 3, cap: 1, tip: 'ptip1' },
-    { ch: 'nest', items: 4, boxes: 3, cap: 1, tip: 'ptip2' },
-    { ch: 'nest', items: 5, boxes: 5, cap: 1, tip: 'ptip3' },
-    { ch: 'nest', items: 6, boxes: 5, cap: 1, tip: 'ptip4' },
-    { ch: 'nest', items: 8, boxes: 3, cap: 3, tip: 'ptip5' },
-    { ch: 'nest', items: 9, boxes: 4, cap: 2, tip: 'ptip6' },
+    // 第一章：鸽子回家（放不下就按「做不到！」）
+    { ch: 'nest', items: 4, boxes: 3, cap: 1, tip: 'ptip1' },   // 放不下：抽屉原理本身
+    { ch: 'nest', items: 8, boxes: 4, cap: 2, tip: 'ptip2' },   // 刚好放满
+    { ch: 'nest', items: 10, boxes: 3, cap: 3, tip: 'ptip3' },  // 放不下：每个最多 3 个
     // 第二章：都不一样多（可以分到 0 颗）
-    { ch: 'distinct', kids: 3, sweets: 6, tip: 'ptip7' },
-    { ch: 'distinct', kids: 3, sweets: 3, tip: 'ptip8' },
-    { ch: 'distinct', kids: 3, sweets: 2, tip: 'ptip9' },
-    { ch: 'distinct', kids: 4, sweets: 9, tip: 'ptip10' },
-    { ch: 'distinct', kids: 4, sweets: 5, tip: 'ptip11' },
+    { ch: 'distinct', kids: 4, sweets: 9, tip: 'ptip4' },       // 做得到：要用上 0，剩下的给最后一人
+    { ch: 'distinct', kids: 4, sweets: 5, tip: 'ptip5' },       // 做不到：最少要 6 颗
     // 第三章：最少几个人一定撞
-    { ch: 'least', sweets: 10, tip: 'ptip12' },
-    { ch: 'least', sweets: 20, tip: 'ptip13' },
-    { ch: 'least', sweets: 50, tip: 'ptip14' },
+    { ch: 'least', sweets: 20, tip: 'ptip6' },
+    { ch: 'least', sweets: 60, tip: 'ptip7' },
     // 终章：OMK 2016 Bongsu B3 原题
-    { ch: 'least', sweets: 1000, olympiad: true, tip: 'ptip15' },
-    // 解答：没有游戏的关卡，一页一个重点，配插画
-    { ch: 'read', key: 'sol1', art: 'nest' },
-    { ch: 'read', key: 'sol2', art: 'stair4' },
-    { ch: 'read', key: 'sol3', art: 'n45' },
-    { ch: 'read', key: 'sol4', art: 'n46' },
-    { ch: 'read', key: 'sol5', art: 'general' },
+    { ch: 'least', sweets: 1000, olympiad: true, tip: 'ptip8' },
+    // 鸽巢原理：没有游戏的一页，配数学家画像
+    { ch: 'read', key: 'sol', art: 'dirichlet' },
     // 想一想：三道额外题（答案见 EXTRA，由测试暴力验证）
     { ch: 'think', key: 'ex1', art: 'socks', answer: 4 },
     { ch: 'think', key: 'ex2', art: 'sum11', answer: 6 },

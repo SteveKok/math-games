@@ -8,7 +8,7 @@
   var LAST = P.LEVELS.length - 1;
 
   /* ---------- 进度 ---------- */
-  var KEY = 'mg.pigeon.v1';
+  var KEY = 'mg.pigeon.v2';  // v2：关卡精简后编号变了
   var progress = MG.store.get(KEY, null);
   if (!progress || typeof progress.unlocked !== 'number') progress = { unlocked: 0, cleared: {} };
   function save() { MG.store.set(KEY, progress); }
@@ -53,12 +53,12 @@
   function render() {
     var lv = state.lv, numeric = lv.ch === 'think' && lv.answer;
     $('level-title').textContent = lv.olympiad ? 'OMK 2016 · B3'
-      : lv.ch === 'read' ? t('psolN', { n: numInChapter(state.idx) })
+      : lv.ch === 'read' ? t('pchSol')
       : lv.ch === 'think' ? t('pthinkN', { n: numInChapter(state.idx) })
       : t('level', { n: state.idx + 1 });
     $('ask').textContent = lv.ch === 'nest' ? t('paskNest', nouns({ m: lv.cap }))
       : lv.ch === 'distinct' ? t('paskDistinct', { s: lv.sweets })
-      : lv.ch === 'read' ? t('p' + lv.key + 'T')
+      : lv.ch === 'read' ? t('psolT')
       : lv.ch === 'think' ? t('pthinkAsk')
       : t('paskLeast', { s: lv.sweets });
     $('btn-rules').hidden = !isGame(lv);
@@ -242,8 +242,11 @@
   /* --- 解答与想一想：没有游戏的关卡 --- */
   function renderRead() {
     var lv = state.lv;
-    var h = '<div class="lesson">' + (lv.key === 'sol1' ? '<p class="oly-src-small">' + t('polySource') + '</p>' : '') +
-      '<div class="lesson-art">' + art(lv.art) + '</div><p class="lesson-text">' + t('p' + lv.key + 'B') + '</p></div>';
+    var paras = t('psolB').split('\n');
+    var h = '<div class="lesson">' + art(lv.art) +
+      paras.slice(0, 2).map(function (x) { return '<p class="lesson-text">' + x + '</p>'; }).join('') +
+      staticNests([3, 2, 2], 2) + '<p class="art-formula">⌈7 ÷ 3⌉ = 3</p>' +
+      paras.slice(2).map(function (x) { return '<p class="lesson-text">' + x + '</p>'; }).join('') + '</div>';
     $('board').className = 'pboard read-board';
     $('board').innerHTML = h;
     paintStatus(null);
@@ -282,32 +285,50 @@
     });
     return h + '</div>';
   }
-  function kidsWith(amounts) {
-    var color = 0;
-    return '<div class="kids art-kids">' + amounts.map(function (n, i) {
-      var plate = '';
-      for (var k = 0; k < n; k++) plate += '<span class="psweet">' + MG.sweetSvg(color++) + '</span>';
-      return '<div class="kid">' + MG.kidFace(i) + '<div class="plate">' + plate + '</div><b class="amt">' + n + '</b></div>';
-    }).join('') + '</div>';
-  }
   var SOCK = ['#ff5d73', '#3a86ff', '#13a36b'];
   function sock(c, extra) {
     return '<svg class="sock' + (extra ? ' ' + extra : '') + '" viewBox="0 0 40 50" aria-hidden="true"><path d="M12 3 h16 v24 l6 6 q5 6 -1 12 q-5 4 -11 -1 l-12 -11 q-3 -3 -3 -7 v-20 Z" fill="' + c + '" stroke="#1d2433" stroke-width="2.4" stroke-linejoin="round"/><path d="M12 9 h16" stroke="#fff" stroke-width="3" opacity=".7"/></svg>';
+  }
+  /** 狄利克雷画像（代码绘制的插画）：卷发、鬓角、高领白衬衫配黑领结 */
+  function dirichletSvg() {
+    return '<svg viewBox="0 0 200 240" aria-hidden="true">' +
+      '<defs><clipPath id="pframe"><ellipse cx="100" cy="120" rx="86" ry="108"/></clipPath></defs>' +
+      '<ellipse cx="100" cy="120" rx="94" ry="116" fill="#c99a2e" stroke="#1d2433" stroke-width="3"/>' +
+      '<ellipse cx="100" cy="120" rx="86" ry="108" fill="#dfe6ee" stroke="#8a6414" stroke-width="2"/>' +
+      '<g clip-path="url(#pframe)">' +
+        '<path d="M100 92 C90 70 30 60 26 150 H174 C170 60 110 70 100 92 Z" fill="#cfd8e3" opacity=".6"/>' +
+        // 外套和肩膀
+        '<path d="M14 240 Q18 182 62 170 L100 196 L138 170 Q182 182 186 240 Z" fill="#2b2f3a" stroke="#1d2433" stroke-width="2.5"/>' +
+        '<path d="M62 170 L84 214 L100 196 Z M138 170 L116 214 L100 196 Z" fill="#3b4150" stroke="#1d2433" stroke-width="2"/>' +
+        // 脖子、高领、领结
+        '<path d="M86 138 h28 v30 h-28 Z" fill="#f0c9a5" stroke="#1d2433" stroke-width="2"/>' +
+        '<path d="M70 162 L88 150 L100 176 L112 150 L130 162 L118 186 L100 178 L82 186 Z" fill="#fff" stroke="#1d2433" stroke-width="2.4" stroke-linejoin="round"/>' +
+        '<path d="M86 176 L100 182 L114 176 L114 192 L100 186 L86 192 Z" fill="#14161c" stroke="#1d2433" stroke-width="2" stroke-linejoin="round"/>' +
+        '<circle cx="100" cy="184" r="4" fill="#14161c"/>' +
+        // 脸
+        '<path d="M66 96 C64 136 80 156 100 156 C120 156 136 136 134 96 C134 70 66 70 66 96 Z" fill="#f4d0ad" stroke="#1d2433" stroke-width="2.6"/>' +
+        '<ellipse cx="64" cy="108" rx="6" ry="10" fill="#efc39c" stroke="#1d2433" stroke-width="2"/>' +
+        '<ellipse cx="136" cy="108" rx="6" ry="10" fill="#efc39c" stroke="#1d2433" stroke-width="2"/>' +
+        // 鬓角
+        '<path d="M66 92 C64 112 68 126 74 134 C74 120 72 106 74 94 Z" fill="#3a2a20"/>' +
+        '<path d="M134 92 C136 112 132 126 126 134 C126 120 128 106 126 94 Z" fill="#3a2a20"/>' +
+        // 卷发（侧分、蓬松）
+        '<path d="M60 100 C52 70 66 42 96 38 C130 34 150 56 142 100 C139 90 134 84 126 82 C114 92 94 90 80 84 C71 88 64 94 60 100 Z" fill="#3a2a20" stroke="#1d2433" stroke-width="2.4" stroke-linejoin="round"/>' +
+        '<path d="M70 62 q8 -8 16 0 M92 50 q8 -8 16 0 M114 54 q8 -8 16 0 M82 76 q6 -6 12 0 M118 72 q6 -5 12 2" fill="none" stroke="#5c4433" stroke-width="2.2" stroke-linecap="round"/>' +
+        // 眉、眼、鼻、嘴
+        '<path d="M78 98 q9 -6 18 -1 M104 97 q9 -5 18 1" fill="none" stroke="#3a2a20" stroke-width="3" stroke-linecap="round"/>' +
+        '<ellipse cx="87" cy="108" rx="4.5" ry="3.4" fill="#fff"/><circle cx="87.5" cy="108" r="2.4" fill="#2b3a4a"/>' +
+        '<ellipse cx="113" cy="108" rx="4.5" ry="3.4" fill="#fff"/><circle cx="112.5" cy="108" r="2.4" fill="#2b3a4a"/>' +
+        '<path d="M100 110 C98 120 96 126 100 129 C103 130 106 128 104 126" fill="none" stroke="#b07a55" stroke-width="2.2" stroke-linecap="round"/>' +
+        '<path d="M90 140 q10 5 20 0" fill="none" stroke="#9b5a45" stroke-width="2.6" stroke-linecap="round"/>' +
+        '<ellipse cx="80" cy="128" rx="6" ry="4" fill="#e9a08c" opacity=".35"/><ellipse cx="120" cy="128" rx="6" ry="4" fill="#e9a08c" opacity=".35"/>' +
+      '</g></svg>';
   }
   function tile(n, cls) { return '<span class="ntile' + (cls ? ' ' + cls : '') + '">' + n + '</span>'; }
   function art(name, phase) {
     var i, h = '';
     switch (name) {
-      case 'nest': return staticNests([2, 1, 1], 1);
-      case 'general': return staticNests([3, 2, 2], 2) + '<p class="art-formula">⌈7 ÷ 3⌉ = 3</p>';
-      case 'stair4': return kidsWith([0, 1, 2, 3]) + '<p class="art-formula">0 + 1 + 2 + 3 = 6</p>';
-      case 'n45': {
-        var v = Array.from({ length: 45 }, function (_, j) { return j; }); v[44] = 54;
-        return stairSvg(v, 44) + '<p class="art-formula">0 + 1 + … + 43 + <b class="teal">54</b> = 1000</p>' + compareBars(990, 1000, true);
-      }
-      case 'n46':
-        return stairSvg(Array.from({ length: 46 }, function (_, j) { return j; })) + '<p class="art-formula">0 + 1 + … + 45 = 1035</p>' +
-          compareBars(1035, 1000, false) + '<p class="big-answer">n = 46</p>';
+      case 'dirichlet': return '<figure class="portrait">' + dirichletSvg() + '<figcaption>' + t('pdirichlet') + '</figcaption></figure>';
       case 'socks':
         if (phase === 'q') {
           h = '<div class="drawer">';
@@ -416,8 +437,7 @@
     $('win-face').innerHTML = lv.ch === 'nest' ? skin.item(0) : MG.kidFace(state.idx);
     $('win-tip').textContent = t(lv.tip || ('p' + lv.key + 'A'), nouns()) + (state.idx === LAST ? ' ' + t('pallClear') : '');
     $('win-next').hidden = state.idx === LAST;
-    var next = P.LEVELS[state.idx + 1];
-    $('win-next').lastChild.textContent = next && next.ch === 'read' && lv.olympiad ? t('pseeSolution') : t('nextLevel');
+    $('win-next').lastChild.textContent = t('nextLevel');
     setTimeout(function () { $('dlg-win').showModal(); }, MG.reducedMotion() ? 0 : 450);
   }
 
@@ -445,7 +465,7 @@
         if (P.chapterOf(lv) !== ch.id) return;
         var cls = 'lv-btn' + (progress.cleared[i] ? ' done' : '') + (i === state.idx ? ' current' : '');
         h += '<button class="' + cls + '" data-lv="' + i + '"' + (i > progress.unlocked ? ' disabled' : '') + ' aria-label="' + t('level', { n: i + 1 }) + '">' +
-          (lv.olympiad ? MG.ICONS.trophy : lv.ch === 'read' || lv.ch === 'think' ? numInChapter(i) : (i + 1)) + (progress.cleared[i] ? '<small>★</small>' : '') + '</button>';
+          (lv.olympiad ? MG.ICONS.trophy : lv.ch === 'read' ? MG.ICONS.book : lv.ch === 'think' ? numInChapter(i) : (i + 1)) + (progress.cleared[i] ? '<small>★</small>' : '') + '</button>';
       });
       h += '</div>';
     });
