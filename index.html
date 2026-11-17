@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>思维小游戏 · Think &amp; Play</title>
+  <meta name="description" content="Free, open-source math-thinking games for kids aged 8–12. No accounts, no tracking.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <span style="flex:1"></span>
+    <button class="icon-btn" data-lang-next data-i18n-aria="langNext"></button>
+    <button class="icon-btn toggle" data-sound-toggle data-i18n-aria="sound"></button>
+  </header>
+
+  <main class="hub">
+    <h1 data-i18n="siteTitle">思维小游戏</h1>
+    <p class="sub" data-i18n="siteSub">先玩，先试，自己发现秘诀</p>
+
+    <div class="cards">
+      <a class="card" href="nim.html">
+        <div class="art" id="nim-art"></div>
+        <h2 data-i18n="gameNim">取石子</h2>
+        <p data-i18n="gameNimDesc">轮流拿，拿到最后一个就赢！</p>
+        <span class="tag" data-i18n="play">开始玩</span>
+      </a>
+      <div class="card soon" aria-disabled="true">
+        <div class="art">
+          <svg viewBox="0 0 120 100" style="width:120px;height:100px" aria-hidden="true">
+            <circle cx="35" cy="40" r="20" fill="#ffd23f" stroke="#1d2433" stroke-width="3"/>
+            <circle cx="85" cy="40" r="20" fill="#ff5d73" stroke="#1d2433" stroke-width="3"/>
+            <path d="M27 50q8 6 16 0M77 54q8-6 16 0" fill="none" stroke="#1d2433" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="29" cy="36" r="2.5"/><circle cx="41" cy="36" r="2.5"/><circle cx="79" cy="36" r="2.5"/><circle cx="91" cy="36" r="2.5"/>
+            <text x="60" y="92" text-anchor="middle" font-size="26" font-weight="800" fill="#1d2433">?</text>
+          </svg>
+        </div>
+        <h2 data-i18n="gameLiar">说谎者与诚实者</h2>
+        <span class="tag" data-i18n="comingSoon">快做好了</span>
+      </div>
+      <div class="card soon" aria-disabled="true">
+        <div class="art">
+          <svg viewBox="0 0 120 100" style="width:120px;height:100px" aria-hidden="true">
+            <path d="M20 80 L60 15 L100 80 Z M20 80 L100 80" fill="none" stroke="#1d2433" stroke-width="4" stroke-linejoin="round"/>
+            <circle cx="20" cy="80" r="8" fill="#3a86ff" stroke="#1d2433" stroke-width="3"/>
+            <circle cx="60" cy="15" r="8" fill="#13a36b" stroke="#1d2433" stroke-width="3"/>
+            <circle cx="100" cy="80" r="8" fill="#ff8c1a" stroke="#1d2433" stroke-width="3"/>
+          </svg>
+        </div>
+        <h2 data-i18n="gameGraph">一笔画与地图染色</h2>
+        <span class="tag" data-i18n="comingSoon">快做好了</span>
+      </div>
+    </div>
+
+    <p class="footer" data-i18n="footer">免费 · 开源 · 不收集任何信息</p>
+  </main>
+
+  <script src="js/core.js"></script>
+  <script src="js/strings.js"></script>
+  <script src="js/skins.js"></script>
+  <script>
+    (function () {
+      var art = document.getElementById('nim-art');
+      var seeds = [11, 23, 37, 41, 53];
+      art.innerHTML = seeds.map(function (s, i) {
+        return MG.SKINS[i % 2].draw(s, 'hub' + i);
+      }).join('');
+      MG.setupTopbar();
+    })();
+  </script>
+</body>
+</html>

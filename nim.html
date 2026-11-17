@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>取石子 · Take the Stones</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="icon-btn" href="index.html" data-icon="home" data-i18n-aria="home"></a>
+    <button class="icon-btn" id="btn-levels" data-icon="grid" data-i18n-aria="levels"></button>
+    <div class="title" id="level-title"></div>
+    <button class="icon-btn" id="btn-skin" data-i18n-aria="skin"></button>
+    <button class="icon-btn" data-lang-next data-i18n-aria="langNext"></button>
+    <button class="icon-btn toggle" data-sound-toggle data-i18n-aria="sound"></button>
+  </header>
+
+  <main class="game" id="game">
+    <div class="player cpu-row" id="cpu-row">
+      <div class="avatar" id="cpu-avatar"></div>
+      <div class="bubble" id="cpu-bubble" aria-live="polite"></div>
+    </div>
+
+    <div class="legend" aria-hidden="true">
+      <span style="background:var(--g8)">8</span><span style="background:var(--g4)">4</span><span style="background:var(--g2)">2</span><span style="background:var(--g1)">1</span>
+    </div>
+    <div class="board" id="board"></div>
+
+    <div class="player kid-row" id="kid-row">
+      <div class="left">
+        <div class="avatar" id="kid-avatar"></div>
+        <div class="tools">
+          <button class="icon-btn toggle" id="btn-glasses" data-icon="glasses" data-i18n-aria="glasses" hidden aria-pressed="false"></button>
+          <button class="icon-btn" id="btn-hint" data-icon="bulb" data-i18n-aria="hint" hidden></button>
+        </div>
+      </div>
+      <button class="big-btn go take-btn" id="btn-take" disabled><span data-icon="hand"></span><span id="take-label"></span></button>
+    </div>
+  </main>
+
+  <dialog id="dlg-win">
+    <div class="face" id="win-face"></div>
+    <h2 data-i18n="youWin"></h2>
+    <p class="tip" id="win-tip"></p>
+    <div class="actions">
+      <button class="big-btn secondary" id="win-again"><span data-icon="replay"></span><span data-i18n="again"></span></button>
+      <button class="big-btn secondary" id="win-math" hidden><span data-icon="book"></span><span data-i18n="mathTitle"></span></button>
+      <button class="big-btn" id="win-next"><span data-icon="next"></span><span data-i18n="nextLevel"></span></button>
+    </div>
+  </dialog>
+
+  <dialog id="dlg-lose">
+    <div class="face" id="lose-face"></div>
+    <h2 data-i18n="cpuWin"></h2>
+    <p class="tip" data-i18n="tryAgain"></p>
+    <div class="actions">
+      <button class="big-btn" id="lose-again"><span data-icon="replay"></span><span data-i18n="again"></span></button>
+    </div>
+  </dialog>
+
+  <dialog id="dlg-levels">
+    <h2 data-i18n="levels"></h2>
+    <div class="levels-grid" id="levels-grid"></div>
+    <div class="skin-row" id="skin-row"></div>
+    <div class="actions">
+      <button class="big-btn secondary" id="levels-math" hidden><span data-icon="book"></span><span data-i18n="mathTitle"></span></button>
+      <button class="big-btn secondary" data-close data-i18n="close"></button>
+    </div>
+  </dialog>
+
+  <dialog id="dlg-math" class="math">
+    <h2 data-i18n="mathTitle"></h2>
+    <div id="math-body"></div>
+    <div class="actions"><button class="big-btn" data-close data-i18n="close"></button></div>
+  </dialog>
+
+  <script src="js/core.js"></script>
+  <script src="js/strings.js"></script>
+  <script src="js/skins.js"></script>
+  <script src="js/fx.js"></script>
+  <script src="js/nim-logic.js"></script>
+  <script src="js/nim-game.js"></script>
+</body>
+</html>
