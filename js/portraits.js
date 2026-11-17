@@ -126,7 +126,36 @@
       '<path d="M78 132 q4 8 10 10 M122 132 q-4 8 -10 10" fill="none" stroke="#d9a888" stroke-width="1.4"/>' + cheeks());
   }
 
-  var DRAW = { dirichlet: dirichlet, steinhaus: steinhaus, banach: banach, gauss: gauss };
+
+  /** 毕达哥拉斯：没有流传下来的真实画像，这里照常见的古希腊半身像来画——卷发、发带、卷曲的大胡子、长袍 */
+  function pythagoras(uid) {
+    var skin = '#e6b98f';
+    return frame(uid,
+      // 长袍：斜披过左肩
+      '<path d="M14 240 Q20 180 64 168 L100 186 L136 168 Q180 180 186 240 Z" fill="#f2ead8" stroke="#1d2433" stroke-width="2.5"/>' +
+      '<path d="M50 176 Q90 200 140 240 L104 240 Q76 214 44 190 Z" fill="#c9b892" stroke="#1d2433" stroke-width="2"/>' +
+      '<path d="M86 136 h28 v34 h-28 Z" fill="' + skin + '" stroke="#1d2433" stroke-width="2"/>' +
+      // 脸
+      '<path d="M66 96 C64 134 80 152 100 152 C120 152 136 134 134 96 C134 66 66 66 66 96 Z" fill="' + skin + '" stroke="#1d2433" stroke-width="2.6"/>' +
+      ears(skin) +
+      // 卷发
+      '<path d="M58 104 C48 70 66 40 100 38 C134 40 152 70 142 104 C138 92 134 84 128 80 C116 84 84 84 72 80 C66 84 62 92 58 104 Z" fill="#6b5b4b" stroke="#1d2433" stroke-width="2.4" stroke-linejoin="round"/>' +
+      '<path d="M66 70 q6 -8 12 0 q6 -8 12 0 q6 -8 12 0 q6 -8 12 0 q6 -8 12 0 M70 56 q6 -7 12 0 q6 -7 12 0 q6 -7 12 0 q6 -7 12 0" fill="none" stroke="#4a3d31" stroke-width="2.2" stroke-linecap="round"/>' +
+      // 发带
+      '<path d="M62 84 C80 74 120 74 138 84" fill="none" stroke="#e9e1cf" stroke-width="5" stroke-linecap="round"/>' +
+      '<path d="M62 84 C80 74 120 74 138 84" fill="none" stroke="#1d2433" stroke-width="1.2" stroke-dasharray="3 3"/>' +
+      // 眉、眼、鼻
+      '<path d="M78 98 q9 -5 18 -1 M104 97 q9 -4 18 1" fill="none" stroke="#4a3d31" stroke-width="3" stroke-linecap="round"/>' +
+      eyes(107, '#4a3d31') +
+      '<path d="M100 108 C98 119 95 125 100 128 C104 129 107 127 105 125" fill="none" stroke="#a8724b" stroke-width="2.2" stroke-linecap="round"/>' +
+      // 卷曲的大胡子
+      '<path d="M70 118 C70 150 84 176 100 178 C116 176 130 150 130 118 C124 132 116 138 100 138 C84 138 76 132 70 118 Z" fill="#6b5b4b" stroke="#1d2433" stroke-width="2.4" stroke-linejoin="round"/>' +
+      '<path d="M80 146 q5 6 10 0 q5 6 10 0 q5 6 10 0 q5 6 10 0 M86 160 q5 6 10 0 q5 6 10 0 q5 6 10 0" fill="none" stroke="#4a3d31" stroke-width="2" stroke-linecap="round"/>' +
+      '<path d="M86 132 C92 128 108 128 114 132" fill="none" stroke="#4a3d31" stroke-width="4" stroke-linecap="round"/>' +
+      '<path d="M93 138 q7 3 14 0" fill="none" stroke="#9b5a45" stroke-width="2.4" stroke-linecap="round"/>');
+  }
+
+  var DRAW = { dirichlet: dirichlet, steinhaus: steinhaus, banach: banach, gauss: gauss, pythagoras: pythagoras };
   var uid = 0;
   /** 一幅带名字的画像 */
   MG.portrait = function (id) {

@@ -64,7 +64,4 @@
   };
   MG.sweetSvg = sweet;
 
-  MG.ICONS.nope = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2.6"/><path d="M5.8 18.2 18.2 5.8" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>';
-  MG.ICONS.minus = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/></svg>';
-  MG.ICONS.plus = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5v14" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/></svg>';
 })(window);
