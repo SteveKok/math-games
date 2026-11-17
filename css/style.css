@@ -122,13 +122,13 @@ svg { display: block; }
   width: var(--item); height: var(--item); padding: 0; border: 0; background: none; border-radius: 14px;
   transition: transform .18s cubic-bezier(.3, 1.6, .5, 1), background .15s;
 }
-.item svg { width: 100%; height: 100%; pointer-events: none; }
-.item:hover { transform: translateY(-3px); }
+.item svg { width: 100%; height: 100%; pointer-events: none; transition: transform .15s; }
+@media (hover: hover) { .item:not(.selected):not(.cpu-pick):hover svg { transform: translateY(-3px); } }
 .item.selected { background: var(--sel); transform: translateY(-8px) scale(1.06); animation: bounce .5s; }
 .item.cpu-pick { background: #cfe0ff; transform: translateY(-8px) scale(1.06); animation: bounce .5s; }
 .item.hint, .icon-btn.hint { animation: pulse 1s infinite; }
 .board.locked .item { cursor: default; }
-.board.locked .item:hover { transform: none; }
+.board.locked .item:hover svg { transform: none; }
 @keyframes bounce { 0% { transform: translateY(0) scale(1); } 40% { transform: translateY(-16px) scale(1.12); } 70% { transform: translateY(-5px) scale(1.02); } 100% { transform: translateY(-8px) scale(1.06); } }
 @keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(255, 140, 26, .8); } 50% { box-shadow: 0 0 0 8px rgba(255, 140, 26, 0); } }
 
@@ -178,7 +178,7 @@ dialog.rules h3 { margin: 16px 0 4px; font-size: 1.25rem; }
 .rule-art .avatar { width: 36px; height: 36px; border-width: 2px; }
 .rule-art .arrow { font-weight: 800; font-size: 1.2rem; }
 .rules-demo { --item: 46px; align-items: stretch; }
-.rules-demo .item.selected { animation: bounce 1.2s infinite alternate; }
+.rules-demo .item.selected { animation: bounce .6s; }
 .fx-canvas { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 1000; }
 .fly { pointer-events: none; }
 
