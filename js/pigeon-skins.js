@@ -1,6 +1,6 @@
 /*
- * 鸽子与糖果的皮肤：只管「长什么样」。规则在 pigeon-logic.js，界面在 pigeon-game.js。
- * 每个皮肤提供 item(i) 画一个东西、box(state) 画一个容器，都是 SVG 字符串。
+ * 鸽子与糖果的图画：只管「长什么样」。规则在 pigeon-logic.js，界面在 pigeon-game.js。
+ * 全部是 SVG 字符串：鸽子、窝、糖果、小朋友。
  */
 (function (root) {
   'use strict';
@@ -43,24 +43,7 @@
       '<path d="M3 10 Q50 22 97 10" fill="none" stroke="#1d2433" stroke-width="3"/>');
   }
 
-  /** 糖果罐（玻璃罐的下半部 + 标签） */
-  function jar(over) {
-    return svg('0 0 100 44',
-      '<path d="M6 4 H94 V30 Q94 42 82 42 H18 Q6 42 6 30 Z" fill="' + (over ? '#ffd6dc' : '#e6f4ff') + '" stroke="#1d2433" stroke-width="3" stroke-linejoin="round"/>' +
-      '<rect x="30" y="14" width="40" height="16" rx="5" fill="#fff" stroke="#1d2433" stroke-width="2"/>' +
-      '<path d="M14 10 V30" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".9"/>');
-  }
-
-  MG.PIGEON_SKINS = [
-    { id: 'pigeon', nameKey: 'skinPigeon', item: pigeon, box: nest },
-    { id: 'jar', nameKey: 'skinJar', item: sweet, box: jar }
-  ];
-  MG.getPigeonSkin = function (id) {
-    return MG.PIGEON_SKINS.filter(function (s) { return s.id === id; })[0] || MG.PIGEON_SKINS[0];
-  };
-  MG.pigeonSkinIcon = function (s) {
-    return '<span class="skin-ico">' + s.item(1) + '</span>';
-  };
+  MG.PIGEON_ART = { item: pigeon, box: nest };
 
   /** 小朋友的脸（不同发色），第三章的人很多时也用它 */
   var HAIR = ['#3d2b1f', '#e0a526', '#7a3b1d', '#1d2433', '#c2410c', '#6b4f3a', '#d9774b', '#4b3621'];

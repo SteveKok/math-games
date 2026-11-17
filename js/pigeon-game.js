@@ -1,5 +1,5 @@
 /*
- * 鸽子与糖果：界面。规则全在 MG.Pigeon（pigeon-logic.js），长相在 pigeon-skins.js。
+ * 鸽子与糖果：界面。规则全在 MG.Pigeon（pigeon-logic.js），图画在 pigeon-skins.js。
  */
 (function (root) {
   'use strict';
@@ -13,12 +13,12 @@
   if (!progress || typeof progress.unlocked !== 'number') progress = { unlocked: 0, cleared: {} };
   function save() { MG.store.set(KEY, progress); }
 
-  var skin = MG.getPigeonSkin(MG.prefs.get('pigeonSkin', 'pigeon'));
+  var skin = MG.PIGEON_ART;  // 鸽子和窝的画法
   var state = {};
 
-  /** 随皮肤变化的名词：鸽子/窝 或 糖果/罐子 */
+  /** 第一章的名词：鸽子、窝 */
   function nouns(extra) {
-    var v = { item: t('item_' + skin.id), box: t('box_' + skin.id), unit: t('unit_' + skin.id) };
+    var v = { item: t('item_pigeon'), box: t('box_pigeon'), unit: t('unit_pigeon') };
     for (var k in extra || {}) v[k] = extra[k];
     return v;
   }
@@ -75,7 +75,6 @@
       $('oly-q').textContent = t('polyQ');
       $('oly-note').textContent = t('polyNote') + ' ' + t('polyGo');
     }
-    $('btn-skin').innerHTML = MG.pigeonSkinIcon(skin);
     $('btn-impossible').hidden = !(lv.ch === 'nest' || lv.ch === 'distinct');
     $('least-ctrl').hidden = !(lv.ch === 'least' || (numeric && !state.showAnswer));
     $('btn-hint').hidden = state.fails < 2 || state.done || !isGame(lv);
@@ -110,7 +109,7 @@
         if (k < c[b]) h += '<button class="pitem' + (k >= lv.cap ? ' extra' : '') + '" data-b="' + b + '" aria-label="−">' + skin.item(placed++) + '</button>';
         else h += '<span class="slot"></span>';
       }
-      h += '</div><button class="nest-btn" data-b="' + b + '" aria-label="+ ' + t('box_' + skin.id) + ' ' + (b + 1) + '">' + skin.box(over) +
+      h += '</div><button class="nest-btn" data-b="' + b + '" aria-label="+ ' + t('box_pigeon') + ' ' + (b + 1) + '">' + skin.box(over) +
         '<span class="cnt">' + c[b] + ' / ' + lv.cap + '</span></button></div>';
     }
     h += '</div>';
@@ -470,16 +469,7 @@
       h += '</div>';
     });
     $('levels-body').innerHTML = h;
-    $('skin-row').innerHTML = MG.PIGEON_SKINS.map(function (s) {
-      return '<button class="skin-btn" data-skin="' + s.id + '" aria-pressed="' + (s.id === skin.id) + '">' + MG.pigeonSkinIcon(s) + '<span>' + t(s.nameKey) + '</span></button>';
-    }).join('');
     $('dlg-levels').showModal();
-  }
-
-  function setSkin(id) {
-    skin = MG.getPigeonSkin(id);
-    MG.prefs.set('pigeonSkin', skin.id);
-    render();
   }
 
   /* ---------- 事件 ---------- */
@@ -498,11 +488,6 @@
     $('btn-restart').addEventListener('click', function () { MG.sound.play('untap'); startLevel(state.idx); });
     $('btn-rules').addEventListener('click', openRules);
     $('btn-levels').addEventListener('click', openLevels);
-    $('btn-skin').addEventListener('click', function () {
-      var i = MG.PIGEON_SKINS.indexOf(skin);
-      setSkin(MG.PIGEON_SKINS[(i + 1) % MG.PIGEON_SKINS.length].id);
-      MG.sound.play('tap');
-    });
     [['btn-m10', -10], ['btn-m1', -1], ['btn-p1', 1], ['btn-p10', 10]].forEach(function (p) {
       $(p[0]).addEventListener('click', function () { leastStep(p[1]); });
     });
@@ -510,10 +495,6 @@
     $('levels-body').addEventListener('click', function (e) {
       var b = e.target.closest('[data-lv]');
       if (b && !b.disabled) { $('dlg-levels').close(); startLevel(+b.getAttribute('data-lv')); }
-    });
-    $('skin-row').addEventListener('click', function (e) {
-      var b = e.target.closest('[data-skin]');
-      if (b) { setSkin(b.getAttribute('data-skin')); $('dlg-levels').close(); openLevels(); }
     });
     $('win-again').addEventListener('click', function () { $('dlg-win').close(); startLevel(state.idx); });
     $('win-next').addEventListener('click', function () { $('dlg-win').close(); startLevel(state.idx + 1); });

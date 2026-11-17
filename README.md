@@ -36,7 +36,6 @@ python3 -m http.server 8765
 关卡刻意精简：会来玩这类游戏的孩子有一定数学天分，每关只放一个新想法。
 
 - 卡住两次后出现 💡 提示；没有倒计时，错了不扣分
-- 皮肤：鸽子 / 糖果罐（只换样子和名词，规则不变）
 - `node tests/pigeon-logic.test.js`：所有结论用暴力枚举验证——放不放得下、能不能都不一样、最少几人（0–60 颗糖逐个搜索）、1000 颗 → 46、三道额外题的答案（握手题枚举全部 2¹⁵ 种情况）
 
 ## 部署到 GitHub Pages
@@ -54,14 +53,14 @@ js/strings.js     所有界面文字（zh / en / ms）
 js/fx.js          通关时撒星星（canvas）
 pigeon.html               游戏 1：鸽子与糖果
 js/pigeon-logic.js        规则和关卡（纯函数，Node 可直接 require）
-js/pigeon-skins.js        鸽子、窝、糖果、罐子、小朋友的 SVG
+js/pigeon-skins.js        鸽子、窝、糖果、小朋友、袜子等的 SVG
 js/pigeon-game.js         界面
 tests/pigeon-logic.test.js
 ```
 
 ## 加一个游戏
 
-- `xxx.html` + `js/xxx-logic.js`（纯规则，UMD，Node 能直接 require）+ `js/xxx-game.js`（界面）+ 皮肤文件
+- `xxx.html` + `js/xxx-logic.js`（纯规则，UMD，Node 能直接 require）+ `js/xxx-game.js`（界面）+ 图画文件（SVG）
 - `tests/xxx-logic.test.js`：用程序验证数学正确性，`node tests/xxx-logic.test.js` 运行
 - 在 `index.html` 加一张卡片，在 `strings.js` 加文字
 
