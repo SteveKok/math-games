@@ -156,8 +156,33 @@
     return h + '</div>';
   }
   function countHtml() {
-    // 一个小提示画：n = 8 的拼法（配对）
+    if (kind() === 'smallest') {
+      // 等边三角形那题：答对、看答案或回去看看时画出 n = 5 的拼法，之前只画空的三角形
+      var shown = state.done || state.revealed || state.review, n = S.answerOf(state.lv);
+      return '<div class="count-art">' + triangleSvg(shown ? S.search(n, 3) : [[], [], []], S.sideLen(n, 3)) +
+        '<p class="stdiv">' + (shown ? '5 · 1 + 4 · 2 + 3' : '? + ? + ?') + '</p></div>';
+    }
+    // 正方形的数数题：一个小提示画，n = 8 的配对拼法
     return '<div class="count-art">' + squareSvg(S.pairing(8), 8, 9) + '<p class="stdiv">1 + 8 · 2 + 7 · 3 + 6 · 4 + 5</p></div>';
+  }
+  /** 等边三角形：三条边按顺序画上小棒（空的边画成虚线） */
+  function triangleSvg(sides, s) {
+    var A = [60, 12], B = [108, 96], C = [12, 96], corners = [[A, B], [B, C], [C, A]];
+    var h = '<svg class="sq-svg" viewBox="0 0 120 112" aria-hidden="true">' +
+      '<polygon points="60,12 108,96 12,96" fill="#fffdf6" stroke="#d6cdb8" stroke-width="5" stroke-dasharray="2 2" stroke-linejoin="round"/>';
+    sides.forEach(function (list, i) {
+      var P = corners[i][0], Q = corners[i][1], pos = 0;
+      var dx = Q[0] - P[0], dy = Q[1] - P[1], len = Math.hypot(dx, dy), nx = dy / len, ny = -dx / len;   // 朝外的方向
+      list.forEach(function (k) {
+        var a = pos / s, b = (pos + k) / s;
+        var x1 = P[0] + dx * a, y1 = P[1] + dy * a, x2 = P[0] + dx * b, y2 = P[1] + dy * b;
+        h += '<line x1="' + x1.toFixed(2) + '" y1="' + y1.toFixed(2) + '" x2="' + x2.toFixed(2) + '" y2="' + y2.toFixed(2) + '" stroke="#1d2433" stroke-width="7"/>' +
+          '<line x1="' + (x1 + dx / len * 0.6).toFixed(2) + '" y1="' + (y1 + dy / len * 0.6).toFixed(2) + '" x2="' + (x2 - dx / len * 0.6).toFixed(2) + '" y2="' + (y2 - dy / len * 0.6).toFixed(2) + '" stroke="' + hue(k) + '" stroke-width="4.6"/>' +
+          '<text x="' + ((x1 + x2) / 2 + nx * 8).toFixed(2) + '" y="' + ((y1 + y2) / 2 + ny * 8 + 2.4).toFixed(2) + '" text-anchor="middle" font-size="7" font-weight="800" fill="#1d2433">' + k + '</text>';
+        pos += k;
+      });
+    });
+    return h + '</svg>';
   }
   function paintStatus() {
     var el = $('status'), k = kind();
