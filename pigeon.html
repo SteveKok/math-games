@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>鸽子与糖果 · Pigeons &amp; Sweets · Merpati &amp; Gula-gula</title>
-  <link rel="stylesheet" href="css/style.css?v=8">
+  <link rel="stylesheet" href="css/style.css?v=9">
 </head>
 <body>
   <header class="topbar">
@@ -45,6 +45,12 @@
         <button class="icon-btn" id="btn-restart" data-icon="replay" data-i18n-aria="restart"></button>
         <button class="big-btn secondary" id="btn-impossible"><span data-icon="nope"></span><span data-i18n="pimpossible"></span></button>
       </div>
+      <div class="pactions" id="card-ctrl" hidden>
+        <button class="big-btn secondary toggle-big" id="btn-thint" aria-pressed="false"><span data-icon="bulb"></span><span data-i18n="pshowHint"></span></button>
+        <button class="big-btn secondary" id="btn-reveal"><span data-icon="book"></span><span data-i18n="pshowAnswer"></span></button>
+        <button class="big-btn" id="btn-got"><span data-icon="check"></span><span data-i18n="pgotIt"></span></button>
+        <button class="big-btn" id="btn-cardnext"><span data-icon="next"></span><span data-i18n="nextLevel"></span></button>
+      </div>
     </div>
   </main>
 
@@ -54,7 +60,6 @@
     <p class="tip" id="win-tip"></p>
     <div class="actions">
       <button class="big-btn secondary" id="win-again"><span data-icon="replay"></span><span data-i18n="again"></span></button>
-      <button class="big-btn" id="win-math" hidden><span data-icon="book"></span><span data-i18n="pseeSolution"></span></button>
       <button class="big-btn" id="win-next"><span data-icon="next"></span><span data-i18n="nextLevel"></span></button>
     </div>
   </dialog>
@@ -64,7 +69,6 @@
     <div id="levels-body"></div>
     <div class="skin-row" id="skin-row"></div>
     <div class="actions">
-      <button class="big-btn secondary" id="levels-math" hidden><span data-icon="book"></span><span data-i18n="pseeSolution"></span></button>
       <button class="big-btn secondary" data-close data-i18n="close"></button>
     </div>
   </dialog>
@@ -77,17 +81,12 @@
     <div class="actions"><button class="big-btn" data-close data-i18n="rulesOk"></button></div>
   </dialog>
 
-  <dialog id="dlg-math" class="math">
-    <h2 data-i18n="mathTitle"></h2>
-    <div id="math-body"></div>
-    <div class="actions"><button class="big-btn" data-close data-i18n="close"></button></div>
-  </dialog>
 
-  <script src="js/core.js?v=8"></script>
-  <script src="js/strings.js?v=8"></script>
-  <script src="js/fx.js?v=8"></script>
-  <script src="js/pigeon-logic.js?v=8"></script>
-  <script src="js/pigeon-skins.js?v=8"></script>
-  <script src="js/pigeon-game.js?v=8"></script>
+  <script src="js/core.js?v=9"></script>
+  <script src="js/strings.js?v=9"></script>
+  <script src="js/fx.js?v=9"></script>
+  <script src="js/pigeon-logic.js?v=9"></script>
+  <script src="js/pigeon-skins.js?v=9"></script>
+  <script src="js/pigeon-game.js?v=9"></script>
 </body>
 </html>

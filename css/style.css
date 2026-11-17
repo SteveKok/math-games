@@ -160,7 +160,7 @@ dialog.rules h3 { margin: 16px 0 4px; font-size: 1.25rem; }
 .pitem svg { width: 46px; height: 38px; }
 .pitem.extra { background: rgba(255, 93, 115, .3); }
 .slot { width: 40px; height: 34px; border: 3px dashed #a39b8b; border-radius: 50%; margin: 2px 3px; }
-.nest-btn { width: 100%; max-width: 130px; padding: 0; border: 0; background: none; position: relative; }
+.nest-btn { width: 100%; max-width: 130px; padding: 0; border: 0; background: none; position: relative; text-align: center; }
 .nest-btn svg { width: 100%; height: auto; }
 .nest-btn .cnt { display: block; font-weight: 800; font-size: .95rem; white-space: nowrap; }
 .nest-wrap.over .cnt { color: #c2253f; }
@@ -221,10 +221,37 @@ dialog .face svg { width: 100%; height: 100%; }
 .rule-art .arrow { font-weight: 800; }
 .pm-demo, .nope-demo { display: flex; gap: 4px; }
 .pm-demo svg, .nope-demo svg { width: 28px; height: 28px; }
-.think { background: var(--bg); border-radius: 16px; padding: 8px 14px; margin: 10px 0; }
-.think details { margin: 4px 0; }
-.think summary { font-weight: 800; cursor: pointer; min-height: 36px; display: flex; align-items: center; }
-.think-title { border-top: 3px dashed var(--line); padding-top: 14px; }
+
+/* 解答、想一想：没有游戏的关卡 */
+.lesson { display: flex; flex-direction: column; gap: 12px; }
+.lesson-art { display: flex; flex-direction: column; gap: 8px; align-items: stretch; }
+.lesson-text, .lesson-q { margin: 0; font-size: 1.15rem; font-weight: 700; line-height: 1.6; }
+.art-nests .nest-wrap { cursor: default; }
+.art-nests { max-width: 420px; margin: 0 auto; width: 100%; }
+.art-kids .kid { padding: 6px 4px; }
+.art-kids .kid > svg { width: 48px; height: 48px; }
+.art-formula { margin: 0; text-align: center; font-size: 1.3rem; font-weight: 800; }
+.art-formula .teal { color: #13866f; }
+.big-answer { margin: 0; text-align: center; font-size: 2.2rem; font-weight: 900; color: #c2253f; }
+.reveal { margin: 0; padding: 10px 14px; border-radius: 16px; font-size: 1.1rem; font-weight: 700; }
+.reveal b { display: block; font-size: .95rem; }
+.hint-box { background: #e3eeff; }
+.answer-box { background: #d6f5ec; }
+.big-btn.toggle-big[aria-pressed="true"] { background: var(--sel); }
+.drawer { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; padding: 12px; border: 3px solid var(--line); border-radius: 12px; background: #e9d2b4; max-width: 320px; margin: 0 auto; box-shadow: inset 0 -10px 0 #d2b38c; }
+.sock { width: 30px; height: 38px; }
+.sock-boxes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; max-width: 360px; margin: 0 auto; width: 100%; }
+.sock-box { display: flex; justify-content: center; gap: 2px; padding: 10px 4px; border: 3px solid var(--line); border-radius: 12px; background: #fff; min-height: 70px; }
+.sock.pop { outline: 3px dashed #c2253f; outline-offset: 2px; border-radius: 8px; }
+.tiles { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+.ntile { display: inline-grid; place-items: center; width: 42px; height: 42px; border: 3px solid var(--line); border-radius: 12px; background: #fff; font-weight: 800; font-size: 1.15rem; }
+.ntile.picked { background: var(--sel); }
+.ntile.sixth { background: #ffb3c0; outline: 3px dashed #c2253f; outline-offset: 2px; }
+.ntile.clash { background: #ffe0e5; text-decoration: line-through; }
+.pair-boxes { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+.pair-box { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 2px; border: 3px solid var(--line); border-radius: 12px; background: #fff7e8; }
+.pair-box small { font-weight: 800; color: var(--ink-soft); }
+.hands { width: 100%; max-width: 230px; margin: 0 auto; }
 
 @media (max-width: 520px) {
   .ask { font-size: 1.15rem; }
@@ -238,9 +265,15 @@ dialog .face svg { width: 100%; height: 100%; }
   .kid .pm .icon-btn { width: 42px; height: 42px; }
   .kids-4 .kids { grid-template-columns: repeat(2, 1fr); }
   .oly-q { font-size: 1rem; }
+  .lesson-text, .lesson-q { font-size: 1.05rem; }
+  .pair-boxes { gap: 3px; }
+  .ntile { width: 36px; height: 36px; font-size: 1rem; }
+  .pair-box .ntile { width: 34px; }
   .oly-card { padding: 10px 12px; }
   .n-val { font-size: 1.6rem; }
 }
 .hub-nest { display: flex; flex-wrap: wrap; justify-content: center; width: 100px; }
 .card .art .hub-nest svg { width: 44px; height: 38px; }
 .card .art .hub-nest svg:last-child { width: 96px; height: 42px; margin-top: -8px; }
+.kids.art-kids { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+.art-kids .plate .psweet svg { width: 18px; height: 14px; }

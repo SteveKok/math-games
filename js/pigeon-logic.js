@@ -86,13 +86,29 @@
     { ch: 'least', sweets: 20, tip: 'ptip13' },
     { ch: 'least', sweets: 50, tip: 'ptip14' },
     // 终章：OMK 2016 Bongsu B3 原题
-    { ch: 'least', sweets: 1000, olympiad: true, tip: 'ptip15' }
+    { ch: 'least', sweets: 1000, olympiad: true, tip: 'ptip15' },
+    // 解答：没有游戏的关卡，一页一个重点，配插画
+    { ch: 'read', key: 'sol1', art: 'nest' },
+    { ch: 'read', key: 'sol2', art: 'stair4' },
+    { ch: 'read', key: 'sol3', art: 'n45' },
+    { ch: 'read', key: 'sol4', art: 'n46' },
+    { ch: 'read', key: 'sol5', art: 'general' },
+    // 想一想：三道额外题（答案见 EXTRA，由测试暴力验证）
+    { ch: 'think', key: 'ex1', art: 'socks', answer: 4 },
+    { ch: 'think', key: 'ex2', art: 'sum11', answer: 6 },
+    { ch: 'think', key: 'ex3', art: 'hands' }
   ];
   var CHAPTERS = [
     { id: 'nest', nameKey: 'pchNest' },
     { id: 'distinct', nameKey: 'pchDistinct' },
-    { id: 'least', nameKey: 'pchLeast' }
+    { id: 'least', nameKey: 'pchLeast' },
+    { id: 'oly', nameKey: 'pchOly' },
+    { id: 'read', nameKey: 'pchSol' },
+    { id: 'think', nameKey: 'pchThink' }
   ];
+  /** 关卡属于哪一章（真题单独成一章） */
+  function chapterOf(lv) { return lv.olympiad ? 'oly' : lv.ch; }
+  var OLYMPIAD = LEVELS.findIndex(function (l) { return l.olympiad; });
   /** 这一关「做得到」吗（第三章不用这个） */
   function levelPossible(lv) {
     if (lv.ch === 'nest') return nestPossible(lv.items, lv.boxes, lv.cap);
@@ -115,6 +131,6 @@
     minDistinct: minDistinct, distinctPossible: distinctPossible, sameIndexes: sameIndexes,
     distinctSolved: distinctSolved, distinctExample: distinctExample,
     forcedSame: forcedSame, leastKids: leastKids,
-    LEVELS: LEVELS, CHAPTERS: CHAPTERS, levelPossible: levelPossible, EXTRA: EXTRA
+    LEVELS: LEVELS, CHAPTERS: CHAPTERS, chapterOf: chapterOf, OLYMPIAD: OLYMPIAD, levelPossible: levelPossible, EXTRA: EXTRA
   };
 });

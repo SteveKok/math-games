@@ -77,8 +77,9 @@ test('OMK 2016 Bongsu B3：1000 颗糖，答案 46', function () {
   assert.strictEqual(P.minDistinct(45), 990);   // 45 人还能都不一样
   assert.strictEqual(P.minDistinct(46), 1035);  // 46 人一定撞
   assert.deepStrictEqual(P.distinctExample(45, 1000).slice(-2), [43, 54]);
-  var final = P.LEVELS[P.LEVELS.length - 1];
-  assert.ok(final.olympiad && final.sweets === 1000);
+  var oly = P.LEVELS[P.OLYMPIAD];
+  assert.ok(oly.olympiad && oly.sweets === 1000);
+  assert.strictEqual(P.LEVELS.filter(function (l) { return l.olympiad; }).length, 1);
 });
 
 test('关卡：每章都有做得到和做不到的关，第三章答案合理', function () {
@@ -120,6 +121,12 @@ test('额外题 3：6 个人随便怎么握手，总有两人握手次数一样�
     pairs.forEach(function (p, k) { if (mask & (1 << k)) { deg[p[0]]++; deg[p[1]]++; } });
     assert.ok(!allDifferent(deg), 'mask ' + mask);
   }
+});
+
+test('想一想关卡的答案和 EXTRA（已验证）一致；解答关在真题之后', function () {
+  var th = P.LEVELS.filter(function (l) { return l.ch === 'think'; });
+  assert.deepStrictEqual(th.map(function (l) { return l.answer; }), [P.EXTRA.socks.answer, P.EXTRA.sum11.answer, undefined]);
+  P.LEVELS.forEach(function (l, i) { if (l.ch === 'read' || l.ch === 'think') assert.ok(i > P.OLYMPIAD); });
 });
 
 console.log('\n' + passed + ' tests passed');
