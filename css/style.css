@@ -373,6 +373,8 @@ dialog .face svg { width: 100%; height: 100%; }
 .win-plus { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; }
 .win-plus b { font-size: 2.4rem; }
 .win-plus span { font-weight: 800; color: #e63946; }
+.win-chips { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; height: 100%; align-content: center; }
+.win-chips span { display: grid; place-items: center; height: 32px; border: 2px solid var(--line); border-radius: 8px; background: #c9f2dc; font-weight: 900; font-size: 1rem; }
 #plus-art { flex-direction: column; gap: 6px; }
 .plus-eq { font-size: 1rem; }
 @media (max-width: 520px) {

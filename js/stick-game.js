@@ -141,6 +141,12 @@
     }).join('') + '</div>';
     return h;
   }
+  /** 能拼成正方形的 n（「挑一挑」那关的答案） */
+  function pickedNumbers() {
+    var out = [];
+    for (var n = 1; n <= state.lv.upTo; n++) if (S.possible(n, 4)) out.push(n);
+    return out;
+  }
   function pickHtml() {
     var lv = state.lv, h = '<div class="pick-grid">';
     for (var n = 1; n <= lv.upTo; n++) {
@@ -258,7 +264,8 @@
     render();
     var lv = state.lv, k = kind(), s = lv.n ? S.sideLen(lv.n, 4) : null;
     $('win-face').innerHTML = k === 'build' && s !== null ? squareSvg(state.sides, lv.n, s)
-      : '<div class="win-plus"><b>' + (k === 'pick' ? '7 · 8 · 15 · 16 · 23 · 24' : k === 'build' ? '?' : state.val) + '</b></div>';
+      : k === 'pick' ? '<div class="win-chips">' + pickedNumbers().map(function (n) { return '<span>' + n + '</span>'; }).join('') + '</div>'
+      : '<div class="win-plus"><b>' + (k === 'build' ? '?' : state.val) + '</b></div>';
     $('win-tip').textContent = (lv.tip ? t(lv.tip) : t(lv.key + 'A')) + (state.idx === LAST ? ' ' + t('stallClear') : '');
     $('win-next').hidden = state.idx === LAST;
     setTimeout(function () { $('dlg-win').showModal(); }, MG.reducedMotion() ? 0 : 450);
