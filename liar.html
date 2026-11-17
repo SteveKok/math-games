@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>说谎者与诚实者 · Liars &amp; Truth-tellers</title>
+  <link rel="stylesheet" href="css/style.css?v=5">
+</head>
+<body>
+  <header class="topbar">
+    <a class="icon-btn" href="index.html" data-icon="home" data-i18n-aria="home"></a>
+    <button class="icon-btn" id="btn-levels" data-icon="grid" data-i18n-aria="levels"></button>
+    <div class="title" id="level-title"></div>
+    <button class="icon-btn" id="btn-skin" data-i18n-aria="skin"></button>
+    <button class="icon-btn" data-lang-next data-i18n-aria="langNext"></button>
+    <button class="icon-btn toggle" data-sound-toggle data-i18n-aria="sound"></button>
+  </header>
+
+  <main class="game liar-game">
+    <div class="ask-row">
+      <h1 class="ask" data-i18n="liarAsk"></h1>
+      <button class="icon-btn" id="btn-rules" data-icon="help" data-i18n-aria="rules"></button>
+    </div>
+
+    <div class="cast" id="cast"></div>
+
+    <div class="liar-bar">
+    <p class="status" id="status" aria-live="polite"></p>
+
+    <div class="liar-actions">
+      <button class="icon-btn" id="btn-hint" data-icon="bulb" data-i18n-aria="hint" hidden></button>
+      <button class="icon-btn" id="btn-new" data-icon="replay" data-i18n-aria="newPuzzle"></button>
+      <button class="big-btn go" id="btn-check" disabled><span data-icon="check"></span><span data-i18n="check"></span></button>
+    </div>
+    </div>
+  </main>
+
+  <dialog id="dlg-win">
+    <div class="face" id="win-face"></div>
+    <h2 data-i18n="youWin"></h2>
+    <p class="tip" id="win-tip"></p>
+    <div class="actions">
+      <button class="big-btn secondary" id="win-again"><span data-icon="replay"></span><span data-i18n="newPuzzle"></span></button>
+      <button class="big-btn" id="win-math" hidden><span data-icon="book"></span><span data-i18n="mathTitle"></span></button>
+      <button class="big-btn" id="win-next"><span data-icon="next"></span><span data-i18n="nextLevel"></span></button>
+    </div>
+  </dialog>
+
+  <dialog id="dlg-levels">
+    <h2 data-i18n="levels"></h2>
+    <div class="levels-grid" id="levels-grid"></div>
+    <div class="skin-row" id="skin-row"></div>
+    <div class="actions">
+      <button class="big-btn secondary" id="levels-math" hidden><span data-icon="book"></span><span data-i18n="mathTitle"></span></button>
+      <button class="big-btn secondary" data-close data-i18n="close"></button>
+    </div>
+  </dialog>
+
+  <dialog id="dlg-rules" class="rules">
+    <h2 data-i18n="rulesTitle"></h2>
+    <ol class="rules-list">
+      <li><span class="rule-art" id="lrule-art-1"></span><span data-i18n="lrule1"></span></li>
+      <li><span class="rule-art" id="lrule-art-2"></span><span data-i18n="lrule2"></span></li>
+      <li><span class="rule-art" id="lrule-art-3"></span><span data-i18n="lrule3"></span></li>
+      <li><span class="rule-art" id="lrule-art-4"></span><span data-i18n="lrule4"></span></li>
+    </ol>
+    <h3 data-i18n="lrulesHowTitle"></h3>
+    <p data-i18n="lrulesHow"></p>
+    <div class="actions"><button class="big-btn" data-close data-i18n="rulesOk"></button></div>
+  </dialog>
+
+  <dialog id="dlg-math" class="math">
+    <h2 data-i18n="mathTitle"></h2>
+    <div id="math-body"></div>
+    <div class="actions"><button class="big-btn" data-close data-i18n="close"></button></div>
+  </dialog>
+
+  <script src="js/core.js?v=5"></script>
+  <script src="js/strings.js?v=5"></script>
+  <script src="js/fx.js?v=5"></script>
+  <script src="js/liar-chars.js?v=5"></script>
+  <script src="js/liar-logic.js?v=5"></script>
+  <script src="js/liar-game.js?v=5"></script>
+</body>
+</html>

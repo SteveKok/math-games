@@ -182,6 +182,77 @@ dialog.rules h3 { margin: 16px 0 4px; font-size: 1.25rem; }
 .rule-art .arrow { font-weight: 800; font-size: 1.2rem; }
 .rules-demo { --item: 46px; align-items: stretch; }
 .rules-demo .item.selected { animation: bounce .6s; }
+/* ---------- 说谎者与诚实者 ---------- */
+.ask-row { display: flex; align-items: center; gap: 12px; justify-content: center; }
+.ask { font-size: 1.5rem; margin: 4px 0; text-align: center; }
+.cast { display: grid; gap: 14px; grid-template-columns: repeat(var(--cols, 2), minmax(0, 1fr)); }
+.cast[data-n="3"] { --cols: 3; }
+.cast[data-n="4"] { --cols: 4; }
+.who {
+  position: relative; background: var(--card); border: 3px solid var(--line); border-radius: var(--radius);
+  padding: 10px; display: flex; flex-direction: column; align-items: center; gap: 6px; box-shadow: 0 5px 0 var(--line);
+}
+.who.good { border-color: var(--go); box-shadow: 0 5px 0 var(--go); }
+.who.bad { border-color: var(--accent); box-shadow: 0 5px 0 var(--accent); }
+.who.bad .say { animation: shake .45s 1; border-color: var(--accent); }
+.say {
+  position: relative; width: 100%; min-height: 76px; flex-grow: 1; background: var(--bg); border: 3px solid var(--line); border-radius: 16px;
+  padding: 8px 10px; font-weight: 700; font-size: 1.02rem; line-height: 1.9; text-align: center;
+  display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 0 4px;
+}
+.say::after {
+  content: ""; position: absolute; bottom: -13px; left: 50%; margin-left: -10px;
+  border: 10px solid transparent; border-top: 12px solid var(--line); border-bottom: 0;
+}
+.tok { display: inline-flex; align-items: center; gap: 3px; white-space: nowrap; }
+.tok svg { width: 1.45em; height: 1.45em; display: inline-block; }
+.tag { display: inline-block; padding: 0 8px; border-radius: 999px; border: 2px solid; line-height: 1.6; white-space: nowrap; }
+.tag.h { background: #fff2b3; border-color: #c99400; }
+.tag.l { background: #ecd9ff; border-color: #7a1fa2; }
+.num { font-size: 1.25em; }
+.fig { width: 100%; max-width: 130px; border: 0; background: none; padding: 6px 0 0; border-radius: 16px; }
+.fig svg { width: 100%; height: auto; }
+.name { font-weight: 800; font-size: 1.05rem; }
+.pick { display: flex; gap: 6px; width: 100%; }
+.chip {
+  flex: 1; min-height: 52px; border: 3px solid var(--line); border-radius: 14px; background: var(--card);
+  font-weight: 800; font-size: .95rem; display: flex; align-items: center; justify-content: center; gap: 4px; padding: 2px 4px;
+  color: var(--ink);
+}
+.chip svg { width: 22px; height: 22px; flex: none; color: var(--ink-soft); }
+.chip.h[aria-pressed="true"] { background: #ffe27a; }
+.chip.l[aria-pressed="true"] { background: #d9b8ff; }
+.chip:disabled { cursor: default; opacity: 1; }
+.who.locked .pick::after { content: ""; }
+.who.locked .chip[aria-pressed="false"] { opacity: .3; }
+.mark { position: absolute; top: -14px; right: -12px; width: 44px; height: 44px; }
+.status { text-align: center; font-weight: 800; font-size: 1.15rem; min-height: 1.6em; margin: 4px 0; color: var(--accent); }
+.liar-bar {
+  position: sticky; bottom: 0; z-index: 5; padding: 6px 0 calc(10px + env(safe-area-inset-bottom));
+  background: linear-gradient(to bottom, rgba(255, 233, 199, 0), var(--bg2) 30%);
+}
+.liar-bar .status { margin: 0 0 6px; }
+.liar-actions { display: flex; gap: 12px; justify-content: center; align-items: center; }
+.liar-actions .big-btn { min-width: 170px; }
+.rule-art .chip-demo { width: 34px; height: 34px; border: 2px solid var(--line); border-radius: 10px; display: grid; place-items: center; }
+.rule-art .chip-demo svg { width: 24px; height: 24px; color: var(--ink-soft); }
+.chip-demo.h { background: #ffe27a; } .chip-demo.l { background: #d9b8ff; }
+.rule-art .one { width: 40px; height: 40px; border-radius: 50%; background: var(--go); color: #fff; font-weight: 800; font-size: 1.4rem; display: grid; place-items: center; }
+@keyframes shake { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-6px); } 40% { transform: translateX(6px); } 60% { transform: translateX(-4px); } 80% { transform: translateX(4px); } }
+@media (max-width: 700px) {
+  .cast[data-n="3"], .cast[data-n="4"] { --cols: 2; }
+}
+@media (max-width: 520px) {
+  .cast { gap: 12px 10px; }
+  .say { font-size: .95rem; min-height: 70px; padding: 6px; }
+  .fig { max-width: 104px; }
+  .chip { font-size: .8rem; min-height: 52px; min-width: 0; flex-direction: column; gap: 0; line-height: 1.1; }
+  .chip svg { width: 20px; height: 20px; }
+  .cast[data-n="4"] .fig { max-width: 76px; }
+  .cast[data-n="4"] .say { min-height: 0; }
+  .who { padding: 8px; }
+  .ask { font-size: 1.25rem; }
+}
 .fx-canvas { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 1000; }
 .fly { pointer-events: none; }
 
@@ -201,3 +272,4 @@ dialog.rules h3 { margin: 16px 0 4px; font-size: 1.25rem; }
   /* 不做动画时，用一个静止的橙色圈来提示「点这里」 */
   .item.hint, .icon-btn.hint { animation: none !important; outline: 4px solid var(--g1); outline-offset: 2px; }
 }
+#liar-art svg { width: 72px; height: 88px; }
