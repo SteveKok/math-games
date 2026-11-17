@@ -293,3 +293,47 @@ dialog .face svg { width: 100%; height: 100%; }
 .portrait-row .portrait svg { width: 100%; max-width: 160px; }
 .portrait figcaption b { display: block; color: var(--ink); }
 .portrait figcaption span { font-weight: 600; }
+
+/* ---------- 加一的秘密 ---------- */
+.wheels { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; max-width: 480px; margin: 0 auto; width: 100%; }
+.wheel { display: flex; flex-direction: column; align-items: center; gap: 4px; background: #1d2433; border-radius: 14px; padding: 6px 2px; }
+.wheel .dg { font-size: 2.2rem; line-height: 1.1; color: #fff; font-variant-numeric: tabular-nums; }
+.wheel.lead .dg { color: #66708a; }
+.wheel .wbtn { width: 40px; height: 36px; border-radius: 10px; box-shadow: 0 3px 0 var(--line); }
+.wheel .wbtn svg { width: 22px; height: 22px; }
+.wheels.locked .wbtn { visibility: hidden; }
+.sums { display: flex; flex-direction: column; gap: 8px; }
+.srow { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; background: #fff; border: 2px solid var(--line); border-radius: 14px; padding: 8px 12px; }
+.slabel { font-size: 1.05rem; min-width: 8.5em; }
+.slabel b { font-size: 1.3rem; font-variant-numeric: tabular-nums; }
+.sdigits { font-weight: 700; font-variant-numeric: tabular-nums; }
+.sdigits i { font-style: normal; color: var(--ink-soft); margin: 0 2px; }
+.sdigits b { font-size: 1.25rem; }
+.sdigits .nine, .odo .nine { background: #ffe36e; border-radius: 4px; }
+.sdigits .zero, .odo .zero { background: #cfe0ff; border-radius: 4px; }
+.sdigits .plus, .odo .plus { background: #c9f2dc; border-radius: 4px; }
+.badge { font-weight: 800; font-size: .9rem; border-radius: 999px; padding: 1px 10px; }
+.badge.ok { background: #c9f2dc; color: #0d6b45; }
+.badge.no { background: #ffe0e5; color: #a01a33; }
+.change { margin: 0; text-align: center; font-weight: 800; font-size: 1.15rem; }
+.change b { font-size: 1.6rem; }
+.change.down b { color: #c2253f; }
+.change.up b { color: #13866f; }
+.odo { display: inline-flex; gap: 3px; font-weight: 900; font-size: 1.6rem; font-variant-numeric: tabular-nums; }
+.odo span { display: inline-block; min-width: 1.1em; text-align: center; border: 2px solid var(--line); border-radius: 6px; background: #fff; }
+.odo.big { font-size: 2rem; justify-content: center; width: 100%; height: 100%; align-items: center; }
+#digit-art { flex-direction: column; gap: 2px; }
+#digit-art .odo { font-size: 1.3rem; }
+.odo-arrow { color: #c2253f; }
+.carry-art { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; }
+.carry-arrow { font-weight: 900; color: #c2253f; font-size: 1.2rem; }
+.mod-table { border-collapse: collapse; margin: 0 auto; font-weight: 700; text-align: center; }
+.mod-table th, .mod-table td { border: 2px solid var(--line); padding: 4px 10px; }
+.mod-table th { font-size: .85rem; background: var(--bg2); }
+.mod-table tr.hit td { background: #c9f2dc; font-weight: 900; }
+@media (max-width: 520px) {
+  .wheels { gap: 3px; }
+  .wheel .dg { font-size: 1.7rem; }
+  .wheel .wbtn { width: 38px; height: 34px; }
+  .slabel { min-width: 0; }
+}

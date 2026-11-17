@@ -98,7 +98,35 @@
       '<path d="M89 141 q11 6 22 0" fill="none" stroke="#9b5a45" stroke-width="2.6" stroke-linecap="round"/>' + cheeks());
   }
 
-  var DRAW = { dirichlet: dirichlet, steinhaus: steinhaus, banach: banach };
+
+  /** 高斯：黑色天鹅绒小圆帽、两侧白发、年长的脸、白色领巾、深色外套配毛领 */
+  function gauss(uid) {
+    var skin = '#f0c8a2';
+    return frame(uid,
+      '<path d="M14 240 Q18 180 62 168 L100 194 L138 168 Q182 180 186 240 Z" fill="#2e2a33" stroke="#1d2433" stroke-width="2.5"/>' +
+      '<path d="M40 182 Q60 164 84 170 L100 196 L116 170 Q140 164 160 182 Q150 200 130 196 L100 206 L70 196 Q50 200 40 182 Z" fill="#7a5a3c" stroke="#1d2433" stroke-width="2"/>' +
+      '<path d="M86 138 h28 v30 h-28 Z" fill="' + skin + '" stroke="#1d2433" stroke-width="2"/>' +
+      '<path d="M76 162 Q100 176 124 162 L120 186 Q100 196 80 186 Z" fill="#f7f4ec" stroke="#1d2433" stroke-width="2.2" stroke-linejoin="round"/>' +
+      '<path d="M90 172 q10 6 20 0 M92 180 q8 5 16 0" fill="none" stroke="#c9c2b0" stroke-width="1.6"/>' +
+      '<path d="M64 98 C62 138 80 158 100 158 C120 158 138 138 136 98 C136 64 64 64 64 98 Z" fill="' + skin + '" stroke="#1d2433" stroke-width="2.6"/>' +
+      ears(skin) +
+      // 两侧白发
+      '<path d="M60 108 C52 96 54 80 64 72 C66 86 68 98 74 108 Z" fill="#eeeeee" stroke="#1d2433" stroke-width="2"/>' +
+      '<path d="M140 108 C148 96 146 80 136 72 C134 86 132 98 126 108 Z" fill="#eeeeee" stroke="#1d2433" stroke-width="2"/>' +
+      // 黑色小圆帽
+      '<path d="M60 80 C58 52 80 38 100 38 C120 38 142 52 140 80 C126 70 74 70 60 80 Z" fill="#141218" stroke="#1d2433" stroke-width="2.4" stroke-linejoin="round"/>' +
+      '<path d="M72 60 C86 50 114 50 128 60" fill="none" stroke="#3a3540" stroke-width="2.2" stroke-linecap="round"/>' +
+      // 皱纹、眉、眼、鼻、嘴
+      '<path d="M84 86 q16 -4 32 0" fill="none" stroke="#c99a7a" stroke-width="1.8" stroke-linecap="round"/>' +
+      '<path d="M78 99 q9 -5 18 -1 M104 98 q9 -4 18 1" fill="none" stroke="#d0d0d0" stroke-width="3.2" stroke-linecap="round"/>' +
+      eyes(108, '#5a6f86') +
+      '<path d="M80 114 q6 3 12 0 M108 114 q6 3 12 0" fill="none" stroke="#c99a7a" stroke-width="1.4" stroke-linecap="round"/>' +
+      '<path d="M100 110 C98 121 95 128 100 131 C104 132 107 129 105 127" fill="none" stroke="#b07a55" stroke-width="2.2" stroke-linecap="round"/>' +
+      '<path d="M90 142 q10 4 20 0" fill="none" stroke="#9b5a45" stroke-width="2.6" stroke-linecap="round"/>' +
+      '<path d="M78 132 q4 8 10 10 M122 132 q-4 8 -10 10" fill="none" stroke="#d9a888" stroke-width="1.4"/>' + cheeks());
+  }
+
+  var DRAW = { dirichlet: dirichlet, steinhaus: steinhaus, banach: banach, gauss: gauss };
   var uid = 0;
   /** 一幅带名字的画像 */
   MG.portrait = function (id) {
