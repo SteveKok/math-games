@@ -273,3 +273,43 @@ dialog.rules h3 { margin: 16px 0 4px; font-size: 1.25rem; }
   .item.hint, .icon-btn.hint { animation: none !important; outline: 4px solid var(--g1); outline-offset: 2px; }
 }
 #liar-art svg { width: 72px; height: 88px; }
+/* ---------- 一笔画与涂地图 ---------- */
+.gboard {
+  border: 3px solid var(--line); border-radius: var(--radius); box-shadow: 0 5px 0 var(--line);
+  overflow: hidden; display: flex; justify-content: center; align-items: center;
+}
+.gboard.color { padding: 4px; }
+.gsvg { width: 100%; height: auto; max-height: min(58vh, 560px); touch-action: none; user-select: none; -webkit-user-select: none; }
+.gboard.stroke .gsvg { aspect-ratio: 1; }
+.gsvg .cell { cursor: pointer; }
+.gsvg :not(.cell) { pointer-events: none; }
+.status.info { color: var(--ink); }
+.palette { display: flex; gap: 12px; justify-content: center; margin: 0 0 10px; flex-wrap: wrap; }
+.pot {
+  width: 58px; height: 58px; border-radius: 50%; border: 3px solid var(--line); background: var(--card);
+  box-shadow: 0 4px 0 var(--line); padding: 0; display: grid; place-items: center; transition: transform .1s;
+}
+.pot span { width: 40px; height: 40px; border-radius: 50%; background: var(--c); border: 2px solid var(--line); }
+.pot svg { width: 28px; height: 28px; }
+.pot[aria-pressed="true"] { background: var(--sel); transform: translateY(-5px); box-shadow: 0 9px 0 var(--line); }
+.graph-bar .liar-actions { flex-wrap: wrap; }
+.big-btn.hint { animation: pulse-big 1s infinite; }
+@keyframes pulse-big { 0%, 100% { box-shadow: 0 5px 0 var(--line), 0 0 0 0 rgba(255, 140, 26, .8); } 50% { box-shadow: 0 5px 0 var(--line), 0 0 0 10px rgba(255, 140, 26, 0); } }
+.lv-chapter { margin: 16px 0 0; font-size: 1.2rem; }
+.g-art svg { width: 24px; height: 24px; }
+.g-art svg:first-child { width: 52px; height: 40px; }
+.nope-demo { width: 44px; height: 44px; border: 3px solid var(--line); border-radius: 14px; display: grid; place-items: center; background: var(--card); }
+.g-art .nope-demo svg { width: 28px; height: 28px; }
+.pot-demo { width: 30px; height: 30px; border-radius: 50%; background: var(--c); border: 2px solid var(--line); }
+.card .tag-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.card .tag-row a { text-decoration: none; font-weight: 800; padding: 6px 16px; border-radius: 999px; background: var(--accent); color: #fff; border: 3px solid var(--line); }
+.card .tag-row a.alt { background: var(--cpu); }
+#graph-art svg { width: 110px; height: 100px; }
+@media (max-width: 520px) {
+  .pot { width: 52px; height: 52px; }
+  .pot span { width: 36px; height: 36px; }
+  .graph-bar .big-btn { min-height: 56px; font-size: 1.1rem; padding: 0 18px; min-width: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .big-btn.hint { animation: none !important; outline: 4px solid var(--g1); outline-offset: 2px; }
+}
