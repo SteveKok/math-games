@@ -13,6 +13,9 @@
   var progress = MG.store.get(KEY, null);
   if (!progress || typeof progress.unlocked !== 'number') progress = { unlocked: 0, cleared: {} };
   function save() { MG.store.set(KEY, progress); }
+  // 关卡后来加过：如果前面的关全都通过了，就把下一关打开（还是按顺序，只是补上旧进度）
+  (function () { var i = 0; while (i < LAST && progress.cleared[i]) i++; progress.unlocked = Math.max(progress.unlocked, i); })();
+
   function complete() {
     progress.cleared[state.idx] = true;
     if (state.idx < LAST) progress.unlocked = Math.max(progress.unlocked, state.idx + 1);
@@ -20,9 +23,6 @@
   }
 
   var state = {};
-  var CULTURE = L.LEVELS.findIndex(function (l) { return l.ch === 'culture'; });
-  /** 文化课是后来加的一关，一直开着；其他关按顺序解锁 */
-  function isOpen(i) { return i <= progress.unlocked || i === CULTURE; }
   function numInChapter(idx) {
     var ch = L.chapterOf(L.LEVELS[idx]), n = 0;
     for (var i = 0; i <= idx; i++) if (L.chapterOf(L.LEVELS[i]) === ch) n++;
@@ -43,8 +43,7 @@
 
   /* ---------- 开始一关 ---------- */
   function startLevel(idx) {
-    idx = Math.max(0, Math.min(idx, LAST));
-    if (!isOpen(idx)) idx = Math.min(progress.unlocked, LAST);
+    idx = Math.max(0, Math.min(idx, progress.unlocked, LAST));
     var lv = L.LEVELS[idx];
     state = { idx: idx, lv: lv, day: 0, glasses: false, val: 1,
       fails: 0, hintOn: false, done: false, revealed: false, review: false, status: null };
@@ -301,7 +300,7 @@
       L.LEVELS.forEach(function (lv, i) {
         if (L.chapterOf(lv) !== ch.id) return;
         var cls = 'lv-btn' + (progress.cleared[i] ? ' done' : '') + (i === state.idx ? ' current' : '');
-        h += '<button class="' + cls + '" data-lv="' + i + '"' + (isOpen(i) ? '' : ' disabled') + ' aria-label="' + t('level', { n: i + 1 }) + '">' +
+        h += '<button class="' + cls + '" data-lv="' + i + '"' + (i > progress.unlocked ? ' disabled' : '') + ' aria-label="' + t('level', { n: i + 1 }) + '">' +
           (lv.olympiad ? MG.ICONS.trophy : lv.ch === 'read' ? MG.ICONS.book : lv.ch === 'think' ? numInChapter(i) : (i + 1)) +
           (progress.cleared[i] ? '<small>★</small>' : '') + '</button>';
       });
@@ -348,8 +347,7 @@
       b.addEventListener('click', function () { b.closest('dialog').close(); });
     });
     root.addEventListener('mg:lang', function () { render(); });
-    // 首页「天干地支」的入口：letter.html#culture 直接进文化课
-    startLevel(root.location.hash === '#culture' ? CULTURE : MG.prefs.get('letterLevel', 0));
+    startLevel(MG.prefs.get('letterLevel', 0));
   }
 
   MG.letterDebug = { start: startLevel, state: function () { return state; }, progress: function () { return progress; } };

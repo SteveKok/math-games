@@ -8,10 +8,13 @@
   var LAST = D.LEVELS.length - 1;
 
   /* ---------- 进度 ---------- */
-  var KEY = 'mg.digit.v1';
+  var KEY = 'mg.digit.v2';   // v2：关卡重新排过顺序
   var progress = MG.store.get(KEY, null);
   if (!progress || typeof progress.unlocked !== 'number') progress = { unlocked: 0, cleared: {} };
   function save() { MG.store.set(KEY, progress); }
+  // 关卡后来加过：如果前面的关全都通过了，就把下一关打开（还是按顺序，只是补上旧进度）
+  (function () { var i = 0; while (i < LAST && progress.cleared[i]) i++; progress.unlocked = Math.max(progress.unlocked, i); })();
+
   function complete() {
     progress.cleared[state.idx] = true;
     if (state.idx < LAST) progress.unlocked = Math.max(progress.unlocked, state.idx + 1);
@@ -19,13 +22,6 @@
   }
 
   var state = {};
-  var FIRST_PRIME = D.LEVELS.findIndex(function (l) { return l.ch === 'prime'; });
-  /** 能不能玩这一关：按顺序解锁；「数字和是质数」这一章是后来加的，第一关一直开着，之后按顺序 */
-  function isOpen(i) {
-    if (i <= progress.unlocked) return true;
-    if (D.LEVELS[i].ch !== 'prime') return false;
-    return i === FIRST_PRIME || !!progress.cleared[i - 1];
-  }
   function numInChapter(idx) {
     var ch = D.chapterOf(D.LEVELS[idx]), n = 0;
     for (var i = 0; i <= idx; i++) if (D.chapterOf(D.LEVELS[i]) === ch) n++;
@@ -35,8 +31,7 @@
 
   /* ---------- 开始一关 ---------- */
   function startLevel(idx) {
-    idx = Math.max(0, Math.min(idx, LAST));
-    if (!isOpen(idx)) idx = Math.min(progress.unlocked, LAST);
+    idx = Math.max(0, Math.min(idx, progress.unlocked, LAST));
     var lv = D.LEVELS[idx];
     state = { idx: idx, lv: lv, digits: D.toDigits(lv.start || 0), fails: 0, hintOn: false, done: false, revealed: false, review: false, status: null };
     MG.prefs.set('digitLevel', idx);
@@ -67,7 +62,7 @@
       $('oly-q').textContent = t(pk + 'Q');
       $('oly-note').textContent = t(pk + 'Note') + ' ' + t('polyGo');
     }
-    $('btn-rules').hidden = !(lv.ch === 'carry' || lv.ch === 'prime');
+    $('btn-rules').hidden = lv.ch !== 'carry';
     var playing = game && !state.done && !state.revealed;
     $('game-ctrl').hidden = !game || state.review;
     $('btn-check').hidden = !playing;
@@ -256,7 +251,7 @@
       D.LEVELS.forEach(function (lv, i) {
         if (D.chapterOf(lv) !== ch.id) return;
         var cls = 'lv-btn' + (progress.cleared[i] ? ' done' : '') + (i === state.idx ? ' current' : '');
-        h += '<button class="' + cls + '" data-lv="' + i + '"' + (isOpen(i) ? '' : ' disabled') + ' aria-label="' + t('level', { n: i + 1 }) + '">' +
+        h += '<button class="' + cls + '" data-lv="' + i + '"' + (i > progress.unlocked ? ' disabled' : '') + ' aria-label="' + t('level', { n: i + 1 }) + '">' +
           (lv.olympiad ? MG.ICONS.trophy : lv.ch === 'read' ? MG.ICONS.book : lv.ch === 'think' ? numInChapter(i) : (i + 1)) +
           (progress.cleared[i] ? '<small>★</small>' : '') + '</button>';
       });
@@ -297,8 +292,7 @@
       b.addEventListener('click', function () { b.closest('dialog').close(); });
     });
     root.addEventListener('mg:lang', function () { render(); });
-    // 首页「数字和是质数」的入口：digit.html#prime 直接进这一章
-    startLevel(root.location.hash === '#prime' ? FIRST_PRIME : MG.prefs.get('digitLevel', 0));
+    startLevel(MG.prefs.get('digitLevel', 0));
   }
 
   MG.digitDebug = { start: startLevel, state: function () { return state; }, progress: function () { return progress; } };

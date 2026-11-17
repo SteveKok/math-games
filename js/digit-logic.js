@@ -59,26 +59,26 @@
 
   /* ---------- 关卡 ---------- */
   var LEVELS = [
+    // 加 1 会怎样：由浅入深
     { ch: 'carry', kind: 'down', start: 1234, tip: 'dtip1', hint: 'dhint1', example: 19 },
     { ch: 'carry', kind: 'drop', amount: 17, start: 1239, tip: 'dtip2', hint: 'dhint2', example: 1299 },
     { ch: 'carry', kind: 'diffMod', m: 5, start: 1299, tip: 'dtip3', hint: 'dhint3', example: 19999 },
+    { ch: 'carry', kind: 'primeRun', k: 3, need: 3, start: 1234, tip: 'dtip5', hint: 'dhint5', example: 199 },
+    // 两道真题都在算数字和：OMK 2016 Bongsu B2、Muda B2
     { ch: 'carry', kind: 'both', m: 5, olympiad: true, start: 50767, tip: 'dtip4', hint: 'dhint4', example: 49999 },
+    { ch: 'carry', kind: 'primeRun', k: 5, need: 4, start: 1234, olympiad: true, poly: 'dp2', title: 'OMK 2016 · Muda B2', tip: 'dtip6', hint: 'dhint6', example: 197 },
     { ch: 'read', key: 'dread' },
     { ch: 'think', key: 'dex1', kind: 'both', m: 7, start: 1, example: 69999 },
     { ch: 'think', key: 'dex2', kind: 'both', m: 3, start: 1, impossible: true },
-    { ch: 'think', key: 'dex3', kind: 'both', m: 11, start: 1, example: 2899999 },
-    // 新的一章：数字和是质数（走向 OMK 2016 Muda B2）
-    { ch: 'prime', kind: 'primeRun', k: 3, need: 3, start: 1234, tip: 'dtip5', hint: 'dhint5', example: 199 },
-    { ch: 'prime', kind: 'primeRun', k: 5, need: 4, start: 1234, olympiad: true, poly: 'dp2', title: 'OMK 2016 · Muda B2', tip: 'dtip6', hint: 'dhint6', example: 197 }
+    { ch: 'think', key: 'dex3', kind: 'both', m: 11, start: 1, example: 2899999 }
   ];
   var CHAPTERS = [
     { id: 'carry', nameKey: 'dchCarry' },
     { id: 'oly', nameKey: 'pchOly' },
     { id: 'read', nameKey: 'dchRead' },
-    { id: 'think', nameKey: 'pchThink' },
-    { id: 'prime', nameKey: 'dchPrime' }
+    { id: 'think', nameKey: 'pchThink' }
   ];
-  function chapterOf(lv) { return lv.olympiad && !lv.poly ? 'oly' : lv.ch; }
+  function chapterOf(lv) { return lv.olympiad ? 'oly' : lv.ch; }
   function levelPossible(lv) { return lv.kind === 'both' ? bothPossible(lv.m) : true; }
   var OLYMPIAD = LEVELS.findIndex(function (l) { return l.olympiad; });
 
