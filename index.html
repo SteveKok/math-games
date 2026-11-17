@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>思维小游戏 · Think &amp; Play</title>
   <meta name="description" content="Free, open-source math-thinking games for kids aged 8–12. No accounts, no tracking.">
-  <link rel="stylesheet" href="css/style.css?v=7">
+  <link rel="stylesheet" href="css/style.css?v=8">
 </head>
 <body>
   <header class="topbar">
@@ -19,56 +19,17 @@
     <p class="sub" data-i18n="siteSub">先玩，先试，自己发现秘诀</p>
 
     <div class="cards">
-      <a class="card" href="nim.html">
-        <div class="art" id="nim-art"></div>
-        <h2 data-i18n="gameNim">取石子</h2>
-        <p data-i18n="gameNimDesc">轮流拿，拿到最后一个就赢！</p>
-        <span class="tag" data-i18n="play">开始玩</span>
-      </a>
-      <a class="card" href="liar.html">
-        <div class="art" id="liar-art"></div>
-        <h2 data-i18n="gameLiar">说谎者与诚实者</h2>
-        <p data-i18n="gameLiarDesc">谁说真话，谁在说谎？</p>
-        <span class="tag" data-i18n="play">开始玩</span>
-      </a>
-      <div class="card">
-        <a class="art" id="graph-art" href="graph.html#stroke" tabindex="-1" aria-hidden="true"></a>
-        <h2 data-i18n="gameGraph">一笔画与涂地图</h2>
-        <p data-i18n="gameGraphDesc">一笔画完？几种颜色涂满地图？</p>
-        <div class="tag-row">
-          <a href="graph.html#stroke" data-i18n="gplayStroke">一笔画</a>
-          <a class="alt" href="graph.html#color" data-i18n="gplayColor">涂地图</a>
-        </div>
+      <div class="card soon">
+        <h2 data-i18n="comingSoon">快做好了</h2>
+        <p data-i18n="noGamesYet">新游戏正在路上……</p>
       </div>
-</div>
     </div>
 
     <p class="footer" data-i18n="footer">免费 · 开源 · 不收集任何信息</p>
   </main>
 
-  <script src="js/core.js?v=7"></script>
-  <script src="js/strings.js?v=7"></script>
-  <script src="js/skins.js?v=7"></script>
-  <script src="js/liar-chars.js?v=7"></script>
-  <script>
-    (function () {
-      var art = document.getElementById('nim-art');
-      var seeds = [11, 23, 37, 41, 53];
-      art.innerHTML = seeds.map(function (s, i) {
-        return MG.SKINS[i % 2].draw(s, 'hub' + i);
-      }).join('');
-      var la = document.getElementById('liar-art');
-      la.innerHTML = MG.LIAR_SKINS[0].draw(0, 'H', 4) + MG.LIAR_SKINS[0].draw(1, 'L', 9) + MG.LIAR_SKINS[1].draw(2, null, 6);
-      document.getElementById('graph-art').innerHTML =
-        '<svg viewBox="0 0 120 100" aria-hidden="true">' +
-        '<path d="M60 10 L18 84 L102 84 Z" fill="none" stroke="#a39b8b" stroke-width="4" stroke-dasharray="0.1 8" stroke-linecap="round"/>' +
-        '<path d="M18 84 L60 10 L102 84" fill="none" stroke="#ff5d73" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>' +
-        '<path d="M60 52 L39 70 L60 84 L81 70 Z" fill="#3a86ff" stroke="#1d2433" stroke-width="3" stroke-linejoin="round"/>' +
-        '<path d="M60 52 L81 70 L60 84 Z" fill="#ffd23f" stroke="#1d2433" stroke-width="3" stroke-linejoin="round"/>' +
-        [[60, 10], [18, 84], [102, 84]].map(function (p, i) { return '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="8" fill="' + (i === 2 ? '#ffd23f' : '#fff') + '" stroke="#1d2433" stroke-width="3"/>'; }).join('') +
-        '</svg>';
-      MG.setupTopbar();
-    })();
-  </script>
+  <script src="js/core.js?v=8"></script>
+  <script src="js/strings.js?v=8"></script>
+  <script>MG.setupTopbar();</script>
 </body>
 </html>

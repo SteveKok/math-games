@@ -28,7 +28,7 @@
     set: function (k, v) { prefs[k] = v; MG.store.set(PREFS_KEY, prefs); }
   };
 
-  /* ---------- 可复现的伪随机数（让每颗糖、每块石头的形状固定） ---------- */
+  /* ---------- 可复现的伪随机数（同一个 seed 永远画出同一个形状） ---------- */
   MG.rng = function (seed) {
     var s = seed >>> 0;
     return function () {
