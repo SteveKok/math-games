@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>加号游戏 · Plus Signs · Tanda Tambah</title>
+  <link rel="stylesheet" href="css/style.css?v=20">
+</head>
+<body>
+  <header class="topbar">
+    <a class="icon-btn" href="index.html" data-icon="home" data-i18n-aria="home"></a>
+    <button class="icon-btn" id="btn-levels" data-icon="grid" data-i18n-aria="levels"></button>
+    <div class="title" id="level-title"></div>
+    <button class="icon-btn" data-lang-next data-i18n-aria="langNext"></button>
+    <button class="icon-btn toggle" data-sound-toggle data-i18n-aria="sound"></button>
+  </header>
+
+  <main class="game plus-game">
+    <section class="oly-card" id="oly-card" hidden>
+      <p class="oly-source" id="oly-source"></p>
+      <p class="oly-q" id="oly-q"></p>
+      <p class="oly-note" id="oly-note"></p>
+    </section>
+
+    <div class="ask-row">
+      <h1 class="ask" id="ask"></h1>
+      <button class="icon-btn" id="btn-rules" data-icon="help" data-i18n-aria="rules"></button>
+    </div>
+
+    <div class="pboard" id="board"></div>
+    <div class="reveal-wrap" id="reveal" hidden></div>
+
+    <div class="pbar">
+      <p class="status" id="status" aria-live="polite"></p>
+      <div class="pactions" id="game-ctrl">
+        <button class="icon-btn" id="btn-hint" data-icon="bulb" data-i18n-aria="hint" hidden></button>
+        <button class="icon-btn" id="btn-restart" data-icon="replay" data-i18n-aria="restart"></button>
+        <button class="big-btn go" id="btn-check"><span data-icon="check"></span><span data-i18n="dcheck"></span></button>
+        <button class="big-btn secondary" id="btn-impossible" hidden><span data-icon="nope"></span><span data-i18n="pimpossible"></span></button>
+      </div>
+      <div class="pactions" id="card-ctrl" hidden>
+        <button class="big-btn secondary toggle-big" id="btn-thint" aria-pressed="false"><span data-icon="bulb"></span><span data-i18n="pshowHint"></span></button>
+        <button class="big-btn secondary" id="btn-reveal"><span data-icon="book"></span><span data-i18n="pshowAnswer"></span></button>
+        <button class="big-btn" id="btn-got"><span data-icon="check"></span><span data-i18n="pgotIt"></span></button>
+        <button class="big-btn" id="btn-cardnext"><span data-icon="next"></span><span data-i18n="nextLevel"></span></button>
+      </div>
+      <div class="pactions" id="review-ctrl" hidden>
+        <button class="big-btn secondary" id="rv-again"><span data-icon="replay"></span><span data-i18n="again"></span></button>
+        <button class="big-btn" id="rv-next"><span data-icon="next"></span><span data-i18n="nextLevel"></span></button>
+      </div>
+    </div>
+  </main>
+
+  <dialog id="dlg-win">
+    <div class="face" id="win-face"></div>
+    <h2 data-i18n="youWin"></h2>
+    <p class="tip" id="win-tip"></p>
+    <div class="actions">
+      <button class="big-btn secondary" id="win-again"><span data-icon="replay"></span><span data-i18n="again"></span></button>
+      <button class="big-btn secondary" id="win-look"><span data-icon="eye"></span><span data-i18n="plookAgain"></span></button>
+      <button class="big-btn" id="win-next"><span data-icon="next"></span><span data-i18n="nextLevel"></span></button>
+    </div>
+  </dialog>
+
+  <dialog id="dlg-levels">
+    <h2 data-i18n="levels"></h2>
+    <div id="levels-body"></div>
+    <div class="actions"><button class="big-btn secondary" data-close data-i18n="close"></button></div>
+  </dialog>
+
+  <dialog id="dlg-rules" class="rules">
+    <h2 data-i18n="rulesTitle"></h2>
+    <ol class="rules-list" id="rules-list"></ol>
+    <h3 data-i18n="helperTitle"></h3>
+    <p id="rules-how"></p>
+    <div class="actions"><button class="big-btn" data-close data-i18n="rulesOk"></button></div>
+  </dialog>
+
+  <script src="js/core.js?v=20"></script>
+  <script src="js/strings.js?v=20"></script>
+  <script src="js/fx.js?v=20"></script>
+  <script src="js/plus-logic.js?v=20"></script>
+  <script src="js/plus-game.js?v=20"></script>
+</body>
+</html>
