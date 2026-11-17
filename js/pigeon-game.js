@@ -85,6 +85,41 @@
     else if (lv.ch === 'least') renderLeast();
     else if (lv.ch === 'read') renderRead();
     else renderThink();
+    paintReview();
+  }
+
+  /* ---------- 回去看看：只看不答，所有提示和解释都摊开 ---------- */
+  function lookAgain() {
+    $('dlg-win').close();
+    state.review = true;
+    if (state.lv.ch === 'think') { state.showHint = true; state.showAnswer = true; }
+    render();
+    root.scrollTo(0, 0);
+  }
+  function reviewHint() {
+    var lv = state.lv;
+    if (lv.ch === 'nest') return P.levelPossible(lv) ? null : t('phintNestCount', nouns({ k: lv.boxes, m: lv.cap, max: lv.boxes * lv.cap, n: lv.items }));
+    if (lv.ch === 'distinct') {
+      if (P.levelPossible(lv)) return t('phintDistinctShow');
+      var list = Array.from({ length: lv.kids }, function (_, i) { return i; });
+      return t('phintDistinctMin', { list: list.join(' + '), min: P.minDistinct(lv.kids), s: lv.sweets });
+    }
+    if (lv.ch === 'least') return t('phintLeast', { s: lv.sweets });
+    return null;
+  }
+  function paintReview() {
+    var on = !!state.review, lv = state.lv;
+    $('review-ctrl').hidden = !on;
+    $('rv-next').hidden = state.idx === LAST;
+    if (!on) { $('reveal').hidden = true; $('reveal').innerHTML = ''; return; }
+    ['least-ctrl', 'card-ctrl'].forEach(function (id) { $(id).hidden = true; });
+    $('btn-hint').hidden = $('btn-restart').hidden = $('btn-impossible').hidden = true;
+    var h = '', hint = reviewHint();
+    if (hint) h += '<p class="reveal hint-box"><b>' + t('pshowHint') + '</b>' + hint + '</p>';
+    if (lv.tip) h += '<p class="reveal answer-box"><b>' + t('pexplain') + '</b>' + t(lv.tip, nouns()) + '</p>';
+    $('reveal').innerHTML = h;
+    $('reveal').hidden = !h;
+    $('status').textContent = '';
   }
 
   function setStatus(key, vars, kind) { state.status = { key: key, vars: vars, kind: kind || '' }; }
@@ -497,6 +532,10 @@
       if (b && !b.disabled) { $('dlg-levels').close(); startLevel(+b.getAttribute('data-lv')); }
     });
     $('win-again').addEventListener('click', function () { $('dlg-win').close(); startLevel(state.idx); });
+    $('win-look').addEventListener('click', lookAgain);
+    $('dlg-win').addEventListener('cancel', function (e) { e.preventDefault(); lookAgain(); });
+    $('rv-again').addEventListener('click', function () { MG.sound.play('untap'); startLevel(state.idx); });
+    $('rv-next').addEventListener('click', function () { MG.sound.play('tap'); startLevel(state.idx + 1); });
     $('win-next').addEventListener('click', function () { $('dlg-win').close(); startLevel(state.idx + 1); });
     $('btn-got').addEventListener('click', function () { complete(); MG.sound.play('tap'); startLevel(state.idx + 1); });
     $('btn-thint').addEventListener('click', function () { state.showHint = !state.showHint; MG.sound.play('hint'); render(); });

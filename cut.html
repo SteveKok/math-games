@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>公平切蛋糕 · Fair Cake Cut · Potong Kek Adil</title>
-  <link rel="stylesheet" href="css/style.css?v=12">
+  <link rel="stylesheet" href="css/style.css?v=13">
 </head>
 <body>
   <header class="topbar">
@@ -43,6 +43,10 @@
         <button class="big-btn" id="btn-got"><span data-icon="check"></span><span data-i18n="pgotIt"></span></button>
         <button class="big-btn" id="btn-cardnext"><span data-icon="next"></span><span data-i18n="nextLevel"></span></button>
       </div>
+      <div class="pactions" id="review-ctrl" hidden>
+        <button class="big-btn secondary" id="rv-again"><span data-icon="replay"></span><span data-i18n="again"></span></button>
+        <button class="big-btn" id="rv-next"><span data-icon="next"></span><span data-i18n="nextLevel"></span></button>
+      </div>
     </div>
   </main>
 
@@ -52,6 +56,7 @@
     <p class="tip" id="win-tip"></p>
     <div class="actions">
       <button class="big-btn secondary" id="win-again"><span data-icon="replay"></span><span data-i18n="again"></span></button>
+      <button class="big-btn secondary" id="win-look"><span data-icon="eye"></span><span data-i18n="plookAgain"></span></button>
       <button class="big-btn" id="win-next"><span data-icon="next"></span><span data-i18n="nextLevel"></span></button>
     </div>
   </dialog>
@@ -70,10 +75,10 @@
     <div class="actions"><button class="big-btn" data-close data-i18n="rulesOk"></button></div>
   </dialog>
 
-  <script src="js/core.js?v=12"></script>
-  <script src="js/strings.js?v=12"></script>
-  <script src="js/fx.js?v=12"></script>
-  <script src="js/cut-logic.js?v=12"></script>
-  <script src="js/cut-game.js?v=12"></script>
+  <script src="js/core.js?v=13"></script>
+  <script src="js/strings.js?v=13"></script>
+  <script src="js/fx.js?v=13"></script>
+  <script src="js/cut-logic.js?v=13"></script>
+  <script src="js/cut-game.js?v=13"></script>
 </body>
 </html>

@@ -75,6 +75,22 @@
     drawBoard();
     renderReveal();
     paintStatus();
+    paintReview();
+  }
+
+  /* ---------- 回去看看：只看不答，所有提示和解释都摊开 ---------- */
+  function lookAgain() {
+    $('dlg-win').close();
+    state.review = true; state.hintOn = true; state.sel = -1; state.status = null;
+    render();
+    root.scrollTo(0, 0);
+  }
+  function paintReview() {
+    var on = !!state.review;
+    $('review-ctrl').hidden = !on;
+    $('rv-next').hidden = state.idx === LAST;
+    if (!on) return;
+    $('game-ctrl').hidden = $('card-ctrl').hidden = true;
   }
   function showHintButton() {
     var lv = state.lv;
@@ -134,7 +150,7 @@
     (lv.pins || []).forEach(function (p) {
       h += '<g class="pin"><circle cx="' + p[0] + '" cy="' + p[1] + '" r="2.4" fill="#e63946" stroke="#1d2433" stroke-width=".6"/><circle cx="' + (p[0] - 0.7) + '" cy="' + (p[1] - 0.7) + '" r=".7" fill="#fff"/></g>';
     });
-    if (C.isEdge(lv) && !state.done) {
+    if (C.isEdge(lv) && (!state.done || state.review)) {
       var pts = C.points(lv, state.lines);
       state.pts = pts;
       var glow = state.hintOn && lv.hintPts ? lv.hintPts : [];
@@ -154,7 +170,8 @@
   }
   function paintStatus() {
     var lv = state.lv, el = $('status'), line = activeLine(), kind = '', text;
-    if (state.status) { text = t(state.status.key); kind = state.status.kind; }
+    if (state.review) { text = line ? splitText(line) : ''; }
+    else if (state.status) { text = t(state.status.key); kind = state.status.kind; }
     else if (state.sel >= 0) text = t('cpicked');
     else if (line) text = splitText(line);
     else text = t(lv.ch === 'pin' ? 'cpinTap' : C.isEdge(lv) ? 'cedgeTap' : 'cfreeTap');
@@ -165,9 +182,13 @@
   function renderReveal() {
     var lv = state.lv, h = '';
     if (lv.ch === 'think') {
-      if (state.hintOn || state.revealed) h += '<p class="reveal hint-box"><b>' + t('pshowHint') + '</b>' + t(lv.key + 'H') + '</p>';
-      if (state.revealed) h += '<p class="reveal answer-box"><b>' + t('panswerLabel') + '</b>' + t(lv.key + 'A') + '</p>';
+      var all = state.revealed || state.review;
+      if (state.hintOn || all) h += '<p class="reveal hint-box"><b>' + t('pshowHint') + '</b>' + t(lv.key + 'H') + '</p>';
+      if (all) h += '<p class="reveal answer-box"><b>' + t('panswerLabel') + '</b>' + t(lv.key + 'A') + '</p>';
       if (state.revealed && state.idx === LAST) h += '<p class="reveal answer-box">' + t('callClear') + '</p>';
+    } else if (state.review) {
+      h += '<p class="reveal hint-box"><b>' + t('pshowHint') + '</b>' + t(lv.hint) + '</p>' +
+        '<p class="reveal answer-box"><b>' + t('pexplain') + '</b>' + t(lv.tip) + '</p>';
     }
     $('reveal').innerHTML = h;
     $('reveal').hidden = !h;
@@ -357,6 +378,10 @@
       if (b && !b.disabled) { $('dlg-levels').close(); startLevel(+b.getAttribute('data-lv')); }
     });
     $('win-again').addEventListener('click', function () { $('dlg-win').close(); startLevel(state.idx); });
+    $('win-look').addEventListener('click', lookAgain);
+    $('dlg-win').addEventListener('cancel', function (e) { e.preventDefault(); lookAgain(); });
+    $('rv-again').addEventListener('click', function () { MG.sound.play('untap'); startLevel(state.idx); });
+    $('rv-next').addEventListener('click', function () { MG.sound.play('tap'); startLevel(state.idx + 1); });
     $('win-next').addEventListener('click', function () { $('dlg-win').close(); startLevel(state.idx + 1); });
     document.querySelectorAll('[data-close]').forEach(function (b) {
       b.addEventListener('click', function () { b.closest('dialog').close(); });
