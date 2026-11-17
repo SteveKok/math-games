@@ -42,22 +42,24 @@
   function ask(lv) {
     if (lv.ch === 'read') return t('dreadT');
     if (lv.ch === 'think') return t(lv.key + 'Q');
+    if (lv.kind === 'primeRun') return t(lv.k === 3 ? 'dask5' : 'dask6');
     return t(lv.kind === 'down' ? 'dask1' : lv.kind === 'drop' ? 'dask2' : lv.kind === 'diffMod' ? 'dask3' : 'dask4');
   }
   function render() {
     var lv = state.lv, game = lv.ch !== 'read';
-    $('level-title').textContent = lv.olympiad ? 'OMK 2016 · B2'
+    $('level-title').textContent = lv.title ? lv.title : lv.olympiad ? 'OMK 2016 · B2'
       : lv.ch === 'read' ? t('dchRead')
       : lv.ch === 'think' ? t('pthinkN', { n: numInChapter(state.idx) })
       : t('level', { n: state.idx + 1 });
     $('ask').textContent = ask(lv);
     $('oly-card').hidden = !lv.olympiad;
     if (lv.olympiad) {
-      $('oly-source').textContent = t('dpolySource');
-      $('oly-q').textContent = t('dpolyQ');
-      $('oly-note').textContent = t('dpolyNote') + ' ' + t('polyGo');
+      var pk = lv.poly || 'dpoly';   // 第二道真题（Muda B2）用自己的文字
+      $('oly-source').textContent = t(pk + 'Source');
+      $('oly-q').textContent = t(pk + 'Q');
+      $('oly-note').textContent = t(pk + 'Note') + ' ' + t('polyGo');
     }
-    $('btn-rules').hidden = lv.ch !== 'carry';
+    $('btn-rules').hidden = !(lv.ch === 'carry' || lv.ch === 'prime');
     var playing = game && !state.done && !state.revealed;
     $('game-ctrl').hidden = !game || state.review;
     $('btn-check').hidden = !playing;
@@ -108,7 +110,14 @@
         '<button class="icon-btn wbtn" data-w="' + i + '" data-d="-1" aria-label="' + t('ddown', { n: i + 1 }) + '"' + (locked ? ' disabled' : '') + '>' + MG.ICONS.down + '</button></div>';
     });
     h += '</div>';
-    if (n > 0) {
+    if (n > 0 && state.lv.kind === 'primeRun') {
+      // 连续 k 个数，各自的数字和，是不是质数
+      h += '<div class="sums">' + Array.from({ length: state.lv.k }, function (_, j) {
+        var m = n + j, ds = D.digitSum(m), ok = D.isPrime(ds);
+        return '<div class="srow"><span class="slabel"><b>' + m + '</b></span><span class="sdigits">' + String(m).split('').join('<i>+</i>') + ' <i>=</i> <b>' + ds + '</b></span>' +
+          '<span class="badge ' + (ok ? 'ok' : 'no') + '">' + (ok ? '✓ ' + t('dprime') : '✗ ' + t('dnotPrime')) + '</span></div>';
+      }).join('') + '</div>';
+    } else if (n > 0) {
       var c = D.change(n);
       h += '<div class="sums">' + sumRow('N', n, 'nine') + sumRow('N + 1', n + 1, 'zero') +
         '<p class="change ' + (c < 0 ? 'down' : 'up') + '"><span>' + t('dchange') + '</span> <b>' + (c > 0 ? '+' : '') + c + '</b></p></div>';
@@ -174,6 +183,7 @@
     var c = D.change(n);
     if (lv.kind === 'down') return fail('dno1');
     if (lv.kind === 'both') return fail('dnoBoth', { a: D.digitSum(n), b: D.digitSum(n + 1), m: lv.m });
+    if (lv.kind === 'primeRun') return fail('dnoRun', { c: D.primeCount(n, lv.k), need: lv.need });
     fail('dnoChange', { c: (c > 0 ? '+' : '') + c });
   }
   function fail(key, vars) {

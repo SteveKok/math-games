@@ -74,4 +74,19 @@ test('想一想：7 和 11 有答案（例子在数字轮范围内），3 做不
   for (var n = 1; n <= 100000; n++) assert.strictEqual(D.digitSum(n) % 3, n % 3);
 });
 
+test('OMK 2016 Muda B2：数字和是质数——连续 3 个都是最早在 199；连续 5 个里 4 个最早在 197（暴力）', function () {
+  function first(k, need) { for (var n = 1; n < 1000000; n++) if (D.primeCount(n, k) >= need) return n; return null; }
+  assert.strictEqual(first(3, 3), 199);
+  assert.strictEqual(first(5, 4), 197);
+  assert.deepStrictEqual([197, 198, 199, 200, 201].map(D.digitSum), [17, 18, 19, 2, 3]);
+  assert.deepStrictEqual([199, 200, 201, 202, 203].map(D.digitSum), [19, 2, 3, 4, 5]);   // 官方另一个例子
+  assert.strictEqual(D.digitSum(3301), 7);                                                 // 题目里的例子
+  var lv = D.LEVELS.filter(function (l) { return l.poly === 'dp2'; })[0];
+  assert.ok(lv && D.check(lv, 197) && D.check(lv, 199) && !D.check(lv, lv.start));
+});
+
+test('不进位时数字和是连续的数，连续 3 个整数不可能都是质数，所以一定要用到进位', function () {
+  for (var s = 1; s < 200; s++) assert.ok(!(D.isPrime(s) && D.isPrime(s + 1) && D.isPrime(s + 2)), 's = ' + s);
+});
+
 console.log('\n' + passed + ' tests passed');

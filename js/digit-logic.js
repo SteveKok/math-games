@@ -17,6 +17,9 @@
   /** 加 1 以后数字和的变化 */
   function change(n) { return digitSum(n + 1) - digitSum(n); }
   function mod(a, m) { return ((a % m) + m) % m; }
+  function isPrime(n) { if (n < 2) return false; for (var i = 2; i * i <= n; i++) if (n % i === 0) return false; return true; }
+  /** 从 n 开始连续 k 个数，有几个的数字和是质数 */
+  function primeCount(n, k) { var c = 0; for (var j = 0; j < k; j++) if (isPrime(digitSum(n + j))) c++; return c; }
   function fromDigits(ds) { return ds.reduce(function (n, d) { return n * 10 + d; }, 0); }
   function toDigits(n) {
     var out = [];
@@ -32,6 +35,7 @@
       case 'drop': return change(n) === -lv.amount;
       case 'diffMod': return mod(change(n), lv.m) === 0;
       case 'both': return mod(digitSum(n), lv.m) === 0 && mod(digitSum(n + 1), lv.m) === 0;
+      case 'primeRun': return n + lv.k - 1 <= Math.pow(10, WHEELS) - 1 && primeCount(n, lv.k) >= lv.need;
     }
     return false;
   }
@@ -62,20 +66,24 @@
     { ch: 'read', key: 'dread' },
     { ch: 'think', key: 'dex1', kind: 'both', m: 7, start: 1, example: 69999 },
     { ch: 'think', key: 'dex2', kind: 'both', m: 3, start: 1, impossible: true },
-    { ch: 'think', key: 'dex3', kind: 'both', m: 11, start: 1, example: 2899999 }
+    { ch: 'think', key: 'dex3', kind: 'both', m: 11, start: 1, example: 2899999 },
+    // 新的一章：数字和是质数（走向 OMK 2016 Muda B2）
+    { ch: 'prime', kind: 'primeRun', k: 3, need: 3, start: 1234, tip: 'dtip5', hint: 'dhint5', example: 199 },
+    { ch: 'prime', kind: 'primeRun', k: 5, need: 4, start: 1234, olympiad: true, poly: 'dp2', title: 'OMK 2016 · Muda B2', tip: 'dtip6', hint: 'dhint6', example: 197 }
   ];
   var CHAPTERS = [
     { id: 'carry', nameKey: 'dchCarry' },
     { id: 'oly', nameKey: 'pchOly' },
     { id: 'read', nameKey: 'dchRead' },
-    { id: 'think', nameKey: 'pchThink' }
+    { id: 'think', nameKey: 'pchThink' },
+    { id: 'prime', nameKey: 'dchPrime' }
   ];
-  function chapterOf(lv) { return lv.olympiad ? 'oly' : lv.ch; }
+  function chapterOf(lv) { return lv.olympiad && !lv.poly ? 'oly' : lv.ch; }
   function levelPossible(lv) { return lv.kind === 'both' ? bothPossible(lv.m) : true; }
   var OLYMPIAD = LEVELS.findIndex(function (l) { return l.olympiad; });
 
   return {
-    WHEELS: WHEELS, digitSum: digitSum, trailingNines: trailingNines, change: change, mod: mod,
+    WHEELS: WHEELS, digitSum: digitSum, isPrime: isPrime, primeCount: primeCount, trailingNines: trailingNines, change: change, mod: mod,
     fromDigits: fromDigits, toDigits: toDigits, check: check, bothPossible: bothPossible, bothExample: bothExample,
     LEVELS: LEVELS, CHAPTERS: CHAPTERS, chapterOf: chapterOf, levelPossible: levelPossible, OLYMPIAD: OLYMPIAD
   };
