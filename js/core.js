@@ -41,17 +41,17 @@
 
   /* ---------- 多语言 ---------- */
   // 字符串表在 strings.js 里：MG.STRINGS = { zh: {...}, en: {...}, ms: {...} }
-  // LANGS 里 enabled:false 的语言不会出现在切换按钮里（马来文先预留结构）。
+  // LANGS 里 enabled:false 的语言不会出现在切换按钮里。三种语言：华语、英语、马来文。
   MG.LANGS = [
     { id: 'zh', label: '中文', html: 'zh-Hans', enabled: true },
     { id: 'en', label: 'EN', html: 'en', enabled: true },
-    { id: 'ms', label: 'BM', html: 'ms', enabled: false }
+    { id: 'ms', label: 'BM', html: 'ms', enabled: true }
   ];
   function enabledLangs() { return MG.LANGS.filter(function (l) { return l.enabled; }); }
   function detectLang() {
     var nav = (root.navigator && (root.navigator.language || '')) .toLowerCase();
     if (nav.indexOf('zh') === 0) return 'zh';
-    if (nav.indexOf('ms') === 0 && MG.LANGS[2].enabled) return 'ms';
+    if (nav.indexOf('ms') === 0 || nav.indexOf('id') === 0) return 'ms';
     return nav ? 'en' : 'zh';
   }
   var lang = MG.prefs.get('lang', null);

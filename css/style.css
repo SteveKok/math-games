@@ -34,7 +34,7 @@ svg { display: block; }
   display: flex; align-items: center; gap: 10px;
   padding: 12px 16px; max-width: 900px; margin: 0 auto;
 }
-.topbar .title { flex: 1; font-size: 1.25rem; font-weight: 800; text-align: center; white-space: nowrap; }
+.topbar .title { flex: 1; min-width: 0; font-size: 1.25rem; font-weight: 800; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .icon-btn {
   width: 52px; height: 52px; flex: none; border-radius: 16px;
   border: 3px solid var(--line); background: var(--card);
@@ -119,6 +119,8 @@ dialog.rules h3 { margin: 16px 0 4px; font-size: 1.25rem; }
 
 @media (max-width: 520px) {
   :root { font-size: 16px; }
+  .topbar { gap: 6px; padding: 10px 12px; }
+  .topbar .title { font-size: 1.05rem; }
   .icon-btn { width: 46px; height: 46px; border-radius: 14px; }
   .icon-btn svg { width: 24px; height: 24px; }
 }
@@ -126,3 +128,119 @@ dialog.rules h3 { margin: 16px 0 4px; font-size: 1.25rem; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+/* ---------- 鸽子与糖果 ---------- */
+.ask-row { display: flex; align-items: center; gap: 12px; }
+.ask { flex: 1; margin: 0; font-size: 1.35rem; line-height: 1.35; }
+.status { margin: 0; min-height: 1.6em; font-weight: 800; font-size: 1.1rem; text-align: center; }
+.status.warn { color: #c2253f; }
+.status.info { color: #1d5fc9; }
+.status.soft { color: var(--ink-soft); font-weight: 700; }
+.pboard {
+  background: rgba(255, 255, 255, .65); border: 3px solid var(--line); border-radius: var(--radius);
+  padding: 14px; min-height: 240px; display: flex; flex-direction: column; gap: 14px; justify-content: center;
+}
+.pbar { display: flex; flex-direction: column; gap: 12px; align-items: center; }
+.pactions, .least-ctrl { display: flex; gap: 10px; align-items: center; justify-content: center; flex-wrap: wrap; }
+.icon-btn.hint, .big-btn.hint { outline: 4px solid var(--g1, #ff8c1a); outline-offset: 3px; }
+.icon-btn:disabled { opacity: .35; cursor: default; box-shadow: none; transform: none; }
+.small-txt { font-size: 1rem; }
+.n-val { min-width: 2.4em; text-align: center; font-size: 2rem; }
+
+/* 第一章：电线上的鸽子 + 窝 */
+.wire { min-height: 56px; display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; align-items: flex-end;
+  border-bottom: 3px solid #7a8396; padding-bottom: 2px; }
+.witem svg { width: 50px; height: 42px; }
+.nests { display: grid; gap: 10px; grid-template-columns: repeat(var(--cols), minmax(0, 1fr)); }
+.nest-wrap { display: flex; flex-direction: column; align-items: center; border-radius: 18px; padding: 6px 2px 0; cursor: pointer; }
+.nest-wrap.over { background: repeating-linear-gradient(135deg, #ffe36e 0 10px, #fff3b0 10px 20px); }
+.nest-wrap.glow { outline: 4px solid #ff8c1a; outline-offset: 2px; }
+.nest-in { display: flex; flex-wrap: wrap-reverse; justify-content: center; align-items: flex-end; gap: 2px; min-height: 48px; margin-bottom: -10px; position: relative; z-index: 1; }
+.pitem { padding: 0; border: 0; background: none; border-radius: 10px; }
+.pitem svg { width: 46px; height: 38px; }
+.pitem.extra { background: rgba(255, 93, 115, .3); }
+.slot { width: 40px; height: 34px; border: 3px dashed #a39b8b; border-radius: 50%; margin: 2px 3px; }
+.nest-btn { width: 100%; max-width: 130px; padding: 0; border: 0; background: none; position: relative; }
+.nest-btn svg { width: 100%; height: auto; }
+.nest-btn .cnt { display: block; font-weight: 800; font-size: .95rem; white-space: nowrap; }
+.nest-wrap.over .cnt { color: #c2253f; }
+
+/* 第二章：分糖 */
+.pool { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.pool-sweets, .plate { display: flex; flex-wrap: wrap; justify-content: center; gap: 2px; }
+.pool-sweets { min-height: 30px; }
+.psweet svg { width: 32px; height: 24px; }
+.pool-n { font-size: 1.15rem; }
+.kids { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); }
+.kid { display: flex; flex-direction: column; align-items: center; gap: 6px; background: var(--card); border: 3px solid var(--line); border-radius: 20px; padding: 8px 6px; }
+.kid > svg { width: 64px; height: 64px; }
+.kid.same { box-shadow: 0 0 0 6px var(--sel); }
+.kid .plate { min-height: 28px; max-width: 120px; }
+.kid .plate .psweet svg { width: 24px; height: 18px; }
+.kid .amt { font-size: 2rem; line-height: 1; }
+.kid .pm { display: flex; gap: 8px; }
+.kid .pm .icon-btn { width: 48px; height: 48px; }
+
+/* 第三章：楼梯 + 比一比 */
+.least-top { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.faces { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; }
+.faces .face svg { width: 34px; height: 34px; }
+.faces .more { font-weight: 800; margin-left: 4px; }
+.kid-n { font-size: 1.3rem; }
+.stair { width: 100%; max-height: 170px; }
+.stair-note { margin: 0; text-align: center; color: var(--ink-soft); font-weight: 700; }
+.compare { display: flex; flex-direction: column; gap: 8px; }
+.cmp-row { display: flex; flex-direction: column; gap: 2px; font-weight: 700; }
+.cmp-head { display: flex; justify-content: space-between; gap: 8px; }
+.cmp-head b { font-size: 1.15rem; }
+.cmp-track { height: 22px; border: 3px solid var(--line); border-radius: 999px; background: #fff; overflow: hidden; }
+.cmp-bar { height: 100%; }
+.cmp-bar.need { background: #2ec4b6; }
+.cmp-bar.need.over { background: #ff5d73; }
+.cmp-bar.have { background: #ffb627; }
+.verdict { margin: 0; text-align: center; font-size: 1.2rem; font-weight: 800; padding: 6px 10px; border-radius: 14px; }
+.verdict small { display: block; font-size: .9rem; font-weight: 700; color: var(--ink-soft); }
+.verdict.ok { background: #d6f5ec; }
+.verdict.forced { background: #ffe0e5; }
+
+/* 奥数真题卡片 */
+.oly-card { background: #fffbe6; border: 3px solid var(--line); border-radius: var(--radius); padding: 14px 16px; box-shadow: 0 5px 0 var(--line); }
+.oly-source { margin: 0 0 8px; font-size: .9rem; font-weight: 800; color: #8a5a00; }
+.oly-q { margin: 0; font-size: 1.1rem; font-weight: 700; }
+.oly-note { margin: 8px 0 0; font-size: .9rem; color: var(--ink-soft); }
+.oly-src-small { font-size: .9rem; font-weight: 800; color: #8a5a00; background: #fffbe6; border-radius: 12px; padding: 8px 12px; }
+
+/* 弹窗里的小零件 */
+.lv-chapter { margin: 14px 0 0; font-size: 1.15rem; }
+.lv-btn svg { width: 34px; height: 34px; margin: 0 auto; }
+.skin-ico svg { width: 56px; height: 46px; margin: 0 auto; }
+#btn-skin .skin-ico svg { width: 36px; height: 30px; }
+dialog .face svg { width: 100%; height: 100%; }
+.rule-art { width: 96px; }
+.rule-art svg { width: 40px; height: 34px; }
+.rule-art .arrow { font-weight: 800; }
+.pm-demo, .nope-demo { display: flex; gap: 4px; }
+.pm-demo svg, .nope-demo svg { width: 28px; height: 28px; }
+.think { background: var(--bg); border-radius: 16px; padding: 8px 14px; margin: 10px 0; }
+.think details { margin: 4px 0; }
+.think summary { font-weight: 800; cursor: pointer; min-height: 36px; display: flex; align-items: center; }
+.think-title { border-top: 3px dashed var(--line); padding-top: 14px; }
+
+@media (max-width: 520px) {
+  .ask { font-size: 1.15rem; }
+  .pboard { padding: 10px 8px; }
+  .nests { gap: 4px; }
+  .pitem svg { width: 36px; height: 30px; }
+  .slot { width: 30px; height: 26px; }
+  .witem svg { width: 40px; height: 34px; }
+  .kids { grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); gap: 6px; }
+  .kid > svg { width: 52px; height: 52px; }
+  .kid .pm .icon-btn { width: 42px; height: 42px; }
+  .kids-4 .kids { grid-template-columns: repeat(2, 1fr); }
+  .oly-q { font-size: 1rem; }
+  .oly-card { padding: 10px 12px; }
+  .n-val { font-size: 1.6rem; }
+}
+.hub-nest { display: flex; flex-wrap: wrap; justify-content: center; width: 100px; }
+.card .art .hub-nest svg { width: 44px; height: 38px; }
+.card .art .hub-nest svg:last-child { width: 96px; height: 42px; margin-top: -8px; }

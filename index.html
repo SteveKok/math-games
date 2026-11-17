@@ -19,6 +19,12 @@
     <p class="sub" data-i18n="siteSub">先玩，先试，自己发现秘诀</p>
 
     <div class="cards">
+      <a class="card" href="pigeon.html">
+        <div class="art" id="pigeon-art"></div>
+        <h2 data-i18n="gamePigeon">鸽子与糖果</h2>
+        <p data-i18n="gamePigeonDesc">放得下吗？一定会撞吗？</p>
+        <span class="tag" data-i18n="play">开始玩</span>
+      </a>
       <div class="card soon">
         <h2 data-i18n="comingSoon">快做好了</h2>
         <p data-i18n="noGamesYet">新游戏正在路上……</p>
@@ -30,6 +36,15 @@
 
   <script src="js/core.js?v=8"></script>
   <script src="js/strings.js?v=8"></script>
-  <script>MG.setupTopbar();</script>
+  <script src="js/pigeon-skins.js?v=8"></script>
+  <script>
+    (function () {
+      var sk = MG.PIGEON_SKINS[0];
+      document.getElementById('pigeon-art').innerHTML =
+        '<div class="hub-nest">' + sk.item(0) + sk.item(1) + sk.box(true) + '</div>' +
+        '<div class="hub-nest">' + sk.item(2) + sk.box(false) + '</div>';
+      MG.setupTopbar();
+    })();
+  </script>
 </body>
 </html>
