@@ -128,7 +128,32 @@
 
 
 
-  var DRAW = { dirichlet: dirichlet, steinhaus: steinhaus, banach: banach, gauss: gauss };
+
+  /** 伯恩赛德：维多利亚时代的英国学者——头顶稀疏、两侧短发、浓密的大胡子、高领白衬衫、深色西装 */
+  function burnside(uid) {
+    var skin = '#f1caa6';
+    return frame(uid,
+      suit('#2d3340', '#3c4352', skin) +
+      '<path d="M76 160 L100 176 L124 160 L116 150 L100 162 L84 150 Z" fill="#fff" stroke="#1d2433" stroke-width="2.2" stroke-linejoin="round"/>' +
+      '<path d="M90 170 L100 176 L110 170 L110 182 L100 178 L90 182 Z" fill="#1d2433"/>' +
+      '<path d="M64 98 C62 136 80 156 100 156 C120 156 138 136 136 98 C136 60 64 60 64 98 Z" fill="' + skin + '" stroke="#1d2433" stroke-width="2.6"/>' +
+      ears(skin) +
+      // 两侧短发，头顶稀疏
+      '<path d="M63 110 C58 98 60 86 68 82 C72 90 72 100 72 110 Z" fill="#8a7a6a"/>' +
+      '<path d="M137 110 C142 98 140 86 132 82 C128 90 128 100 128 110 Z" fill="#8a7a6a"/>' +
+      '<path d="M84 68 q16 -6 32 0" fill="none" stroke="#8a7a6a" stroke-width="3" stroke-linecap="round"/>' +
+      '<ellipse cx="90" cy="72" rx="9" ry="4" fill="#fff" opacity=".3"/>' +
+      '<path d="M78 97 q9 -5 18 -1 M104 96 q9 -4 18 1" fill="none" stroke="#6b5b4b" stroke-width="3" stroke-linecap="round"/>' +
+      eyes(106, '#3b4a5a') +
+      '<path d="M100 108 C98 118 96 124 100 127 C104 128 106 126 104 124" fill="none" stroke="#b07a55" stroke-width="2.2" stroke-linecap="round"/>' +
+      // 浓密的大胡子（连着两颊）
+      '<path d="M66 112 C64 150 84 178 100 180 C116 178 136 150 134 112 C128 128 118 134 100 134 C82 134 72 128 66 112 Z" fill="#8a7a6a" stroke="#1d2433" stroke-width="2.4" stroke-linejoin="round"/>' +
+      '<path d="M78 146 q6 6 12 0 q6 6 12 0 q6 6 12 0 q6 6 12 0 M84 162 q6 6 12 0 q6 6 12 0 q6 6 12 0" fill="none" stroke="#6b5b4b" stroke-width="1.8" stroke-linecap="round"/>' +
+      '<path d="M84 131 C92 125 108 125 116 131" fill="none" stroke="#6b5b4b" stroke-width="4.5" stroke-linecap="round"/>' +
+      '<path d="M94 138 q6 3 12 0" fill="none" stroke="#9b5a45" stroke-width="2.2" stroke-linecap="round"/>');
+  }
+
+  var DRAW = { dirichlet: dirichlet, steinhaus: steinhaus, banach: banach, gauss: gauss, burnside: burnside };
   var uid = 0;
   /** 一幅带名字的画像 */
   MG.portrait = function (id) {

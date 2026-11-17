@@ -382,3 +382,42 @@ dialog .face svg { width: 100%; height: 100%; }
   .crow .rep { font-size: 1.25rem; }
   .crow .icon-btn { width: 42px; height: 42px; }
 }
+
+/* ---------- 涂立方体 ---------- */
+.stepper { display: flex; gap: 8px; align-items: center; justify-content: center; flex-wrap: wrap; }
+.cube-board { align-items: center; }
+.cube-stage { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.cube-row { display: flex; align-items: center; gap: 10px; }
+.scene { --size: 170px; --half: 85px; width: var(--size); height: var(--size); perspective: 700px; touch-action: none; cursor: grab; margin: 24px; }
+.scene.locked { cursor: default; }
+.cube3d { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform .3s ease; }
+.cube3d.dragging { transition: none; }
+.cface { position: absolute; inset: 0; border: 4px solid #1d2433; border-radius: 14px; backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  background: #fff; box-shadow: inset 0 0 0 6px rgba(29, 36, 51, .06); cursor: pointer; }
+.cface.painted { box-shadow: inset 0 0 0 6px rgba(255, 255, 255, .25); }
+.cface:focus-visible { outline: 4px solid var(--focus); outline-offset: -8px; }
+.collection { width: 100%; min-height: 104px; }
+.collection h3 { margin: 4px 0; text-align: center; font-size: 1.05rem; }
+.nets { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.net-item { display: flex; flex-direction: column; align-items: center; padding: 4px; border-radius: 10px; }
+.net-item small { font-weight: 800; color: var(--ink-soft); }
+.net-item.flash { background: #ffe36e; }
+.net { display: grid; grid-template-columns: repeat(4, 14px); grid-template-rows: repeat(3, 14px); gap: 2px; }
+.net span { border: 2px solid #1d2433; border-radius: 3px; }
+.net.small { grid-template-columns: repeat(4, 10px); grid-template-rows: repeat(3, 10px); gap: 1px; }
+.net.small span { border-width: 1.5px; border-radius: 2px; }
+.net-groups { display: flex; flex-direction: column; gap: 8px; }
+.net-group { display: flex; align-items: center; gap: 12px; justify-content: center; }
+.net-group > b { width: 1.5em; text-align: right; }
+.win-nets { height: 100%; align-content: center; gap: 6px; }
+.mini-cube { position: relative; width: 44px; height: 44px; }
+.mini-cube span { position: absolute; border: 2px solid #1d2433; }
+.mini-cube .mt { left: 10px; top: 0; width: 26px; height: 12px; background: #2fb67c; transform: skewX(-40deg); transform-origin: bottom left; }
+.mini-cube .mf { left: 0; top: 12px; width: 26px; height: 26px; background: #fff; }
+.mini-cube .mr { left: 26px; top: 12px; width: 12px; height: 26px; background: #2fb67c; transform: skewY(-40deg); transform-origin: top left; }
+.mini-cube.big { transform: scale(1.9); }
+@media (prefers-reduced-motion: reduce) { .cube3d { transition: none; } }
+@media (max-width: 520px) {
+  .scene { --size: 150px; --half: 75px; margin: 20px; }
+  .turn { width: 44px; height: 44px; }
+}
