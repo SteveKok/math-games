@@ -498,3 +498,33 @@ dialog .face .sq-svg { max-width: 110px; }
 .gz-card i { font-style: normal; font-size: .7rem; font-weight: 700; color: var(--ink-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
 .gz-card.cur { background: #ffd23f; box-shadow: 0 0 0 3px #b3261e; }
 .gz-card.cur small { color: #1d2433; }
+
+/* ---------- 天平找相等 ---------- */
+.status.good { color: var(--go); }
+.clues { background: #fffdf6; border: 3px solid var(--line); border-radius: var(--radius); padding: 10px 12px; }
+.clues-title { margin: 0 0 6px; font-size: 1rem; color: var(--ink-soft); }
+.clues-list { display: grid; gap: 8px; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+.clue { margin: 0; position: relative; display: flex; flex-direction: column; align-items: center; }
+.clue .scale-svg { width: 100%; max-width: 240px; }
+.clue figcaption { font-size: .9rem; font-weight: 700; color: var(--ink-soft); text-align: center; }
+.clue-n { position: absolute; left: 4px; top: 0; font-weight: 900; font-size: 1.1rem; }
+.balance-board { display: flex; flex-direction: row; align-items: center; justify-content: center; padding: 8px; }
+.balance-board .scale-svg { width: 100%; max-width: 520px; }
+.scale-svg { display: block; }
+.scale-svg .tap-fruit { cursor: pointer; }
+.m-count { display: inline-flex; align-items: center; gap: 6px; min-width: 5.5em; justify-content: center; font-size: 1.6rem; }
+.fruit-icon { display: inline-block; vertical-align: middle; }
+.rule-vs { font-size: 1.4rem; margin: 0 2px; }
+
+.read-scales { display: flex; align-items: center; justify-content: center; gap: 6px; }
+.read-scales .scale-svg { width: 45%; max-width: 220px; }
+.read-arrow { font-size: 2rem; font-weight: 900; }
+.read-done { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.share-btn { background: #25d366; }
+.toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: var(--ink); color: #fff; padding: 12px 18px; border-radius: 14px; font-weight: 800; z-index: 2000; max-width: calc(100vw - 32px); text-align: center; transition: opacity .4s; }
+.toast.out { opacity: 0; }
+dialog .face.wide { width: auto; height: auto; }
+.win-eq { display: flex; align-items: center; justify-content: center; gap: 6px; flex-wrap: wrap; }
+.win-eq b { font-size: 1.8rem; }
+dialog .face.wide svg { width: 52px; height: 52px; }
+#balance-art .scale-svg { width: 210px; height: 110px; }

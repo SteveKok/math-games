@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<!-- 天平游戏的分享封面（og:image、Facebook 帖子图）。1200×630。WhatsApp 小图会裁中间，最重要的第 3 个天平放在中间以外也能从标题看懂 -->
+<defs><radialGradient id="bg" cx="30%" cy="0%" r="120%"><stop offset="0" stop-color="#fffdf6"/><stop offset=".5" stop-color="#fff7e8"/><stop offset="1" stop-color="#ffe9c7"/></radialGradient></defs>
+<rect width="1200" height="630" fill="url(#bg)"/>
+<g font-family="'PingFang SC','Hiragino Sans GB','Noto Sans SC',system-ui,sans-serif">
+<text x="600" y="92" text-anchor="middle" font-size="64" font-weight="900" fill="#1d2433">1 个榴梿 = 几个芒果？</text>
+<text x="600" y="140" text-anchor="middle" font-size="26" font-weight="700" fill="#4a5468">1 durian = how many mangoes? · 1 durian = berapa biji mangga?</text>
+<g stroke="#1d2433" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M205 232 L175 396 L235 396z" fill="#ffffff"/>
+<line x1="101" y1="232" x2="309" y2="232" stroke-width="9"/>
+<line x1="101" y1="232" x2="49" y2="350" stroke-width="3"/><line x1="101" y1="232" x2="149" y2="350" stroke-width="3"/>
+<path d="M41 350 L161 350 Q101 386 41 350z" fill="#ffe9c7"/>
+<line x1="309" y1="232" x2="257" y2="350" stroke-width="3"/><line x1="309" y1="232" x2="357" y2="350" stroke-width="3"/>
+<path d="M249 350 L369 350 Q309 386 249 350z" fill="#ffe9c7"/>
+<circle cx="205" cy="232" r="10" fill="#ff5d73"/></g>
+<polygon points="148.2,316.0 139.7,320.8 146.2,327.6 136.6,330.1 140.7,338.2 130.5,338.3 131.9,347.0 122.1,344.6 120.6,353.3 112.0,348.6 107.7,356.6 101.0,350.0 94.3,356.6 90.0,348.6 81.4,353.3 79.9,344.6 70.1,347.0 71.5,338.3 61.3,338.2 65.4,330.1 55.8,327.6 62.3,320.8 53.9,316.0 62.3,311.2 55.8,304.4 65.4,301.9 61.3,293.8 71.5,293.7 70.1,285.0 79.9,287.4 81.4,278.7 90.0,283.4 94.3,275.4 101.0,282.0 107.7,275.4 112.0,283.4 120.6,278.7 122.1,287.4 131.9,285.0 130.5,293.7 140.7,293.8 136.6,301.9 146.2,304.4 139.7,311.2" fill="#9ccc3a" stroke="#1d2433" stroke-width="4" stroke-linejoin="round"/>
+<path d="M87 308 q6 10 0 20 M103 302 q6 12 0 26 M119 308 q6 10 0 20" stroke="#6f9a1f" stroke-width="3" fill="none" stroke-linecap="round"/>
+<rect x="97" y="260" width="8" height="14" rx="3" fill="#7a5230" stroke="#1d2433" stroke-width="3"/>
+<g stroke="#1d2433" stroke-width="4" stroke-linejoin="round"><path d="M282.0 286 l-14 -22 l10 6 l4 -16 l4 16 l10 -6z" fill="#2fb67c"/><ellipse cx="282.0" cy="316" rx="21" ry="29" fill="#ffd23f"/></g>
+<path d="M268.0 302 l28 28 M263.0 320 l18 18 M278.0 292 l20 20 M296.0 302 l-28 28 M301.0 320 l-18 18 M286.0 292 l-20 20" stroke="#d9a400" stroke-width="2.5"/>
+<g stroke="#1d2433" stroke-width="4" stroke-linejoin="round"><path d="M336.0 286 l-14 -22 l10 6 l4 -16 l4 16 l10 -6z" fill="#2fb67c"/><ellipse cx="336.0" cy="316" rx="21" ry="29" fill="#ffd23f"/></g>
+<path d="M322.0 302 l28 28 M317.0 320 l18 18 M332.0 292 l20 20 M350.0 302 l-28 28 M355.0 320 l-18 18 M340.0 292 l-20 20" stroke="#d9a400" stroke-width="2.5"/>
+<text x="205" y="442" text-anchor="middle" font-size="26" font-weight="800" fill="#4a5468">①</text>
+<g stroke="#1d2433" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M600 232 L570 396 L630 396z" fill="#ffffff"/>
+<line x1="496" y1="232" x2="704" y2="232" stroke-width="9"/>
+<line x1="496" y1="232" x2="444" y2="350" stroke-width="3"/><line x1="496" y1="232" x2="544" y2="350" stroke-width="3"/>
+<path d="M436 350 L556 350 Q496 386 436 350z" fill="#ffe9c7"/>
+<line x1="704" y1="232" x2="652" y2="350" stroke-width="3"/><line x1="704" y1="232" x2="752" y2="350" stroke-width="3"/>
+<path d="M644 350 L764 350 Q704 386 644 350z" fill="#ffe9c7"/>
+<circle cx="600" cy="232" r="10" fill="#ff5d73"/></g>
+<g stroke="#1d2433" stroke-width="4" stroke-linejoin="round"><path d="M496 286 l-14 -22 l10 6 l4 -16 l4 16 l10 -6z" fill="#2fb67c"/><ellipse cx="496" cy="316" rx="21" ry="29" fill="#ffd23f"/></g>
+<path d="M482 302 l28 28 M477 320 l18 18 M492 292 l20 20 M510 302 l-28 28 M515 320 l-18 18 M500 292 l-20 20" stroke="#d9a400" stroke-width="2.5"/>
+<g stroke="#1d2433" stroke-width="4" stroke-linejoin="round"><path d="M644.0 320 C642.0 294 678.0 290 686.0 312 C692.0 332 662.0 340 644.0 320z" fill="#ff9f1c"/><path d="M678.0 296 q10 -10 20 -4 q-8 10 -20 4z" fill="#2fb67c"/></g>
+<g stroke="#1d2433" stroke-width="4" stroke-linejoin="round"><path d="M684.0 320 C682.0 294 718.0 290 726.0 312 C732.0 332 702.0 340 684.0 320z" fill="#ff9f1c"/><path d="M718.0 296 q10 -10 20 -4 q-8 10 -20 4z" fill="#2fb67c"/></g>
+<g stroke="#1d2433" stroke-width="4" stroke-linejoin="round"><path d="M724.0 320 C722.0 294 758.0 290 766.0 312 C772.0 332 742.0 340 724.0 320z" fill="#ff9f1c"/><path d="M758.0 296 q10 -10 20 -4 q-8 10 -20 4z" fill="#2fb67c"/></g>
+<text x="600" y="442" text-anchor="middle" font-size="26" font-weight="800" fill="#4a5468">②</text>
+<g stroke="#1d2433" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M995 232 L965 396 L1025 396z" fill="#ffffff"/>
+<line x1="891" y1="232" x2="1099" y2="232" stroke-width="9"/>
+<line x1="891" y1="232" x2="839" y2="350" stroke-width="3"/><line x1="891" y1="232" x2="939" y2="350" stroke-width="3"/>
+<path d="M831 350 L951 350 Q891 386 831 350z" fill="#ffe9c7"/>
+<line x1="1099" y1="232" x2="1047" y2="350" stroke-width="3"/><line x1="1099" y1="232" x2="1147" y2="350" stroke-width="3"/>
+<path d="M1039 350 L1159 350 Q1099 386 1039 350z" fill="#ffe9c7"/>
+<circle cx="995" cy="232" r="10" fill="#ff5d73"/></g>
+<polygon points="938.1,316.0 929.7,320.8 936.2,327.6 926.6,330.1 930.7,338.2 920.5,338.3 921.9,347.0 912.1,344.6 910.6,353.3 902.0,348.6 897.7,356.6 891.0,350.0 884.3,356.6 880.0,348.6 871.4,353.3 869.9,344.6 860.1,347.0 861.5,338.3 851.3,338.2 855.4,330.1 845.8,327.6 852.3,320.8 843.9,316.0 852.3,311.2 845.8,304.4 855.4,301.9 851.3,293.8 861.5,293.7 860.1,285.0 869.9,287.4 871.4,278.7 880.0,283.4 884.3,275.4 891.0,282.0 897.7,275.4 902.0,283.4 910.6,278.7 912.1,287.4 921.9,285.0 920.5,293.7 930.7,293.8 926.6,301.9 936.2,304.4 929.7,311.2" fill="#9ccc3a" stroke="#1d2433" stroke-width="4" stroke-linejoin="round"/>
+<path d="M877 308 q6 10 0 20 M893 302 q6 12 0 26 M909 308 q6 10 0 20" stroke="#6f9a1f" stroke-width="3" fill="none" stroke-linecap="round"/>
+<rect x="887" y="260" width="8" height="14" rx="3" fill="#7a5230" stroke="#1d2433" stroke-width="3"/>
+<circle cx="1099" cy="314" r="38" fill="#ff5d73" stroke="#1d2433" stroke-width="5"/>
+<text x="1099" y="332" text-anchor="middle" font-size="54" font-weight="900" fill="#fff">?</text>
+<text x="995" y="442" text-anchor="middle" font-size="26" font-weight="800" fill="#4a5468">③</text>
+<g><rect x="330" y="526" width="540" height="78" rx="39" fill="#ff5d73" stroke="#1d2433" stroke-width="5"/><circle cx="380" cy="565" r="24" fill="#fff"/><path d="M372 551 L394 565 L372 579z" fill="#ff5d73"/><text x="620" y="578" text-anchor="middle" font-size="36" font-weight="900" fill="#fff">点图开始玩 · Tap to play</text></g>
+<text x="40" y="590" font-size="34" font-weight="900" fill="#1d2433">Jom<tspan fill="#ff5d73">Fikir</tspan></text>
+<g><rect x="1060" y="548" width="104" height="52" rx="26" fill="#ffd23f" stroke="#1d2433" stroke-width="4"/><text x="1112" y="584" text-anchor="middle" font-size="28" font-weight="900" fill="#1d2433">8岁+</text></g>
+</g></svg>

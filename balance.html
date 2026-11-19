@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>天平找相等 · Balance Scales · Neraca Buah — JomFikir</title>
+  <meta name="description" content="1 个榴梿 = 几个芒果？看两个天平，猜第三个。8 岁以上，免费，点开就玩。">
+  <!-- 分享预览（WhatsApp、Facebook）。og:url 故意不写：Facebook 会用 og:url 盖掉帖子里带来源标记的网址 -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="JomFikir 思维小游戏">
+  <meta property="og:title" content="1 个榴梿 = 几个芒果？">
+  <meta property="og:description" content="看两个天平，猜第三个。8 岁以上，免费，点开就玩。">
+  <meta property="og:image" content="https://stevekok.github.io/math-games/og/balance.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="三个天平：榴梿和两个黄梨一样重，黄梨和三个芒果一样重，榴梿和几个芒果一样重？">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="css/style.css?v=35">
+</head>
+<body>
+  <header class="topbar">
+    <a class="icon-btn" href="index.html" data-icon="home" data-i18n-aria="home"></a>
+    <button class="icon-btn" id="btn-levels" data-icon="grid" data-i18n-aria="levels"></button>
+    <div class="title" id="level-title"></div>
+    <button class="icon-btn" data-lang-next data-i18n-aria="langNext"></button>
+    <button class="icon-btn toggle" data-sound-toggle data-i18n-aria="sound"></button>
+  </header>
+
+  <main class="game balance-game">
+    <section class="oly-card" id="cup-card" hidden>
+      <p class="oly-source" data-i18n="bcupSource"></p>
+      <p class="oly-note" data-i18n="bcupNote"></p>
+    </section>
+
+    <div class="ask-row">
+      <h1 class="ask" id="ask"></h1>
+      <button class="icon-btn" id="btn-rules" data-icon="help" data-i18n-aria="rules"></button>
+    </div>
+
+    <section class="clues" id="clues" hidden>
+      <h2 class="clues-title" id="clues-title"></h2>
+      <div class="clues-list" id="clues-list"></div>
+    </section>
+
+    <div class="pboard balance-board" id="board"></div>
+    <div class="reveal-wrap" id="reveal" hidden></div>
+
+    <div class="pbar">
+      <p class="status" id="status" aria-live="polite"></p>
+      <div class="pactions" id="count-ctrl">
+        <button class="icon-btn" id="btn-minus" data-icon="minus" data-i18n-aria="bremove"></button>
+        <span class="m-count" id="m-count"></span>
+        <button class="icon-btn" id="btn-plus" data-icon="plus" data-i18n-aria="badd"></button>
+      </div>
+      <div class="pactions" id="game-ctrl">
+        <button class="icon-btn" id="btn-hint" data-icon="bulb" data-i18n-aria="hint" hidden></button>
+        <button class="icon-btn" id="btn-restart" data-icon="replay" data-i18n-aria="restart"></button>
+        <button class="big-btn go" id="btn-check"><span data-icon="check"></span><span id="btn-check-label"></span></button>
+        <button class="big-btn secondary" id="btn-solution" hidden><span data-icon="book"></span><span data-i18n="pshowAnswer"></span></button>
+      </div>
+      <div class="pactions" id="read-ctrl" hidden>
+        <button class="big-btn" id="btn-got"><span data-icon="check"></span><span data-i18n="pgotIt"></span></button>
+        <div class="read-done" id="read-done" hidden>
+          <p class="status good" data-i18n="ballClear"></p>
+          <button class="big-btn" id="btn-share-end"><span data-icon="share"></span><span data-i18n="bshare"></span></button>
+        </div>
+      </div>
+      <div class="pactions" id="review-ctrl" hidden>
+        <button class="big-btn secondary" id="rv-again"><span data-icon="replay"></span><span data-i18n="again"></span></button>
+        <button class="big-btn" id="rv-next"><span data-icon="next"></span><span data-i18n="nextLevel"></span></button>
+      </div>
+    </div>
+  </main>
+
+  <dialog id="dlg-win">
+    <div class="face" id="win-face"></div>
+    <h2 data-i18n="youWin"></h2>
+    <p class="tip" id="win-tip"></p>
+    <div class="actions">
+      <button class="big-btn share-btn" id="win-share"><span data-icon="share"></span><span data-i18n="bshare"></span></button>
+      <button class="big-btn secondary" id="win-again"><span data-icon="replay"></span><span data-i18n="again"></span></button>
+      <button class="big-btn secondary" id="win-look"><span data-icon="eye"></span><span data-i18n="plookAgain"></span></button>
+      <button class="big-btn" id="win-next"><span data-icon="next"></span><span data-i18n="nextLevel"></span></button>
+    </div>
+  </dialog>
+
+  <dialog id="dlg-levels">
+    <h2 data-i18n="levels"></h2>
+    <div id="levels-body"></div>
+    <div class="actions"><button class="big-btn secondary" data-close data-i18n="close"></button></div>
+  </dialog>
+
+  <dialog id="dlg-rules" class="rules">
+    <h2 data-i18n="rulesTitle"></h2>
+    <ol class="rules-list" id="rules-list"></ol>
+    <h3 data-i18n="helperTitle"></h3>
+    <p id="rules-how"></p>
+    <div class="actions"><button class="big-btn" data-close data-i18n="rulesOk"></button></div>
+  </dialog>
+
+  <script src="js/core.js?v=35"></script>
+  <script src="js/config.js?v=35"></script>
+  <script src="js/track.js?v=35"></script>
+  <script src="js/share.js?v=35"></script>
+  <script src="js/strings.js?v=35"></script>
+  <script src="js/fx.js?v=35"></script>
+  <script src="js/balance-logic.js?v=35"></script>
+  <script src="js/balance-art.js?v=35"></script>
+  <script src="js/balance-game.js?v=35"></script>
+</body>
+</html>

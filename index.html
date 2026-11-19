@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>思维小游戏 · Think &amp; Play</title>
   <meta name="description" content="Free, open-source math-thinking games for kids aged 8–12. No accounts, no tracking.">
-  <link rel="stylesheet" href="css/style.css?v=33">
+  <link rel="stylesheet" href="css/style.css?v=35">
 </head>
 <body>
   <header class="topbar">
@@ -19,6 +19,12 @@
     <p class="sub" data-i18n="siteSub">先玩，先试，自己发现秘诀</p>
 
     <div class="cards">
+      <a class="card" href="balance.html">
+        <div class="art" id="balance-art"></div>
+        <h2 data-i18n="gameBalance">天平找相等</h2>
+        <p data-i18n="gameBalanceDesc">1 个榴梿等于几个芒果？</p>
+        <span class="tag"><span data-i18n="play">开始玩</span> · <span data-i18n="age8">8 岁+</span></span>
+      </a>
       <a class="card" href="cube.html">
         <div class="art" id="cube-art"><div class="mini-cube big"><span class="mt"></span><span class="mf"></span><span class="mr"></span></div></div>
         <h2 data-i18n="gameCube">涂立方体</h2>
@@ -67,12 +73,15 @@
       </div>
     </div>
 
-    <p class="footer" data-i18n="footer">免费 · 开源 · 不收集任何信息</p>
+    <p class="footer" data-i18n="footer">免费 · 开源 · 不用登录 · 只做不记名的使用统计</p>
   </main>
 
-  <script src="js/core.js?v=33"></script>
-  <script src="js/strings.js?v=33"></script>
-  <script src="js/pigeon-skins.js?v=33"></script>
+  <script src="js/core.js?v=35"></script>
+  <script src="js/config.js?v=35"></script>
+  <script src="js/track.js?v=35"></script>
+  <script src="js/strings.js?v=35"></script>
+  <script src="js/pigeon-skins.js?v=35"></script>
+  <script src="js/balance-art.js?v=35"></script>
   <script>
     (function () {
       var sk = MG.PIGEON_ART;
@@ -85,6 +94,7 @@
         '<path d="M12 14H108V86H12Z M44 34L70 28L76 54L50 60Z" fill="#7cc3ff" fill-rule="evenodd" clip-path="url(#hl)"/>' +
         '<path d="M12 14H108V86H12Z M44 34L70 28L76 54L50 60Z" fill="none" stroke="#1d2433" stroke-width="3"/>' +
         '<path d="M2 98L118 2" stroke="#e63946" stroke-width="4" stroke-linecap="round"/></svg>';
+      document.getElementById('balance-art').innerHTML = MG.BalanceArt.scale(['D'], ['P', 'P'], { small: true });
       MG.setupTopbar();
     })();
   </script>
