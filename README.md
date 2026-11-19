@@ -5,7 +5,7 @@
 > 项目重新开始：之前的三个游戏（取石子、说谎者与诚实者、一笔画与涂地图）已移除，代码仍保存在 git 历史里（提交 `b5e7328` 及之前）。
 
 - 纯静态：HTML + CSS + JavaScript，无构建步骤、无后端、无账号
-- 不用登录、不收集名字电邮；只做不记名的使用统计（随机访客号码，见下面「使用统计」）；进度只存在本机浏览器（localStorage，读写都包 try/catch）
+- 不收集任何信息、没有追踪脚本；进度只存在本机浏览器（localStorage，读写都包 try/catch）
 - 所有图形用 SVG / Canvas 代码绘制，音效用 WebAudio 现场合成（可静音）
 - 三语：华语、英语、马来文（Bahasa Melayu）
 - 大字、高对比、触屏友好；失败不惩罚，没有倒计时
@@ -18,21 +18,6 @@
 ```bash
 python3 -m http.server 8765
 ```
-
-## 游戏 0：天平找相等（等量代换，8 岁+）
-
-给比较小的孩子。分享封面 `og/balance.png` 就是第 3 关：1 个榴梿 = 几个芒果？（答案 6。）`balance.html#cover` 直接打开这一关。
-
-| 章 | 关卡 | 孩子在做什么 |
-|---|---|---|
-| 天平怎么玩 | 1–2 | 往右盘放芒果，第 1 关天平跟着动；第 2 关起天平被手按住，想好了才「放手看看」 |
-| 换一换 | 3–4 | 用线索天平把榴梿换成黄梨、香蕉，再换成芒果 |
-| 两边拿走一样的 | 5–6 | 线索天平两边有一样的水果，先拿走 |
-| 挑战题 | 🏆 7–8 | 自己出的比赛风格题：□ + □ + △ = 10，□ + △ = 7 |
-| 天平的秘诀 | 📖 | 换一换、两边拿走一样的，就是代数和解方程 |
-
-- 通关时有「考考朋友」按钮，分享出去的链接带来源标记
-- `node tests/balance-logic.test.js`：每个线索天平都平；每关的答案只靠线索就能推出来（把 1–12 的所有重量都试一遍，答案只有一个）
 
 ## 游戏 1：涂立方体（伯恩赛德引理）
 
@@ -134,64 +119,10 @@ python3 -m http.server 8765
 
 - `node tests/plus-logic.test.js`：N ≤ 16 把所有放法逐个试遍；每一关（包括 2018 个 1 凑 8102）再用和公式无关的动态规划核对
 
-## 分享封面（每个游戏都要有）
-
-游戏主要靠 WhatsApp 和 Facebook 传播，所以设计一个游戏 = 游戏本体 + 一张分享封面。封面同时是：
-
-- 页面的 `og:image`：在 WhatsApp、Facebook、Telegram 贴网址时显示的预览图
-- Facebook 专页帖子的图：专页用「贴网址」的方式发帖，Facebook 自动用这张图，点图就直接进游戏
-
-**规格**
-
-- 1200 × 630 PNG，300 KB 以内（WhatsApp 太大的图会不显示），源文件是同名 SVG，都放在 `og/`
-- 封面本身就是一道题：看了就想算，答案不写在图上
-- 一定有「▶ 点图开始玩 · Tap to play」按钮样式，让人知道点下去就能玩
-- 左下角 JomFikir 标志，右下角年龄标签（例如 8岁+）
-- 题目大字用华语，下面一行英文和马来文；图形尽量不用字也看得懂
-- 不用 emoji 图片（版权），水果、物品都用 SVG 自己画，风格和游戏一样（粗深色描边、扁平色块）
-- 最重要的东西放中间：WhatsApp 有时只显示中间一块
-
-**和游戏的衔接**
-
-点封面进来的人，第一眼要看到同一道题，不能先看到别的关卡。游戏网址加 `#cover`（例如 `balance.html#cover`）时，直接打开封面那道题；做完再引导去从第 1 关玩起。分享出去的网址都用带 `#cover` 的版本。
-
-**页面要加的标签**（以天平游戏为例，网址换成每个游戏自己的）
-
-```html
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="JomFikir 思维小游戏">
-<meta property="og:title" content="1 个榴梿 = 几个芒果？">
-<meta property="og:description" content="看两个天平，猜第三个。8 岁以上，免费，点开就玩。">
-<meta property="og:image" content="https://stevekok.github.io/math-games/og/balance.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="三个天平：榴梿和两个黄梨一样重，黄梨和三个芒果一样重，榴梿和几个芒果一样重？">
-<meta name="twitter:card" content="summary_large_image">
-```
-
-不要写 `og:url`：Facebook 会用它盖掉帖子里带来源标记的网址，来源就看不到了。`og:image` 一定要写完整的 https 网址。换了封面图之后，用 Facebook 的 Sharing Debugger 重新抓一次，不然 Facebook 会一直显示旧图。
-
-**生成 PNG**
-
-```bash
-C="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"; U=$(mktemp -d)
-"$C" --headless=new --user-data-dir="$U" --hide-scrollbars --screenshot="$PWD/og/balance.png" --window-size=1200,630 "file://$PWD/og/balance.svg"
-```
-
-## 使用统计
-
-为了知道游戏从哪里传开、孩子在哪一关卡住，网站会发不记名的事件到 JomFikir 的 analytics（Cloudflare Worker，程序在 `~/Documents/jomfikir.com`）。
-
-- `js/config.js`：收集网址。空的就什么都不发；本机（localhost / 127.0.0.1）发到 `:8787`
-- `js/track.js`：随机访客号码、来访（30 分钟没动静算新的一次）、来源（utm、短链接 `l`、分享人 `r`、referrer）、活跃时间、出错；读完来源后把网址换成 `?r=自己的号码`，复制转发也算人传人
-- `js/share.js`：「考考朋友」，网址带 `utm_source=share` 和分享人号码
-- 游戏里调用 `MG.track('level_start', {...})`，没有设定收集网址时是空操作
-- 自己测试时网址加 `?notrack=1`，这个浏览器就不再被记录；`?notrack=0` 取消
-
 ## 部署到 GitHub Pages
 
 推到 GitHub 仓库，Settings → Pages → Source 选 `main` 分支根目录。没有构建步骤。
-每次改了 CSS / JS，把所有 HTML 里的 `?v=N` 加 1，让浏览器拿到新文件。
+每次改了 CSS / JS，把 HTML 里的 `?v=N` 加 1，让浏览器拿到新文件。
 
 ## 文件
 
@@ -219,15 +150,6 @@ plus.html                 游戏 7：加号游戏
 js/plus-logic.js          规则和关卡（纯函数，Node 可直接 require）
 js/plus-game.js           界面
 tests/plus-logic.test.js
-balance.html              游戏 0：天平找相等（8 岁+）
-js/balance-logic.js       规则和关卡（纯函数，Node 可直接 require）
-js/balance-art.js         水果和天平的 SVG
-js/balance-game.js        界面
-tests/balance-logic.test.js
-og/balance.svg、.png      分享封面
-js/config.js              收集统计的网址
-js/track.js               不记名的使用统计
-js/share.js               考考朋友（分享链接带来源标记）
 cube.html                 游戏 1：涂立方体
 js/cube-logic.js          规则和关卡（纯函数，Node 可直接 require）
 js/cube-game.js           界面（CSS 3D 立方体）
